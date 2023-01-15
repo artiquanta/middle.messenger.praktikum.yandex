@@ -1,0 +1,15 @@
+<form class="form" novalidate>
+  {{#if heading}}
+  {{{heading}}}
+  {{/if}}
+  <div class="form__inputs">
+    <span class="form__error"></span>
+    {{#each inputsList}}
+    {{{this}}}
+    {{/each}}
+  </div>
+  <button class="form__button" type="submit">{{form.buttonTitle}}</button>
+  {{#if link}}
+  {{{link}}}
+  {{/if}}
+</form>

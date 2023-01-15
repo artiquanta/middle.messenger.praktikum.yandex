@@ -1,0 +1,65 @@
+.header {
+  grid-area: header;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 56px;
+  position: relative;
+}
+
+.header__username {
+  margin: 0 0 0 35px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1
+}
+
+.header__edit-button {
+  margin-left: 5px;
+  padding: 0;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  background-image: url(../../../../images/header__edit-button-icon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.header__edit-button:hover {
+  opacity: .8;
+}
+
+.header__delete-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 35px;
+  padding: 0;
+  width: 133px;
+  height: 24px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #202020;
+  line-height: 1;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: .4s;
+  visibility: hidden;
+  opacity: 0;
+  transition: .4s;
+}
+
+.header__delete-message_shown {
+  visibility: visible;
+  opacity: 1;
+}
+
+.header__delete-message:hover {
+  opacity: .8;
+}

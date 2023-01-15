@@ -1,0 +1,104 @@
+.chat-controls {
+  grid-area: chat-controls;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  min-height: 59px;
+  max-height: 30vh;
+  position: relative;
+}
+
+.chat-controls__attach-btn {
+  margin: 0 11px 17px 10px;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  background-image: url(../../../../images/chat-control__attach-btn-icon.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.chat-controls__attach-btn:hover {
+  opacity: .8;
+}
+
+.chat-controls__form {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.chat-controls__textarea {
+  margin: 12px 0;
+  padding: 10px 25px;
+  width: 100%;
+  min-height: 35px;
+  max-height: 25vh;
+  background-color: #f5f5f5;
+  font-size: 12px;
+  color: #202020;
+  line-height: 1.25;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  outline: none;
+  resize: none;
+  scrollbar-width: thin;
+  scrollbar-color: #202020 transparent;
+  scrollbar-gutter: stable;
+}
+
+.chat-controls__textarea::placeholder {
+  font-size: 12px;
+  color: #202020;
+  line-height: 1.25;
+  opacity: .5;
+}
+
+.chat-controls__textarea::-webkit-scrollbar {
+  border-radius: 50%;
+  width: 7px;
+}
+
+.chat-controls__textarea::-webkit-scrollbar-thumb {
+  background-color: #202020;
+  border-radius: 3px;
+  border: 2px solid #f5f5f5;
+}
+
+.chat-controls__textarea::-webkit-scrollbar-track {
+  margin: 5px 0;
+}
+
+.chat-controls__input {
+  width: 0;
+  height: 0;
+}
+
+.chat-controls__send-btn {
+  margin: 0 22px 12px;
+  padding: 0;
+  width: 50px;
+  height: 35px;
+  background-color: #f5f5f5;
+  background-image: url(../../../../images/chat-control__send-btn-icon.svg);
+  background-size: 13px 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 5px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.chat-controls__send-btn:hover {
+  opacity: .8;
+}

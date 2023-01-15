@@ -1,0 +1,29 @@
+.location-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 100px;
+  text-decoration: none;
+}
+
+.location-message__icon {
+  width: 42px;
+  height: 42px;
+  background-image: url(../../../../../../images/location-message__icon.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.location-message__icon_type_user {
+  filter: brightness(0) invert(1);
+}
+
+.location-message__hint {
+  margin: 10px 0 0;
+  font-size: 10px;
+  color: #000;
+  line-height: 1;
+}

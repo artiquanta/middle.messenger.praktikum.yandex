@@ -1,0 +1,45 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+  width: fit-content;
+  row-gap: 5px;
+}
+
+.message__sender-info {
+  display: flex;
+  align-items: center;
+}
+
+.message__avatar {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.message__name {
+  margin: 0 0 0 5px;
+  font-size: 10px;
+  font-weight: 400;
+  color: #000;
+  line-height: 1;
+}
+
+.message__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 7px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .05);
+}
+
+.message__send-time {
+  align-self: flex-end;
+  margin: 0;
+  font-size: 10px;
+  color: #000;
+  line-height: 1;
+}

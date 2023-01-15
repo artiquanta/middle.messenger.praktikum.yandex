@@ -1,0 +1,23 @@
+<main class="profile">
+  <div class="profile__personal">
+    <a href="./chat" class="profile__return-url">
+      <div class="profile__return-icon"></div>
+      <h1 class="profile__heading">Управление аккаунтом</h1>
+    </a>
+    <div class="profile__personal-container">
+      <div class="profile__avatar-container">
+        <div class="profile__avatar-overlay">
+          <span class="profile__overlay-text">Изменить аватар</span>
+        </div>
+        <img src="{{user.user.avatar}}" alt="Аватар профиля пользователя." class="profile__avatar">
+      </div>
+      {{{personalForm}}}
+    </div>
+  </div>
+  <div class="profile__password">
+    <div class="profile__password-container">
+      {{{passwordForm}}}
+    </div>
+  </div>
+  {{{popup}}}
+</main>

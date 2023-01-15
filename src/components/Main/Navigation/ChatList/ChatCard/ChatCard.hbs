@@ -1,0 +1,20 @@
+<li class="chat-card">
+  <img src="{{link}}" alt="{{name}}." class="chat-card__avatar">
+  <div class="chat-card__info">
+    <h2 class="chat-card__username">{{name}}</h2>
+    <div class="chat-card__message-container">
+      {{#if owner}}
+      <p class="chat-card__sender">Вы:</p>
+      {{/if}}
+      <p class="chat-card__last-message">{{lastMessage}}</p>
+    </div>
+  </div>
+  <div class="chat-card__notification">
+    <p class="chat-card__time">{{time}}</p>
+    {{#unless owner}}
+    <div class="chat-card__counter">
+      <p class="chat-card__count">{{unreadCount}}</p>
+    </div>
+    {{/unless}}
+  </div>
+</li>

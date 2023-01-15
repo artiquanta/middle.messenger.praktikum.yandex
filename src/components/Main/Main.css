@@ -1,0 +1,11 @@
+.main {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "navigation chat";
+  column-gap: 6px;
+  min-height: 100vh;
+  height: 100%;
+  background-color: #202020;
+}

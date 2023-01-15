@@ -1,0 +1,14 @@
+.chat-divider {
+  display: flex;
+}
+
+.chat-divider__content {
+  margin: 25px 0 20px;
+  font-size: 10px;
+  line-height: 1.3;
+  color: #000;
+}
+
+.chat-divider__content:first-child {
+  margin-top: 35px;
+}
