@@ -4,12 +4,8 @@
       <button class="side-panel__delete-chat">Удалить чат</button>
       <h2 class="side-panel__title">Пользователи</h2>
       <ul class="side-panel__users">
-        {{#each groupMembers}}
-        <li class="side-panel__user">
-          <img src="{{this.avatar}}" alt="Аватар пользователя {{this.name}}." class="side-panel__avatar">
-          <h3 class="side-panel__user-name">{{this.name}}</h3>
-          {{#unless this.owner}}<button class="side-panel__remove-user" type="button"></button>{{/unless}}
-        </li>
+        {{#each usersList}}
+        {{{this}}}
         {{/each}}
       </ul>
     </div>

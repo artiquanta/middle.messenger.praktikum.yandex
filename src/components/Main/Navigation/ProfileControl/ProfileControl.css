@@ -9,23 +9,24 @@
   margin: 35px 0;
 }
 
-.profile-control__link {
+.profile-control__button {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 180px;
   height: 35px;
+  padding: 0;
   font-size: 12px;
   color: #000;
   line-height: 1;
-  text-decoration: none;
   background-color: #fff;
+  border: 0;
   border-radius: 3px;
   user-select: none;
   cursor: pointer;
   transition: .4s;
 }
 
-.profile-control__link:hover {
+.profile-control__button:hover {
   opacity: .8;
 }

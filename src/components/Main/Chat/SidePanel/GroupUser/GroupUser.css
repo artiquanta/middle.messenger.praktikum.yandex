@@ -1,0 +1,46 @@
+.group-user {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.group-user:first-child {
+  margin-top: 25px;
+}
+
+.group-user__avatar {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.group-user__user-name {
+  margin: 0 15px;
+  max-width: 160px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.group-user__remove-user {
+  width: 9px;
+  height: 13px;
+  padding: 0;
+  background-color: #f50000;
+  mask-image: url(../../../../../images/side-panel__remove-user-icon.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+.group-user__remove-user:hover {
+  opacity: .8;
+}

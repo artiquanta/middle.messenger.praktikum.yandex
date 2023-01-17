@@ -8,22 +8,23 @@
   text-decoration: none;
 }
 
+.file-message:hover {
+  opacity: .8;
+}
+
 .file-message__icon {
   width: 55px;
   height: 63px;
-  background-image: url(../../../../../../images/file-message__icon.svg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.file-message__icon_type_user {
-  filter: brightness(0) invert(1);
+  background-color: var(--icon-color);
+  mask-image: url(../../../../../../images/file-message__icon.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .file-message__file-name {
   margin: 10px 0 0;
   font-size: 10px;
-  color: #000;
+  color: var(--text-color);
   line-height: 1;
 }

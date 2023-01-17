@@ -10,6 +10,7 @@ function Chat(chatData) {
     group,
     name,
     messages,
+    groupOwner,
     groupMembers,
   } = chatData;
   return template({
@@ -18,7 +19,7 @@ function Chat(chatData) {
       name,
     }),
     chatContent: ChatContent(messages),
-    sidePanel: SidePanel(groupMembers),
+    sidePanel: SidePanel(groupMembers, groupOwner),
     chatControls: ChatControls(),
   });
 }

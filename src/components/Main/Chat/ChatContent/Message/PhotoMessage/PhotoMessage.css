@@ -12,4 +12,9 @@
   max-height: 180px;
   height: 100%;
   border-radius: 7px;
+  cursor: pointer;
+}
+
+.photo-message__image:hover {
+  filter: saturate(.5)
 }

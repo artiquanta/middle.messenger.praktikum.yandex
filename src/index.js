@@ -50,3 +50,7 @@ document.querySelector('.side-panel__button').addEventListener('click', () => {
 document.querySelector('.chat-controls__attach-btn').addEventListener('click', () => {
   document.querySelector('.popup-attach').classList.toggle('popup-attach_opened');
 });
+
+window.addEventListener('load', () => {
+  document.querySelector('.chat-content__messages').scrollTo(0, document.querySelector('.chat-content__messages').scrollHeight);
+});

@@ -1,12 +1,11 @@
 .chat {
   grid-area: chat;
   display: grid;
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: min-content minmax(0, auto) minmax(min-content, auto);
   grid-template-columns: auto minmax(0, min-content);
   grid-template-areas:
     "header header"
     "chat side-panel"
     "chat-controls chat-controls";
-  min-height: 100vh;
-  height: 100%;
+  height: 100vh;
 }

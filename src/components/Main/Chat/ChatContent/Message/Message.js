@@ -6,6 +6,8 @@ import PhotoMessage from './PhotoMessage/PhotoMessage';
 import FileMessage from './FileMessage/FileMessage';
 import LocationMessage from './LocationMessage/LocationMessage';
 
+// Id текущего пользователя для временного наполнения данными
+import { userId } from '../../../../../utils/constants';
 
 function Message(messageData) {
   const {
@@ -42,6 +44,7 @@ function Message(messageData) {
   }
 
   const messageTemplate = template({
+    user: owner.id === userId,
     avatar: owner.avatar,
     username: owner.username,
     message,

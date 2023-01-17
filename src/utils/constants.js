@@ -167,18 +167,52 @@ export const chats = [
 
 export const chatData = {
   group: true,
+  groupOwner: 123,
   groupMembers: [
     {
       name: 'Человек 1',
       avatar: avatarLink,
       id: 123,
-      owner: false,
     },
     {
       name: 'Человек 2',
       avatar: avatarLink,
       id: 15,
-      owner: true,
+    },
+    {
+      name: 'Человек 2',
+      avatar: avatarLink,
+      id: 15,
+    },
+    {
+      name: 'Человек 2',
+      avatar: avatarLink,
+      id: 15,
+    },
+    {
+      name: 'Человек 2',
+      avatar: avatarLink,
+      id: 15,
+    },
+    {
+      name: 'Человек 2',
+      avatar: avatarLink,
+      id: 15,
+    },
+    {
+      name: 'Человек 2',
+      avatar: avatarLink,
+      id: 15,
+    },
+    {
+      name: 'Человек 2',
+      avatar: avatarLink,
+      id: 15,
+    },
+    {
+      name: 'Человек 2',
+      avatar: avatarLink,
+      id: 15,
     },
   ],
   name: 'Группа "Человеков"',
@@ -215,24 +249,10 @@ export const chatData = {
         username: 'Человек',
       },
       content: {
-        type: 'file',
-        value: 'http://localhost:1234/file.txt',
-        fileName: 'file.txt',
+        type: 'text',
+        value: 'Вот ссылочка: http://localhost:1234/file.txt',
       },
-      time: 1671902091,
-    },
-    {
-      owner: {
-        id: 121,
-        avatar: avatarLink,
-        username: 'Человек',
-      },
-      content: {
-        type: 'file',
-        value: 'http://localhost:1234/file.txt',
-        fileName: 'file.txt',
-      },
-      time: 1662902091,
+      time: 1672902090,
     },
     {
       owner: {
@@ -242,7 +262,7 @@ export const chatData = {
       },
       content: {
         type: 'location',
-        value: 'http://localhost:1234/file.txt',
+        value: '82.949146,55.011570',
       },
       time: 1662902191,
     },
@@ -272,18 +292,6 @@ export const chatData = {
     },
     {
       owner: {
-        id: 121,
-        avatar: avatarLink,
-        username: 'Человек',
-      },
-      content: {
-        type: 'image',
-        value: avatarLink,
-      },
-      time: 1664902191,
-    },
-    {
-      owner: {
         id: 123,
         avatar: avatarLink,
         username: 'Человек',
@@ -294,54 +302,6 @@ export const chatData = {
         fileName: 'file.txt',
       },
       time: 1662902091,
-    },
-    {
-      owner: {
-        id: 123,
-        avatar: avatarLink,
-        username: 'Человек',
-      },
-      content: {
-        type: 'location',
-        value: 'http://localhost:1234/file.txt',
-      },
-      time: 1662902191,
-    },
-    {
-      owner: {
-        id: 123,
-        avatar: avatarLink,
-        username: 'Человек',
-      },
-      content: {
-        type: 'video',
-        value: 'https://pictures.s3.yandex.net/iframes_topic/3.mp4',
-      },
-      time: 1664902191,
-    },
-    {
-      owner: {
-        id: 123,
-        avatar: avatarLink,
-        username: 'Человек',
-      },
-      content: {
-        type: 'image',
-        value: avatarLink,
-      },
-      time: 1664902191,
-    },
-    {
-      owner: {
-        id: 123,
-        avatar: avatarLink,
-        username: 'Человек',
-      },
-      content: {
-        type: 'image',
-        value: avatarLink,
-      },
-      time: 1664902191,
     },
   ],
 };

@@ -8,22 +8,23 @@
   text-decoration: none;
 }
 
+.location-message:hover {
+  opacity: .8;
+}
+
 .location-message__icon {
   width: 42px;
   height: 42px;
-  background-image: url(../../../../../../images/location-message__icon.svg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.location-message__icon_type_user {
-  filter: brightness(0) invert(1);
+  background-color: var(--icon-color);
+  mask-image: url(../../../../../../images/location-message__icon.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .location-message__hint {
   margin: 10px 0 0;
   font-size: 10px;
-  color: #000;
+  color: var(--text-color);
   line-height: 1;
 }

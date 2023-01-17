@@ -1,4 +1,5 @@
-<li class="message">
+{{#unless user}}
+<li class="message message_spacing_outer">
   <div class="message__sender-info">
     <img src="{{avatar}}" alt="Аватар пользователя {{username}}." class="message__avatar">
     <h3 class="message__name">{{username}}</h3>
@@ -8,3 +9,12 @@
   </div>
   <p class="message__send-time">{{time}}</p>
 </li>
+{{/unless}}
+{{#if user}}
+<li class="message message_spacing_outer message_type_user">
+  <div class="message__container message__container_type_user">
+    {{{message}}}
+  </div>
+  <p class="message__send-time">{{time}}</p>
+</li>
+{{/if}}

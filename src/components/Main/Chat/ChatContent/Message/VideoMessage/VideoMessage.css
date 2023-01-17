@@ -18,30 +18,28 @@
   top: 10px;
   left: 10px;
   width: calc(100% - (10px * 2));
-  height: calc(100% - (10px *2));
-  background-color: #202020;
+  height: calc(100% - (10px * 2));
+  background-color: rgba(var(--overlay-color), 1);
   border-radius: 7px;
-  opacity: 0;
   transition: .4s;
-}
-
-.video-message__overlay_type_user {
-  background-color: #f5f5f5;
+  opacity: 0;
+  z-index: 2;
 }
 
 .video-message__overlay:hover {
-  opacity: .8;
+  background-color: rgba(var(--overlay-color), .8);
+  opacity: 1;
 }
 
 .video-message__play-button {
   padding: 0;
   width: 24px;
   height: 27px;
-  background-color: transparent;
-  background-image: url(../../../../../../images/video-message__play-button.svg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--message-color);
+  mask-image: url(../../../../../../images/video-message__play-button.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
   border: none;
   cursor: pointer;
   transition: .4s;
@@ -49,10 +47,6 @@
 
 .video-message__play-button:hover {
   opacity: .8;
-}
-
-.video-message__play-button_type_user {
-  filter: brightness(1) invert(1);
 }
 
 .video-message__video {

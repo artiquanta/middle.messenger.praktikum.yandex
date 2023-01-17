@@ -1,11 +1,7 @@
 import './ChatContent.css';
 import template from './ChatContent.hbs';
 import Message from './Message/Message';
-import UserMessage from './UserMessage/UserMessage';
 import ChatDivider from './ChatDivider/ChatDivider';
-
-// Id текущего пользователя для временного наполнения данными
-import { userId } from '../../../../utils/constants';
 
 function ChatContent(messages) {
 
@@ -19,18 +15,32 @@ function ChatContent(messages) {
     return new Date(time * 1000).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
   }
 
+  // Проверка, если день в сообщении сегодняшний
+  function checkIfToday(time) {
+    const today = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
+    if (convertDay(time) === today) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // Массив с сообщениями для последующего наполнения шаблона
   const messagesList = [];
 
 
   // Обработка массива с сообщениями
   messages.forEach((message, index) => {
+    const messageTime = message.time;
+    const time = checkIfToday(messageTime)
+      ? `Сегодня в ${convertTime(messageTime)}`
+      : `${convertDay(messageTime)} ${convertTime(messageTime)}`;
 
     // Добавление разделителя сообщений по датам
     if (index === 0) {
       messagesList.push(ChatDivider({ content: 'Начало беседы' }));
     } else {
-      const currentMessageDate = convertDay(message.time);
+      const currentMessageDate = convertDay(messageTime);
       const previousMessageDate = convertDay(messages[index - 1].time);
 
       // Если даты не совпадают, добавляем разделить
@@ -39,21 +49,12 @@ function ChatContent(messages) {
       }
     }
 
-    if (message.owner.id === userId) {
-      messagesList.push(UserMessage({
-        type: message.type,
-        owner: message.owner,
-        content: message.content,
-        time: convertTime(message.time),
-      }));
-    } else {
-      messagesList.push(Message({
-        type: message.type,
-        owner: message.owner,
-        content: message.content,
-        time: convertTime(message.time),
-      }));
-    }
+    messagesList.push(Message({
+      owner: message.owner,
+      content: message.content,
+      time,
+    }));
+
   });
 
   return template({ message: messagesList });

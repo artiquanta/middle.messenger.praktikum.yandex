@@ -1,0 +1,5 @@
+<li class="group-user">
+  <img src="{{user.avatar}}" alt="Аватар пользователя {{user.name}}." class="group-user__avatar">
+  <h3 class="group-user__user-name">{{user.name}}</h3>
+  {{#unless owner}}<button class="group-user__remove-user" type="button"></button>{{/unless}}
+</li>
