@@ -5,12 +5,13 @@ import Chat from './Chat/Chat';
 import ChatStub from './ChatStub/ChatStub';
 
 // Тестовый набор данных для наполнения
-import { chatData } from '../../utils/constants';
+import { chatData, chats } from '../../utils/constants';
+
 
 function Main() {
   const chat = chatData.length === 0 ? ChatStub() : Chat(chatData);
   return template({
-    navigation: Navigation(),
+    navigation: Navigation(chats),
     chat,
   });
 }

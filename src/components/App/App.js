@@ -1,7 +1,14 @@
+import './App.css';
+import template from './App.hbs';
+import Main from '../Main/Main';
+
 function App() {
-  return (
-    `<a href="https://vk.com">vk</a>`
-  )
+  
+  const page = Main();
+
+  return template({
+    page,
+  });
 }
 
 export default App;

@@ -1,8 +1,8 @@
 import './FileMessage.css';
 import template from './FileMessage.hbs';
 
-function FileMessage({ value, fileName, user = false }) {
-  return template({ value, fileName, user });
+function FileMessage({ value, fileName }) {
+  return template({ value, fileName });
 }
 
 export default FileMessage;

@@ -11,15 +11,16 @@ function Chat(chatData) {
     name,
     messages,
     groupOwner,
-    groupMembers,
+    groupUsers,
   } = chatData;
+
   return template({
     header: Header({
       group,
       name,
     }),
     chatContent: ChatContent(messages),
-    sidePanel: SidePanel(groupMembers, groupOwner),
+    sidePanel: SidePanel(groupUsers, groupOwner),
     chatControls: ChatControls(),
   });
 }

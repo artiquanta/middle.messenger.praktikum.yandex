@@ -11,8 +11,43 @@ import {
   userInfo,
 } from './utils/constants';
 import Profile from './components/Profile/Profile';
+import App from './components/App/App';
 
-document.getElementById('root').innerHTML = Main();
+
+const root = document.getElementById('root');
+root.innerHTML = App();
+const path = window.location.pathname;
+
+if (path === '/') {
+  root.innerHTML = (Login(loginForm));
+}
+window.addEventListener('popstate', (evt) => {
+  evt.preventDefault();
+  console.log(path)
+  if (path === '/profile') {
+    root.innerHTML = Profile({ personalForm, passwordForm, userInfo });
+  }
+
+  if (path === '') {
+
+  }
+});
+
+function changePage(page) {
+  window.history.pushState({}, '', page);
+  window.dispatchEvent(new Event('popstate'));
+}
+
+
+const chatCards = document.querySelectorAll('.chat-card');
+
+chatCards.forEach((card) => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('chat-card_selected');
+  });
+});
+
+/* root.innerHTML = App(); */
 
 /* document.getElementById('root').innerHTML = ErrorPage({
   title: '404',
@@ -28,6 +63,11 @@ document.getElementById('root').innerHTML = Main();
 /* document.querySelector('.form').addEventListener('submit', (evt) => {
   evt.preventDefault();
 }) */
+
+
+document.querySelector('.profile-control__button').addEventListener('click', (evt) => {
+  changePage('profile');
+});
 
 document.querySelector('.chat-controls__form').addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -53,4 +93,9 @@ document.querySelector('.chat-controls__attach-btn').addEventListener('click', (
 
 window.addEventListener('load', () => {
   document.querySelector('.chat-content__messages').scrollTo(0, document.querySelector('.chat-content__messages').scrollHeight);
+});
+
+document.querySelector('.profile__theme-change').addEventListener('click', () => {
+  console.log('asd')
+  document.querySelector('.root').classList.toggle('dark');
 });

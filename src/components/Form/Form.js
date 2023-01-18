@@ -6,6 +6,7 @@ import FormLink from './FormLink/FormLink';
 
 function Form(formData) {
   const { form, inputs } = formData;
+
   const heading = form.heading ? FormHeading(form.heading) : false;
   const link = form.link ? FormLink(form.link) : false;
 

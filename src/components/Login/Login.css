@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #202020;
+  background-color: var(--background-additional-primary);
 }
 
 .login__container {
@@ -14,6 +14,6 @@
   width: 35vw;
   max-width: 448px;
   min-height: 391px;
-  background-color: #fff;
+  background-color: var(--background-main-secondary);
   border-radius: 15px;
 }

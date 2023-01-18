@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #202020;
+  background-color: var(--background-additional-primary);
 }
 
 .profile__return-url {
@@ -31,17 +31,18 @@
 .profile__return-icon {
   width: 14px;
   height: 8px;
-  background-image: url(../../images/profile__return-icon.svg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--font-main-secondary);
+  mask-image: url(../../images/profile__return-icon.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .profile__heading {
   margin: 0 0 0 5px;
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
+  color: var(--font-main-primary);
   line-height: 1;
 }
 
@@ -52,13 +53,18 @@
   align-items: center;
   width: 250px;
   height: 100%;
+  --input-text-secondary: var(--font-main-primary, #f5f5f5);
+  --input-title-color: var(--font-main-primary, #fff);
+  --form-button-font: #202020;
+  --form-button-background: #f5f5f5;
+  --form-button-border-radius: 3px;
 }
 
 .profile__avatar-container {
   display: flex;
   margin: 0 0 52px;
-  position: relative;
   cursor: pointer;
+  position: relative;
 }
 
 .profile__avatar-overlay {
@@ -70,7 +76,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #202020;
+  background-color: var(--background-additional-primary);
   border-radius: 50%;
   user-select: none;
   opacity: 0;
@@ -82,7 +88,7 @@
 
 .profile__overlay-text {
   font-size: 10px;
-  color: #fff;
+  color: var(--font-main-primary);
   line-height: 1;
 }
 
@@ -99,8 +105,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: var(--background-main-primary);
+  position: relative;
 }
+
+.profile__theme-change {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  background-color: var(--background-additional-secondary);
+  mask-image: url(../../images/profile__theme-icon_type_light.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.profile__theme-change:hover {
+  transform: rotateZ(180deg);
+  opacity: .8;
+}
+
+.profile__theme-change_theme_dark {
+  mask-image: url(../../images/profile__theme-icon_type_dark.svg);
+}
+
 
 .profile__password-container {
   display: flex;

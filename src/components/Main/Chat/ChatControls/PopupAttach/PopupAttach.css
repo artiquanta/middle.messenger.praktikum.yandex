@@ -5,16 +5,16 @@
   left: 10px;
   width: 162px;
   height: 146px;
-  background-color: #202020;
+  background-color: var(--background-additional-primary);
   border-radius: 7px;
-  visibility: hidden;
   opacity: 0;
+  visibility: hidden;
   transition: .2s;
 }
 
 .popup-attach_opened {
-  visibility: visible;
   opacity: 1;
+  visibility: visible;
 }
 
 .popup-attach__options {
@@ -46,26 +46,27 @@
   margin: 0 10px;
   width: 22px;
   height: 22px;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--background-main-quaternary);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .popup-attach__icon_type_graphics {
-  background-image: url(../../../../../images/popup-attach__icon_type_graphics.svg);
+  mask-image: url(../../../../../images/popup-attach__icon_type_graphics.svg);
 }
 
 .popup-attach__icon_type_file {
-  background-image: url(../../../../../images/popup-attach__icon_type_file.svg);
+  mask-image: url(../../../../../images/popup-attach__icon_type_file.svg);
 }
 
 .popup-attach__icon_type_location {
-  background-image: url(../../../../../images/popup-attach__icon_type_location.svg);
+  mask-image: url(../../../../../images/popup-attach__icon_type_location.svg);
 }
 
 .popup-attach__name {
   margin: 0;
   font-size: 12px;
-  color: #fff;
+  color: var(--font-main-primary);
   line-height: 1;
 }

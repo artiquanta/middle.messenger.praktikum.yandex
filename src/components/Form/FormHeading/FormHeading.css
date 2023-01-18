@@ -2,6 +2,6 @@
   margin: 0 0 44px;
   font-size: 24px;
   font-weight: 500;
-  color: #000;
+  color: var(--font-additional-primary);
   line-height: 1.25;
 }

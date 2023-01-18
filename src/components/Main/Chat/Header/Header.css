@@ -11,20 +11,20 @@
   margin: 0 0 0 35px;
   font-size: 15px;
   font-weight: 500;
-  color: #fff;
+  color: var(--font-main-primary);
   line-height: 1
 }
 
 .header__edit-button {
   margin-left: 5px;
   padding: 0;
-  width: 15px;
-  height: 15px;
-  background-color: transparent;
-  background-image: url(../../../../images/header__edit-button-icon.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 13px;
+  height: 13px;
+  background-color: var(--background-main-quaternary);
+  mask-image: url(../../../../images/header__edit-button-icon.svg);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
   border: none;
   cursor: pointer;
   transition: .4s;
@@ -44,20 +44,19 @@
   height: 24px;
   font-size: 10px;
   font-weight: 500;
-  color: #202020;
+  color: var(--font-additional-secondary);
   line-height: 1;
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  transition: .4s;
-  visibility: hidden;
   opacity: 0;
+  visibility: hidden;
   transition: .4s;
 }
 
 .header__delete-message_shown {
-  visibility: visible;
   opacity: 1;
+  visibility: visible;
 }
 
 .header__delete-message:hover {

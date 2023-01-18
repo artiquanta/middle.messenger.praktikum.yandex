@@ -1,9 +1,11 @@
 import './ChatCard.css';
 import template from './ChatCard.hbs';
 
+// Id текущего пользователя для временного наполнения данными
+import { userId } from '../../../../../utils/constants';
+
 function ChatCard(chatData) {
   const {
-    owner,
     link,
     name,
     lastMessage,
@@ -12,7 +14,7 @@ function ChatCard(chatData) {
   } = chatData;
 
   return template({
-    owner,
+    owner: lastMessage.user === userId,
     link,
     name,
     lastMessage,

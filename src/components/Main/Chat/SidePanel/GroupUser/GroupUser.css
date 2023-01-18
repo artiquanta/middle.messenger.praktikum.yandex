@@ -11,9 +11,9 @@
 .group-user__avatar {
   width: 35px;
   height: 35px;
+  border-radius: 50%;
   object-fit: cover;
   object-position: center;
-  border-radius: 50%;
 }
 
 .group-user__user-name {
@@ -21,7 +21,7 @@
   max-width: 160px;
   font-size: 13px;
   font-weight: 500;
-  color: #fff;
+  color: var(--font-main-primary);
   line-height: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -32,7 +32,7 @@
   width: 9px;
   height: 13px;
   padding: 0;
-  background-color: #f50000;
+  background-color: var(--background-extra);
   mask-image: url(../../../../../images/side-panel__remove-user-icon.svg);
   mask-size: contain;
   mask-position: center;

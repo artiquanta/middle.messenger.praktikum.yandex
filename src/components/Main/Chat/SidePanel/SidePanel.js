@@ -1,17 +1,19 @@
 import './SidePanel.css';
 import template from './SidePanel.hbs';
 import GroupUser from './GroupUser/GroupUser';
+import Form from '../../../Form/Form';
+import { addUserForm } from '../../../../utils/constants';
 
-function SidePanel(groupMembers, groupOwner) {
+function SidePanel(groupUsers, groupOwner) {
   const usersList = [];
 
-  groupMembers.forEach((user) => {
+  groupUsers.forEach((user) => {
     usersList.push(GroupUser(user, groupOwner));
   });
 
   return template({
-    owner: groupOwner,
     usersList,
+    form: Form(addUserForm),
   });
 }
 

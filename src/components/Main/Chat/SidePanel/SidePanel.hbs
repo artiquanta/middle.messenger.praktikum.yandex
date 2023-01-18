@@ -9,15 +9,11 @@
         {{/each}}
       </ul>
     </div>
-    <form class="side-panel__form" novalidate>
-      <span class="side-panel__form-error"></span>
-      <label class="side-panel__input-container">
-        <span class="side-panel__input-title">Добавление пользователя</span>
-        <input type="text" name="add-user" class="side-panel__input" minlength="3" maxlength="20" required>
-        <span class="side-panel__input-error"></span>
-      </label>
-      <button class="side-panel__form-button" type="submit">Добавить</button>
-    </form>
+    <div class="side-panel__form-container">
+      {{{form}}}
+    </div>
   </div>
   <button class="side-panel__button" type="button"></button>
 </aside>
+
+

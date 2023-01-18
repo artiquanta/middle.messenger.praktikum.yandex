@@ -43,7 +43,7 @@ function ChatContent(messages) {
       const currentMessageDate = convertDay(messageTime);
       const previousMessageDate = convertDay(messages[index - 1].time);
 
-      // Если даты не совпадают, добавляем разделить
+      // Если даты отличаются, добавляем разделить
       if (currentMessageDate !== previousMessageDate) {
         messagesList.push(ChatDivider({ content: currentMessageDate }));
       }

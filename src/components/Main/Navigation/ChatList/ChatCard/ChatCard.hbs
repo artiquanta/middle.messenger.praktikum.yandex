@@ -2,11 +2,12 @@
   <img src="{{link}}" alt="{{name}}." class="chat-card__avatar">
   <div class="chat-card__info">
     <h2 class="chat-card__username">{{name}}</h2>
+    {{#if lastMessage.content}}
     <div class="chat-card__message-container">
       {{#if owner}}
       <p class="chat-card__sender">Вы:</p>
       {{/if}}
-      <p class="chat-card__last-message">{{lastMessage}}</p>
+      <p class="chat-card__last-message">{{lastMessage.content}}</p>
     </div>
   </div>
   <div class="chat-card__notification">
@@ -17,4 +18,5 @@
     </div>
     {{/unless}}
   </div>
+  {{/if}}
 </li>

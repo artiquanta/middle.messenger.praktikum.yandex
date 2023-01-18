@@ -1,0 +1,112 @@
+@import url(../../vendor/fonts/fonts.css);
+
+.app {
+  display: flex;
+  padding-left: calc(100vw - 100%);
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+
+:root {
+  --background-main-primary: #f5f5f5;
+  --background-main-secondary: #fff;
+  --background-main-tertiary: #d9d9d9;
+  --background-main-quaternary: #fff;
+  --background-main-overlay-primary: 255, 255, 255;
+  --background-main-overlay-secondary: 245, 245, 245;
+  --background-additional-primary: #202020;
+  --background-additional-secondary: #202020;
+  --background-extra: #f50000;
+  --background-additional-overlay-primary: 0, 0, 0;
+  --background-additional-overlay-secondary: 32, 32, 32;
+  --font-main-primary: #fff;
+  --font-main-secondary: #f5f5f5;
+  --font-main-tertiary: #d9d9d9;
+  --font-main-quaternary: #000;
+  --font-additional-primary: #000;
+  --font-additional-secondary: #202020;
+  --font-additional-tertiary: #000;
+  --font-additional-quaternary: #202020;
+  --font-extra: #f50000;
+
+
+  --scrollbar-color-primary: #202020;
+  --scrollbar-color-secondary: #f5f5f5;
+  --scrollbar-background-primary: #202020;
+  --scrollbar-background-secondary: transparent;
+  --scrollbar-background-tertiary: #f5f5f5;
+
+
+
+
+
+
+
+  --form-link: #202020;
+  --form-heading: #000;
+  --form-button-text: #202020;
+
+  --form-button-background: #202020;
+
+  --input-title-color: #9b9b9b;
+  --input-text-color: #f5f5f5;
+  --input-text-secondary: #202020;
+  --input-divider-color: #d9d9d9;
+  --input-divider-secondary: #d9d9d9;
+  --form-width-max: 250px;
+  --form-align: center;
+  --form-button-width: 100%;
+  --form-button-height: 42px;
+  --form-button-margin-top: 45px;
+
+  --form-button-font: #fff;
+  --form-button-border-radius: 5px;
+}
+
+
+/* :root {
+    --background-main-primary: #181818;
+    --background-main-secondary: #3c3c3c;
+    --background-main-tertiary: #d9d9d9;
+    --background-main-quaternary: #fff;
+    --background-main-overlay-primary: 255, 255, 255;
+    --background-main-overlay-secondary: 245, 245, 245;
+    --background-additional-primary: #0f0f0f;
+    --background-additional-secondary: #f5f5f5;
+    --background-extra: #f50000;
+    --background-additional-overlay-primary: 0, 0, 0;
+    --background-additional-overlay-secondary: 32, 32, 32;
+    --font-main-primary: #fff;
+    --font-main-secondary: #fff;
+    --font-main-tertiary: #d9d9d9;
+    --font-main-quaternary: #000;
+    --font-additional-primary: #fff;
+    --font-additional-secondary: #fff;
+    --font-additional-tertiary: #fff;
+    --font-additional-quaternary: #fff;
+    --font-extra: #f50000;
+    --scrollbar-color-primary: #202020;
+    --scrollbar-color-secondary: #202020;
+    --scrollbar-background-primary: #202020;
+    --scrollbar-background-secondary: transparent;
+    --scrollbar-background-tertiary: #f5f5f5;
+    --form-link: #202020;
+    --form-heading: #000;
+    --form-button-text: #202020;
+    --form-button-background: #202020;
+    --input-title-color: #9b9b9b;
+    --input-text-color: #f5f5f5;
+    --input-text-secondary: #fff;
+    --input-divider-color: #d9d9d9;
+    --input-divider-secondary: #d9d9d9;
+    --form-width-max: 250px;
+    --form-align: center;
+    --form-button-width: 100%;
+    --form-button-height: 42px;
+    --form-button-margin-top: 45px;
+    --form-button-font: #fff;
+    --form-button-border-radius: 5px;
+} */

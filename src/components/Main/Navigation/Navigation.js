@@ -5,11 +5,10 @@ import ChatList from './ChatList/ChatList';
 import ChatInfo from './ChatInfo/ChatInfo';
 import ProfileControl from './ProfileControl/ProfileControl';
 
-// Тестовый список чатов
-import { chats } from '../../../utils/constants.js';
-
-function Navigation() {
+function Navigation(chats) {
+  // Если чаты отсутствуют - показать заглушку
   const chatsList = chats.length === 0 ? ChatInfo() : ChatList({ chats });
+
   return template({
     searchForm: SearchForm(),
     chatsList,

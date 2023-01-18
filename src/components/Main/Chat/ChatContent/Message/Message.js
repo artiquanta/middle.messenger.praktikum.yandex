@@ -20,6 +20,7 @@ function Message(messageData) {
 
   let message;
 
+  // Генерируем сообщение в зависимости от его типа содержимого
   switch (content.type) {
     case 'text':
       message = TextMessage(messageContent);
@@ -43,15 +44,13 @@ function Message(messageData) {
       return console.error('Ошибка при создании карточки сообщения. Некорректный тип данных');
   }
 
-  const messageTemplate = template({
+  return template({
     user: owner.id === userId,
     avatar: owner.avatar,
     username: owner.username,
     message,
     time,
   });
-
-  return messageTemplate;
 }
 
 export default Message;
