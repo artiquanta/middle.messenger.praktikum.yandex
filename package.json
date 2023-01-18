@@ -9,8 +9,8 @@
   "scripts": {
     "start": "node server.js",
     "nodemon": "nodemon server.js",
-    "dev": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html --no-cache",
+    "dev": "parcel ./src/index.html --no-cache",
+    "build": "parcel build ./src/index.html",
     "watch": "parcel watch"
   },
   "keywords": [],
