@@ -3,6 +3,6 @@ require('dotenv').config();
 
 const app = express();
 
-app.get('/', express.static(__dirname + '/dist'));
+app.use('/', express.static(__dirname + '/dist'));
 
 module.exports = app;
