@@ -1,3 +1,5 @@
+[![Sprint-1](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml/badge.svg?branch=sprint_1)](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml)
+
 # Проектная работа. Мессенджер.
 
 ## Описание проекта
