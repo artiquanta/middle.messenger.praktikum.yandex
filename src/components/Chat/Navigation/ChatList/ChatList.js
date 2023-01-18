@@ -1,5 +1,5 @@
 import './ChatList.css';
-import template from './Chatlist.hbs';
+import template from './ChatList.hbs';
 import ChatCard from './ChatCard/ChatCard';
 
 function ChatList({ chats }) {
