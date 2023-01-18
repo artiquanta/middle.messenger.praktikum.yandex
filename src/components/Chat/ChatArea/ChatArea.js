@@ -1,11 +1,11 @@
-import './Chat.css';
-import template from './Chat.hbs';
+import './ChatArea.css';
+import template from './ChatArea.hbs';
 import Header from './Header/Header';
 import ChatContent from './ChatContent/ChatContent';
 import SidePanel from './SidePanel/SidePanel';
 import ChatControls from './ChatControls/ChatControls';
 
-function Chat(chatData) {
+function ChatArea(chatData, addUserForm) {
   const {
     group,
     name,
@@ -20,9 +20,9 @@ function Chat(chatData) {
       name,
     }),
     chatContent: ChatContent(messages),
-    sidePanel: SidePanel(groupUsers, groupOwner),
+    sidePanel: SidePanel(groupUsers, groupOwner, addUserForm),
     chatControls: ChatControls(),
   });
 }
 
-export default Chat;
+export default ChatArea;

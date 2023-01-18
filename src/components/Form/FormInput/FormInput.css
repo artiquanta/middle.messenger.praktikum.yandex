@@ -21,7 +21,7 @@
   line-height: 1.25;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--input-divider-secondary);
+  border-bottom: 1px solid var(--input-divider-color);
 }
 
 .form-input__input:focus {

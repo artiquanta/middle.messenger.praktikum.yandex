@@ -7,7 +7,7 @@ import FileMessage from './FileMessage/FileMessage';
 import LocationMessage from './LocationMessage/LocationMessage';
 
 // Id текущего пользователя для временного наполнения данными
-import { userId } from '../../../../../utils/constants';
+import { userId } from '../../../../../utils/userInfo';
 
 function Message(messageData) {
   const {

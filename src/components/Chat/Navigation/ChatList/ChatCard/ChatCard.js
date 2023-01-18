@@ -2,7 +2,7 @@ import './ChatCard.css';
 import template from './ChatCard.hbs';
 
 // Id текущего пользователя для временного наполнения данными
-import { userId } from '../../../../../utils/constants';
+import { userId } from '../../../../../utils/userInfo';
 
 function ChatCard(chatData) {
   const {

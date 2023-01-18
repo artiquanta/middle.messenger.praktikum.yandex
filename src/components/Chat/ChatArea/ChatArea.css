@@ -1,4 +1,4 @@
-.chat {
+.chat-area {
   grid-area: chat;
   display: grid;
   grid-template-rows: min-content minmax(0, auto) minmax(min-content, auto);
