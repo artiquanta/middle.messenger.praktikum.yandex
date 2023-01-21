@@ -1,0 +1,19 @@
+<aside class="side-panel">
+  <div class="side-panel__content">
+    <div class="side-panel__container">
+      <button class="side-panel__delete-chat">Удалить чат</button>
+      <h2 class="side-panel__title">Пользователи</h2>
+      <ul class="side-panel__users">
+        {{#each usersList}}
+        {{{this}}}
+        {{/each}}
+      </ul>
+    </div>
+    <div class="side-panel__form-container">
+      {{{form}}}
+    </div>
+  </div>
+  <button class="side-panel__button" type="button"></button>
+</aside>
+
+

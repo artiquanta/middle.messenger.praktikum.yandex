@@ -1,0 +1,8 @@
+.app {
+  display: flex;
+  padding-left: calc(100vw - 100%);
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}

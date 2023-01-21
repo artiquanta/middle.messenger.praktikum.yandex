@@ -1,0 +1,112 @@
+.chat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 91.25%;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.chat-card:hover {
+  background-color: rgba(var(--background-main-overlay-primary), .3);
+}
+
+.chat-card_selected {
+  background-color: var(--background-main-secondary);
+  --font-main-secondary: var(--font-additional-secondary);
+  --font-main-tertiary: var(--font-additional-secondary);
+  --font-additional-quaternary: var(--font-main-primary);
+  --background-main-primary: var(--background-additional-primary);
+}
+
+.chat-card_selected:hover {
+  background-color: var(--background-main-secondary);
+}
+
+.chat-card__avatar {
+  margin: 9px 0 9px 5px;
+  width: 35px;
+  height: 35px;
+  background-color: var(--background-main-secondary);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  flex-shrink: 0;
+}
+
+.chat-card__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 15px;
+  width: 100%;
+}
+
+.chat-card__username {
+  margin: 0;
+  max-width: 170px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--font-main-secondary);
+  line-height: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.chat-card__message-container {
+  display: flex;
+  margin-top: 1px;
+  max-width: 170px;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.chat-card__sender {
+  margin: 0 3px 0 0;
+  font-weight: 500;
+  color: var(--font-main-secondary);
+}
+
+.chat-card__last-message {
+  margin: 0;
+  color: var(--font-main-tertiary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.chat-card__notification {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 5px;
+}
+
+.chat-card__time {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--font-main-tertiary);
+  line-height: 1.3;
+}
+
+.chat-card__counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3px 0 0;
+  width: 27px;
+  height: 10px;
+  background-color: var(--background-main-primary);
+  border-radius: 3px;
+}
+
+.chat-card__count {
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--font-additional-quaternary);
+  line-height: 1;
+  text-align: center;
+}

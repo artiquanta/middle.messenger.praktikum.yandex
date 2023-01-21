@@ -1,0 +1,30 @@
+.file-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 193px;
+  height: 121px;
+  text-decoration: none;
+}
+
+.file-message:hover {
+  opacity: .8;
+}
+
+.file-message__icon {
+  width: 55px;
+  height: 63px;
+  background-color: var(--icon-color);
+  mask-image: url(../../../../../../images/file-message__icon.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+}
+
+.file-message__file-name {
+  margin: 10px 0 0;
+  font-size: 10px;
+  color: var(--text-color);
+  line-height: 1;
+}

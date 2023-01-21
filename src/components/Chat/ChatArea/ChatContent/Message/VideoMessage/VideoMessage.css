@@ -1,0 +1,58 @@
+.video-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.video-message__overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: calc(100% - (10px * 2));
+  height: calc(100% - (10px * 2));
+  background-color: rgba(var(--overlay-color-secondary), 1);
+  border-radius: 7px;
+  transition: .4s;
+  opacity: 0;
+  z-index: 2;
+}
+
+.video-message__overlay:hover {
+  background-color: rgba(var(--overlay-color-secondary), .8);
+  opacity: 1;
+}
+
+.video-message__play-button {
+  padding: 0;
+  width: 24px;
+  height: 27px;
+  background-color: var(--message-color);
+  mask-image: url(../../../../../../images/video-message__play-button.svg);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.video-message__play-button:hover {
+  opacity: .8;
+}
+
+.video-message__video {
+  max-height: 180px;
+  height: 100%;
+  max-width: 320px;
+  width: 100%;
+  border-radius: 7px;
+}

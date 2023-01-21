@@ -1,0 +1,133 @@
+.side-panel {
+  grid-area: side-panel;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 35px;
+  height: 100%;
+  overflow-x: hidden;
+  transition: .4s;
+}
+
+.side-panel__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 0;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  user-select: none;
+  transition: .4s ease-out;
+}
+
+.side-panel__content_shown {
+  margin-left: 25px;
+  width: 277px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.side-panel__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.side-panel__delete-chat {
+  padding: 0;
+  align-self: flex-end;
+  font-size: 12px;
+  color: var(--font-extra);
+  line-height: 1;
+  white-space: nowrap;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.side-panel__delete-chat:hover {
+  opacity: .8;
+}
+
+.side-panel__title {
+  align-self: flex-start;
+  margin: 15px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--font-main-primary);
+  line-height: 1;
+}
+
+.side-panel__users {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 25px;
+  padding: 0;
+  width: calc(100% - 12px);
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color-secondary) var(--scrollbar-background-secondary);
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+.side-panel__users::-webkit-scrollbar {
+  width: 5px;
+}
+
+.side-panel__users::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-background-tertiary);
+  border-radius: 5px;
+}
+
+.side-panel__users::-webkit-scrollbar-track {
+  margin: 5px 0;
+}
+
+.side-panel__form-container {
+  display: flex;
+  margin-bottom: 25px;
+  --form-align: flex-start;
+  --form-width-max: 225px;
+  --input-text-secondary: var(--font-main-secondary, #f5f5f5);
+  --form-button-margin-top: 25px;
+  --form-button-width: 127px;
+  --form-button-height: 29px;
+  --form-button-font: #202020;
+  --form-button-background: #f5f5f5;
+  --form-button-border-radius: 3px;
+}
+
+.side-panel__button {
+  align-self: center;
+  margin-right: 12px;
+  padding: 0;
+  width: 11px;
+  height: 8px;
+  background-color: transparent;
+  background-image: url(../../../../images/group-control__open-button-icon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  overflow-x: hidden;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.side-panel__button_action_close {
+  background-image: url(../../../../images/group-control__close-button-icon.svg);
+  height: 11px;
+}
+
+.side-panel__button:hover {
+  transform: rotate(90deg);
+}
+
+.side-panel__button:active {
+  transform: rotate(-90deg);
+}

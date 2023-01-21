@@ -1,0 +1,30 @@
+.chat-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-info__title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--font-main-primary);
+  line-height: 1.25;
+}
+
+.chat-info__subtitle {
+  margin: 5px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--font-main-primary);
+  line-height: 1.25;
+}
+
+.chat-info__hint {
+  margin: 15px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--font-main-primary);
+  line-height: 1;
+}
