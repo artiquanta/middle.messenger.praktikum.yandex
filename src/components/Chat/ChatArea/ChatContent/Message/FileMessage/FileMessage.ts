@@ -10,7 +10,7 @@ class FileMessage extends Block {
 
   render(): DocumentFragment {
     return this.compile(template, {
-      value: this.props.value,
+      value: this.props.value.content,
       fileName: this.props.fileName,
     });
   }

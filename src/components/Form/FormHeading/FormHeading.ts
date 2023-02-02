@@ -10,8 +10,9 @@ class FormHeading extends Block {
   constructor(props: Props) {
     super(props);
   }
-  render() {
-    this.compile(template, { Heading: this.props.heading });
+
+  render(): DocumentFragment {
+    return this.compile(template, { heading: this.props.heading });
   }
 }
 

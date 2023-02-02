@@ -9,7 +9,7 @@ type Props = {
 //function SearchForm() {
 class SearchForm extends Block {
   constructor(props: Props) {
-    super(props);
+    super();
   }
 
   render(): DocumentFragment {

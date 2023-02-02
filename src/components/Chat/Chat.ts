@@ -12,13 +12,18 @@ type Props = {
 //function Chat(chatData, chats, addUserForm) {
 class Chat extends Block {
   constructor(props: Props) {
-    super(props);
-    if (this.props.chatData.length === 0) {
-      this.children.chatArea = new ChatStub({});
+    const {chatData, addUserForm, chats, userId} = props;
+    super();
+    const chatBody = {};
+
+    if (chatData.length === 0) {
+      chatBody.chatArea = new ChatStub({});
     } else {
-      this.children.chatArea = new ChatArea({ chatData, addUserForm });
+      chatBody.chatArea = new ChatArea({ chatData, addUserForm, userId });
     }
-    this.children.navigation = new Navigation(chats);
+
+   chatBody.navigation = new Navigation({chats, userId});
+   this.children.chatBody = chatBody;
   }
 
   render(): DocumentFragment {

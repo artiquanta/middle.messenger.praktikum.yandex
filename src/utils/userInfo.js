@@ -5,12 +5,12 @@ export const userId = 123;
 export const userInfo = {
   user: {
     id: 123,
-    name: 'Человек',
-    surname: 'Человеков',
-    username: 'Человек!',
+    first_name: 'Человек',
+    second_name: 'Человеков',
+    display_name: 'Человек',
     login: 'chelovek',
     email: 'chelovek@test.test',
-    phone: '+7-901-000-00-01',
+    phone: '+79010000001',
     avatar: avatarLink,
   },
 }

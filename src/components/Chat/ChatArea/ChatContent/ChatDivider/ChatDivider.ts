@@ -2,7 +2,6 @@ import Block from '../../../../../services/Block';
 import './ChatDivider.css';
 import template from './ChatDivider.hbs';
 
-//function ChatDivider({ content }) {
 class ChatDivider extends Block {
   constructor(props) {
     super(props);

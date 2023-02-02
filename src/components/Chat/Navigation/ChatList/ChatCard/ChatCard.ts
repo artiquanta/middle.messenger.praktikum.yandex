@@ -12,7 +12,21 @@ type Props = {
 //function ChatCard(chatData) {
 class ChatCard extends Block {
   constructor(props: Props) {
-    super(props);
+    const newProps = {
+      ...props, events: [
+        {
+          selector: 'chat-card',
+          events: {
+            click: (evt) => {
+              document.querySelectorAll('.chat-card_selected').forEach((element) => element.classList.remove('chat-card_selected'));
+              console.log(this._id);
+              evt.target.closest('li').classList.toggle('chat-card_selected')
+            }
+          }
+        }
+      ]
+    }
+    super(newProps);
   }
 
   render(): DocumentFragment {
@@ -22,9 +36,9 @@ class ChatCard extends Block {
       lastMessage,
       time,
       unreadCount,
-    } = this.props.chatData;
+    } = this.props.chat;
 
-    return this.compile(template, { link, name, owner: lastMessage.user === this.props.userId, time, unreadCount });
+    return this.compile(template, { link, name, owner: lastMessage.user === this.props.userId, time, unreadCount, lastMessage });
   }
 }
 

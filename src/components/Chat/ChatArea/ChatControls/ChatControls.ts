@@ -9,7 +9,26 @@ type Props = {
 
 class ChatControls extends Block {
   constructor(props: Props) {
-    super(props);
+    const events = [
+      {
+        selector: 'chat-controls__textarea',
+        events: {
+          input: (evt) => {
+            evt.target.style.height = 'auto';
+            evt.target.style.height = evt.target.scrollHeight + 'px';
+          }
+        }
+      },
+      {
+        selector: 'chat-controls__attach-btn',
+        events: {
+          click: (evt) => {
+            document.querySelector('.popup-attach').classList.toggle('popup-attach_opened');
+          }
+        }
+      },
+    ];
+    super({ ...props, events });
     this.children.popup = new PopupAttach({});
   }
 

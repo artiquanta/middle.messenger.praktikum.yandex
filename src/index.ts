@@ -1,42 +1,24 @@
 import './index.css';
 import App from './components/App/App';
 import ErrorPage from './components/ErrorPage/ErrorPage';
+import BasicRouter from './services/BasicRouter';
 
-const root = document.getElementById('root');
+const root = document.getElementById('root')!;
+const app = new App();
+app.componentDidMount();
+root.appendChild(app.getContent()); // убран clonenode
+
 
 // Отрисовка страницы в зависимости от пути
-function renderPage(path) {
-  const pagePath = path ? path : window.location.pathname;
-  /* root.appendChild(App(path)); */
-  const test = new App({
-    title: '404',
-    description: 'Вы попали в пустоту...',
-    link: './',
-    linkTitle: 'Вернуться к чату?',
-  });
-  //console.log(test.getContent())
-  //test.setProps({title: 'Кукарача', description: 'asd'})
-  root.appendChild(test.getContent());
- // console.log(test.getContent())
-  test.componentDidMount();
-  //setTimeout(() => {test.setProps({title: 'Кукарача1'})}, 1000);
-  // setTimeout(() => {test.setProps({title: 'Кукарача2'}), root.innerHTML = ''; root.appendChild(test.getContent())}, 5000);
-
-  //setFormEventListener();
-  //setPageEventListener(pagePath);
-}
 
 
 // Временное наполнение обработчиками событий
 
 // Смена страницы
-function changePage(path) {
-  window.history.pushState({}, '', path);
-  window.dispatchEvent(new Event('popstate'));
-}
+
 
 // Обработчик форм
-function handleForm(evt) {
+/* function handleForm(evt) {
   evt.preventDefault();
 }
 
@@ -151,9 +133,5 @@ function setPageEventListener(path) {
 
 // Отрисовываем страницу
 renderPage();
+ */
 
-// Отслеживаем событие изменения истории
-window.addEventListener('popstate', (evt) => {
-  evt.preventDefault();
-  renderPage(window.location.pathname);
-});

@@ -5,7 +5,6 @@ import ChatList from './ChatList/ChatList';
 import ChatInfo from './ChatInfo/ChatInfo';
 import ProfileControl from './ProfileControl/ProfileControl';
 import Block from '../../../services/Block';
-import { render } from 'express/lib/response';
 
 type Props = {
   [key: string]: unknown
@@ -14,15 +13,29 @@ type Props = {
 //function Navigation(chats) {
 class Navigation extends Block {
   constructor(props: Props) {
-    super(props);
-    this.children.searchForm = new SearchForm({});
-    this.children.profileControl = new ProfileControl({ buttonTitle: 'Управление профилем' });
+    const { chats, userId } = props;
+    super();
+    const navigationBody = {};
+    navigationBody.searchForm = new SearchForm({});
+    navigationBody.profileControl = new ProfileControl({ buttonTitle: 'Управление профилем', events: [
+      {
+        selector: 'profile-control__button',
+        events: {
+          click: () => {
+            window.location.href = './profile';
+            //console.log(this._id);
+          }
+        }
+      }
+    ] });
     // Если чаты отсутствуют - показать заглушку
-    if (this.props.chats.length === 0) {
-      this.children.chatList = new ChatInfo({});
+    if (chats.length === 0) {
+      navigationBody.chatsList = new ChatInfo({});
     } else {
-      this.children.chatList = new ChatList({ chats: this.props.chats });
+      navigationBody.chatsList = new ChatList({ chats, userId });
     }
+
+    this.children.navigationBody = navigationBody;
   }
 
   render(): DocumentFragment {

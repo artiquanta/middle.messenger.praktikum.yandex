@@ -13,11 +13,16 @@ type Props = {
 //function ChatArea(chatData, addUserForm) {
 class ChatArea extends Block {
   constructor(props: Props) {
-    super(props);
-    this.children.header = new Header({ group, name });
-    this.children.chatContent = new ChatContent({ messages });
-    this.children.sidePanel = new SidePanel({ groupUsers, groupOwner, addUserForm });
-    this.children.chatControls = new ChatControls({});
+    const { chatData, addUserForm, userId } = props;
+    super(chatData);
+    const chatAreaBody = {};
+
+    chatAreaBody.header = new Header({ group: this.props.group, name: this.props.name });
+    chatAreaBody.chatContent = new ChatContent({ messages: this.props.messages, userId });
+    chatAreaBody.sidePanel = new SidePanel({ groupUsers: this.props.groupUsers, groupOwner: this.props.groupOwner, addUserForm });
+    chatAreaBody.chatControls = new ChatControls({});
+
+    this.children.chatAreaBody = chatAreaBody;
   }
 
   /*   const {

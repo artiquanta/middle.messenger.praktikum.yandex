@@ -9,7 +9,7 @@ type Props = {
 //function ChatStub() {
 class ChatStub extends Block {
   constructor(props: Props) {
-    super(props);
+    super();
   }
 
   render(): DocumentFragment {

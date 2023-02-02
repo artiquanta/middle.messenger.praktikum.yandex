@@ -1,5 +1,6 @@
 export const loginForm = {
   form: {
+    id: 'loginForm',
     heading: 'Рады видеть!',
     link: {
       url: './signup',
@@ -29,6 +30,7 @@ export const loginForm = {
 
 export const registerForm = {
   form: {
+    id: 'registerForm',
     heading: 'Добро пожаловать! ',
     link: {
       url: './signin',
@@ -73,24 +75,24 @@ export const registerForm = {
       title: 'Телефон',
       type: 'tel',
       name: 'phone',
-      minLength: '2',
-      maxLength: '30',
+      minLength: '10',
+      maxLength: '15',
       required: true,
     },
     {
       title: 'Пароль',
       type: 'password',
       name: 'password',
-      minLength: '6',
-      maxLength: '25',
+      minLength: '8',
+      maxLength: '40',
       required: true,
     },
     {
       title: 'Повторите пароль',
       type: 'password',
       name: 'password_repeat',
-      minLength: '6',
-      maxLength: '25',
+      minLength: '8',
+      maxLength: '40',
       required: true,
     },
   ],
@@ -98,6 +100,7 @@ export const registerForm = {
 
 export const addUserForm = {
   form: {
+    id: 'addUserForm',
     buttonTitle: 'Добавить',
   },
   inputs: [
@@ -114,6 +117,7 @@ export const addUserForm = {
 
 export const personalForm = {
   form: {
+    id: 'personalForm',
     buttonTitle: 'Сохранить изменения',
   },
   inputs: [
@@ -161,8 +165,8 @@ export const personalForm = {
       title: 'Телефон',
       type: 'tel',
       name: 'phone',
-      minLength: '2',
-      maxLength: '30',
+      minLength: '10',
+      maxLength: '15',
       required: true,
     },
   ],
@@ -170,6 +174,7 @@ export const personalForm = {
 
 export const passwordForm = {
   form: {
+    id: 'passwordForm',
     buttonTitle: 'Изменить пароль',
   },
   inputs: [
@@ -177,24 +182,24 @@ export const passwordForm = {
       title: 'Старый пароль',
       type: 'password',
       name: 'oldPassword',
-      minLength: '6',
-      maxLength: '25',
+      minLength: '8',
+      maxLength: '40',
       required: true,
     },
     {
       title: 'Новый пароль',
       type: 'password',
       name: 'newPassword',
-      minLength: '6',
-      maxLength: '25',
+      minLength: '8',
+      maxLength: '40',
       required: true,
     },
     {
       title: 'Повторите новый пароль',
       type: 'password',
-      name: 'repeat-password',
-      minLength: '6',
-      maxLength: '25',
+      name: 'repeat_password',
+      minLength: '8',
+      maxLength: '40',
       required: true,
     },
   ],

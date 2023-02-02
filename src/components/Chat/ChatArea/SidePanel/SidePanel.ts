@@ -11,10 +11,26 @@ type Props = {
 //function SidePanel(groupUsers, groupOwner, addUserForm) {
 class SidePanel extends Block {
   constructor(props: Props) {
-    super(props);
-    this.children.form = new Form({ adduserForm });
+    const { addUserForm, groupUsers, groupOwner } = props;
+    const events = [
+      {
+        selector: 'side-panel__button',
+        events: {
+          click: (evt) => {
+            document.querySelector('.side-panel__content').classList.toggle('side-panel__content_shown');
+            evt.target.classList.toggle('side-panel__button_action_close');
+          }
+        }
+      }
+    ];
+    super({events});
+    const sidePanelBody = {};
+
+    sidePanelBody.form = new Form({ form: addUserForm });
     //
-    this.children.usersList;
+    sidePanelBody.usersList = groupUsers.map((user) => new GroupUser({user, groupOwner}));
+
+    this.children.sidePanelBody = sidePanelBody;
   }
 
   render(): DocumentFragment {

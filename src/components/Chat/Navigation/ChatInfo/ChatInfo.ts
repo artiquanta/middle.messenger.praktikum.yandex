@@ -9,7 +9,7 @@ type Props = {
 //function ChatInfo() {
 class ChatInfo extends Block {
   constructor(props: Props) {
-    super(props);
+    super();
   }
 
   render(): DocumentFragment {
