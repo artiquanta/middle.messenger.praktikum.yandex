@@ -1,7 +1,7 @@
 .chat-area {
   grid-area: chat;
   display: grid;
-  grid-template-rows: min-content minmax(0, auto) minmax(min-content, auto);
+  grid-template-rows: min-content minmax(0, auto) min-content;
   grid-template-columns: auto minmax(0, min-content);
   grid-template-areas:
     "header header"

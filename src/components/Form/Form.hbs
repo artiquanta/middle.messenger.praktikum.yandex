@@ -1,4 +1,4 @@
-<form class="form" novalidate>
+<form class="form" id="{{formId}}" novalidate>
   {{#if heading}}
   {{{heading}}}
   {{/if}}
@@ -8,7 +8,7 @@
     {{{this}}}
     {{/each}}
   </div>
-  <button class="form__button" type="submit">{{form.buttonTitle}}</button>
+  <button class="form__button" type="submit" disabled>{{buttonTitle}}</button>
   {{#if link}}
   {{{link}}}
   {{/if}}

@@ -10,6 +10,7 @@
   opacity: 0;
   visibility: hidden;
   transition: .2s;
+  z-index: 2;
 }
 
 .popup-attach_opened {
