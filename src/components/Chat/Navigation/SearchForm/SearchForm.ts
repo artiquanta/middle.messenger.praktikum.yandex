@@ -1,15 +1,17 @@
-import Block from '../../../../services/Block';
 import './SearchForm.css';
 import template from './SearchForm.hbs';
+import Block from '../../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  events: {
+    selector: string;
+    events: Record<string, (evt: Event) => void>,
+  }[],
 };
 
-//function SearchForm() {
 class SearchForm extends Block {
   constructor(props: Props) {
-    super();
+    super(props);
   }
 
   render(): DocumentFragment {

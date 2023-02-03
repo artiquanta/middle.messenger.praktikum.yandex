@@ -1,9 +1,12 @@
-import Block from '../../../services/Block';
 import './FormLink.css';
 import template from './FormLink.hbs';
+import Block from '../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  link: {
+    url: string,
+    title: string,
+  },
 };
 
 class FormLink extends Block {

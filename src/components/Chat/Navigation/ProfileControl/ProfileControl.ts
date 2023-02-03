@@ -1,12 +1,15 @@
-import Block from '../../../../services/Block';
 import './ProfileControl.css';
 import template from './ProfileControl.hbs';
+import Block from '../../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  buttonTitle: string,
+  events: {
+    selector: string;
+    events: Record<string, (evt: Event) => void>,
+  }[],
 };
 
-//function ProfileControl({ buttonTitle }) {
 class ProfileControl extends Block {
   constructor(props: Props) {
     super(props);

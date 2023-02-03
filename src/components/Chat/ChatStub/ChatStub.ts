@@ -1,15 +1,17 @@
-import Block from '../../../services/Block';
 import './ChatStub.css';
 import template from './ChatStub.hbs';
+import Block from '../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  events?: {
+    selector: string;
+    events: Record<string, (evt: Event) => void>,
+  }[],
 };
 
-//function ChatStub() {
 class ChatStub extends Block {
   constructor(props: Props) {
-    super();
+    super(props);
   }
 
   render(): DocumentFragment {

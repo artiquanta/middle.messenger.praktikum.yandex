@@ -1,32 +1,31 @@
 import './ChatCard.css';
 import template from './ChatCard.hbs';
-
-// Id текущего пользователя для временного наполнения данными
-import { userId } from '../../../../../utils/userInfo';
 import Block from '../../../../../services/Block';
 
-type Props = {
-  [key: string]: unknown
+type ChatType = {
+  owner: boolean,
+  link: string,
+  name: string,
+  lastMessage: {
+    content: string,
+    user: number,
+  },
+  time: string,
+  unreadCount: number,
 };
 
-//function ChatCard(chatData) {
+type Props = {
+  chat: ChatType,
+  userId: number,
+  events?: {
+    selector: string;
+    events: Record<string, (evt: Event) => void>,
+  }[],
+};
+
 class ChatCard extends Block {
   constructor(props: Props) {
-    const newProps = {
-      ...props, events: [
-        {
-          selector: 'chat-card',
-          events: {
-            click: (evt) => {
-              document.querySelectorAll('.chat-card_selected').forEach((element) => element.classList.remove('chat-card_selected'));
-              console.log(this._id);
-              evt.target.closest('li').classList.toggle('chat-card_selected')
-            }
-          }
-        }
-      ]
-    }
-    super(newProps);
+    super(props);
   }
 
   render(): DocumentFragment {
@@ -38,7 +37,14 @@ class ChatCard extends Block {
       unreadCount,
     } = this.props.chat;
 
-    return this.compile(template, { link, name, owner: lastMessage.user === this.props.userId, time, unreadCount, lastMessage });
+    return this.compile(template, {
+      link,
+      name,
+      owner: lastMessage.user === this.props.userId,
+      time,
+      unreadCount,
+      lastMessage,
+    });
   }
 }
 

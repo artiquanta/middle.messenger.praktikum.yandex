@@ -1,16 +1,20 @@
-import Block from '../../../../../../services/Block';
 import './FileMessage.css';
 import template from './FileMessage.hbs';
+import Block from '../../../../../../services/Block';
 
-//function FileMessage({ value, fileName }) {
+type Props = {
+  content: string,
+  fileName: string,
+};
+
 class FileMessage extends Block {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
   }
 
   render(): DocumentFragment {
     return this.compile(template, {
-      value: this.props.value.content,
+      value: this.props.content,
       fileName: this.props.fileName,
     });
   }

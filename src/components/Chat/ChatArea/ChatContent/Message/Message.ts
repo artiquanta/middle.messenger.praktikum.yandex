@@ -1,36 +1,45 @@
 import './Message.css';
 import template from './Message.hbs';
+import Block from '../../../../../services/Block';
 import TextMessage from './TextMessage/TextMessage';
 import VideoMessage from './VideoMessage/VideoMessage';
 import PhotoMessage from './PhotoMessage/PhotoMessage';
 import FileMessage from './FileMessage/FileMessage';
 import LocationMessage from './LocationMessage/LocationMessage';
 
-// Id текущего пользователя для временного наполнения данными
-import Block from '../../../../../services/Block';
+type MessageTypes = 'text' | 'file' | 'location' | 'photo' | 'video';
 
 type Props = {
-  [key: string]: unknown
+  owner: {
+    id: number,
+    avatar: string,
+    username: string,
+  },
+  content: {
+    type: keyof MessageTypes,
+    fileName?: string,
+    value: string,
+  },
+  time: string,
+  userId: number,
+  events?: {
+    selector: string;
+    events: Record<string, (evt: Event) => void>,
+  }[],
 };
 
 class Message extends Block {
   constructor(props: Props) {
-    const { content, owner, time, userId } = props;
-    const events = [
-      {
-        selector: 'message_type_user',
-        events: {
-          click: (evt) => {
-            evt.preventDefault();
-            evt.target.closest('.message__container').classList.toggle('message__container_selected');
-          }
-        }
-      }
-    ]
-    super({ owner, time, userId, events });
+    super(props);
+
+    // Добавляем дочерний компонент
+    this.children.messageContent = this._generateMessage();
+  }
+
+  _generateMessage(): Block {
     let message: Block;
-    const messageContent = { content: content.value };
-    switch (content.type) {
+    const messageContent: { content: string } = { content: this.props.content.value };
+    switch (this.props.content.type) {
       case 'text':
         message = new TextMessage(messageContent);
         break;
@@ -42,8 +51,8 @@ class Message extends Block {
         break;
       case 'file':
         message = new FileMessage({
-          value: messageContent,
-          fileName: content.fileName,
+          content: this.props.content.value,
+          fileName: this.props.content.fileName,
         });
         break;
       case 'location':
@@ -53,17 +62,21 @@ class Message extends Block {
         message = new TextMessage(messageContent);
         break;
     }
-    this.children.messageContent = message;
+
+    // Вовзращаем доченрний компонент
+    return message;
   }
 
   render(): DocumentFragment {
-    return this.compile(template,
+    return this.compile(
+      template,
       {
         user: this.props.owner.id === this.props.userId,
         avatar: this.props.owner.avatar,
         username: this.props.owner.username,
-        time: this.props.time
-      });
+        time: this.props.time,
+      },
+    );
   }
 }
 

@@ -2,106 +2,189 @@ import './Profile.css';
 import template from './Profile.hbs';
 import Block from '../../services/Block';
 import Form from '../Form/Form';
-import UploadPopup from '../UploadPopup/UploadPopup';
-import { profileEvents, VALIDATION_ERRORS } from '../../utils/constants'
 import FormValidator from '../../services/FormValidator';
+import { FormType } from '../../utils/formsContent';
+import { UserInfo } from '../../utils/userInfo';
 
 type Props = {
-  [key: string]: unknown
+  personalForm: FormType,
+  passwordForm: FormType,
+  userInfo: UserInfo,
+  events?: {
+    selector: string;
+    events: Record<string, (evt: Event) => void>,
+  }[],
+  onEditProfile: (data: Record<string, FormDataEntryValue>) => void,
+};
+
+type User = {
+  id: number,
+  first_name: string,
+  second_name: string,
+  display_name: string,
+  login: string,
+  email: string,
+  phone: string,
+  avatar: string,
 };
 
 class Profile extends Block {
+  _validatorPersonal: FormValidator;
+
+  _validatorPassword: FormValidator;
+
+  _onEditProfile;
+
   constructor(props: Props) {
-    const { personalForm, passwordForm, userInfo } = props;
-    super({ userInfo, events: profileEvents });
-    const profileBody = {};
+    const {
+      personalForm,
+      passwordForm,
+      userInfo,
+      events,
+      onEditProfile,
+    } = props;
+    super({ userInfo, events });
+    const profileBody: Record<string, Block> = {};
+
+    // Форма редактирования профиля пользователя
     profileBody.personalForm = new Form({
-      form: personalForm, events: [
+      form: personalForm,
+      events: [
         {
           selector: 'form',
           events: {
-            submit: this.handlePersonalForm.bind(this),
+            submit: this._handlePersonalForm.bind(this),
           },
         },
-      ], handleInput: this.handleInputChange.bind(this),
+      ],
+      // Коллбэк обработки инпута
+      handleInput: this.handlePersonalInput.bind(this),
     });
+
+    // Форма изменения пароля пользователя
     profileBody.passwordForm = new Form({
       form: passwordForm,
       events: [
         {
           selector: 'form',
           events: {
-            submit: this.handlePasswordForm.bind(this),
+            submit: this._handlePasswordForm.bind(this),
           },
         },
-      ], handleInput: this.handlePasswordChange.bind(this),
+      ],
+      // Коллбэк обработки инпута
+      handleInput: this.handlePasswordInput.bind(this),
     });
+
+    // Добавление доченрних компонентов в родительский
     this.children.profileBody = profileBody;
-    // this.children.popup = new UploadPopup({});
+    this._onEditProfile = onEditProfile;
   }
 
-  componentIsReady() {
-    const profileContainer = this._element.querySelector('.profile__personal-container')!;
-    const inputs = profileContainer.querySelectorAll('.form-input__input');
-    const form1 = profileContainer.querySelector('form');
-    const passwordContainer = this._element.querySelector('.profile__password-container')!;
-    const inputs2 = passwordContainer.querySelectorAll('.form-input__input');
-    const form2 = passwordContainer.querySelector('form');
-    //const { first_name, second_name, display_name, login, email, phone } = this.props.userInfo;
-    const { user } = this.props.userInfo;
-    inputs.forEach((input) => {
-      input.value = user[input.name];
-    })
-    this.validator = new FormValidator({ options: { form: form1, buttonSelector: 'form__button', inputErrorSelector: 'form-input__error' }, inputs });
-    this.validator2 = new FormValidator({ options: { form: form2, buttonSelector: 'form__button', inputErrorSelector: 'form-input__error' }, inputs: inputs2 });
+  // Подключение валидации форм, заполнение формы персональными данными пользователя
+  componentIsReady(): void {
+    const personalForm = document.getElementById('personalForm')!;
+    const inputs = personalForm.querySelectorAll('input');
+    const { user } = this.props.userInfo as UserInfo;
+    // Заполнение формы данными пользователя
+    inputs.forEach((input: HTMLInputElement): void => {
+      /* eslint no-param-reassign: "error" */
+      const inputName = input.name as keyof User;
+      input.value = user[inputName].toString();
+    });
+
+    // Валидация для формы редактирования профиля
+    this._validatorPersonal = new FormValidator({
+      options: {
+        withButton: true,
+        withTextError: true,
+      },
+      formData:
+      {
+        formName: 'personalForm',
+        buttonSelector: 'form__button',
+        inputErrorTextSelector: 'form-input__error',
+        inputErrorClass: 'form-input__input_type_error',
+      },
+
+    });
+
+    // Валидация для формы изменения пароля
+    this._validatorPassword = new FormValidator({
+      options: {
+        withButton: true,
+        withTextError: true,
+      },
+      formData:
+      {
+        formName: 'passwordForm',
+        buttonSelector: 'form__button',
+        inputErrorTextSelector: 'form-input__error',
+        inputErrorClass: 'form-input__input_type_error',
+        inputPasswordName: 'newPassword',
+      },
+
+    });
   }
 
-  handlePersonalForm(evt) {
-    // Запросить статус валидности полей, и через FormData сравнивать данные с имеющимися.
-    // Обязательно сверять, если данные те же, что и были ранее
+  // Обработчик инпута формы реадктирования профиля
+  handlePersonalInput(evt: Event) {
+    switch (evt.type) {
+      case 'input':
+        this._validatorPersonal.handleInputChange(evt);
+        break;
+      case 'blur':
+        this._validatorPersonal.manageTextError(evt);
+        break;
+      default:
+        break;
+    }
+  }
+
+  // Обработчик инпута формы реадктирования профиля
+  handlePasswordInput(evt: Event) {
+    switch (evt.type) {
+      case 'input':
+        this._validatorPassword.handleInputChange(evt);
+        break;
+      case 'blur':
+        this._validatorPassword.manageTextError(evt);
+        break;
+      default:
+        break;
+    }
+  }
+
+  // Обработчик формы редактирования профиля
+  _handlePersonalForm(evt: Event): void {
     evt.preventDefault();
-    console.log(evt.target.closest('form').checkValidity())
-    console.log(`данные пользователя`)
+
+    const target = evt.target as HTMLFormElement;
+    // Повторная проверка валидации формы
+    const isFormValid: boolean = this._validatorPersonal.submitValidation();
+    // Если форма валидна - обрабатываем значения
+    if (isFormValid) {
+      const data = new FormData(target);
+      const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
+
+      // Коллбэк основного компонента App
+      this._onEditProfile(formData);
+    }
   }
 
-  handlePasswordForm(evt) {
+  // Обработчик формы изменения пароля
+  _handlePasswordForm(evt: Event): void {
     evt.preventDefault();
-    console.log('паролик')
-  }
+    const target = evt.target as HTMLFormElement;
+    // Повторная проверка валидации формы
+    const isFormValid: boolean = this._validatorPassword.submitValidation();
+    if (isFormValid) {
+      const data = new FormData(target);
+      const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
 
-  handleInputChange(evt) {
-    this.validator.handleChange(evt);
-  }
-
-  handlePasswordChange(evt) {
-    // ставить состояние формы здесь?
-   /*  const target = evt.target;
-    const { name, value } = target;
-    const form = document.forms.passwordForm;
-    const newPassword = form.querySelector('input');
-    if (name === 'repeat_password') {
-      if (formElements.newPassword === value) {
-        this.validator2._inputValidity['repeat_password'] = true;
-        //evt.target.closest('label').querySelector('.form-input__error').textContent = '';
-        console.log(document.forms.passwordForm.elements.repeat_password.value)
-      } else {
-        this.validator2._inputValidity['repeat_password'] = false;
-        evt.target.closest('label').querySelector('.form-input__error').textContent = VALIDATION_ERRORS['REPEAT_PASSWORD_ERROR'];
-      }
-     //console.log(this.validator2._inputValidity);
-    } else {
-      this.validator2.handleChange(evt);
-    } */
-    this.validator2.handleChange(evt);
-  }
-
-  setFormValues() {
-    /* const inputs = document.querySelectorAll('.form-input__input');
-    console.log(inputs);
-    inputs.forEach((input) => {
-      //if (input.name === this.props.userInfo[input.name])
-      console.log(input.name)
-    }) */
+      // Коллбэк основного компонента App
+      this._onEditProfile(formData);
+    }
   }
 
   render(): DocumentFragment {

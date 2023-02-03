@@ -1,6 +1,42 @@
-import { avatarLink } from "./constants";
+import { avatarLink } from './constants';
 
-export const chats = [
+export type ChatsType = {
+  owner: boolean,
+  link: string,
+  name: string,
+  lastMessage: {
+    content: string,
+    user: number,
+  },
+  time: string,
+  unreadCount: number,
+}[];
+
+export type ChatDataType = {
+  group: boolean,
+  groupOwner?: number,
+  groupUsers?: {
+    name: string,
+    avatar: string,
+    id: number,
+  }[],
+  name: string,
+  messages: {
+    owner: {
+      id: number,
+      avatar: string,
+      username: string,
+    },
+    content: {
+      type: string,
+      value: string,
+      fileName?: string,
+    },
+    time: number,
+  }[],
+};
+
+export const chats: ChatsType = [
   {
     owner: true,
     link: avatarLink,
@@ -223,7 +259,7 @@ export const chats = [
   },
 ];
 
-export const chatData = {
+export const chatData: ChatDataType = {
   group: true,
   groupOwner: 123,
   groupUsers: [

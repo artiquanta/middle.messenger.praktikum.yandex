@@ -1,12 +1,11 @@
-import Block from '../../../../../../services/Block';
 import './LocationMessage.css';
 import template from './LocationMessage.hbs';
+import Block from '../../../../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  content: string,
 };
 
-//function LocationMessage(content) {
 class LocationMessage extends Block {
   constructor(props: Props) {
     super(props);

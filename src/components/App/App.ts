@@ -1,61 +1,104 @@
 import './App.css';
 import template from './App.hbs';
-import ErrorPage from '../ErrorPage/ErrorPage'
+import ErrorPage from '../ErrorPage/ErrorPage';
 import Block from '../../services/Block';
-import Form from '../Form/Form'
 import BasicRouter from '../../services/BasicRouter';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Chat from '../Chat/Chat';
-import Profile from '../Profile/Profile'
-import { loginForm, registerForm, addUserForm, personalForm, passwordForm } from '../../utils/formsContent';
+import Profile from '../Profile/Profile';
+import {
+  loginForm,
+  registerForm,
+  addUserForm,
+  personalForm,
+  passwordForm,
+} from '../../utils/formsContent';
 import { chatData, chats } from '../../utils/chatsContent';
 import { userId, userInfo } from '../../utils/userInfo';
 
-type Props = {
-  [key: string]: unknown
-};
-
-enum PAGES {
-}
+type CallBackData = Record<string, FormDataEntryValue>;
 
 class App extends Block {
   _router: BasicRouter;
+
   _history: Function;
 
   constructor() {
     super();
 
     this.children.page = this._pageToRender(window.location.pathname);
-    this._router = new BasicRouter('app', ['/signin', '/signup', '/profile', '/'], ErrorPage, this.changPage);
   }
 
-  login(data) {
+  _handleLogin(data: CallBackData): void {
+    console.warn('-----Login Form-----');
     console.log(data);
+    console.warn('--------------------');
   }
 
-  register(data) {
+  _handleRegister(data: CallBackData): void {
+    console.warn('-----Register Form-----');
     console.log(data);
+    console.warn('--------------------');
   }
 
-  changPage(path) {
-    console.log(path)
+  _handleSearch(data: CallBackData): void {
+    console.warn('-----Search Form-----');
+    console.log(data);
+    console.warn('--------------------');
   }
 
+  _addGroupUser(data: CallBackData): void {
+    console.warn('-----Group Form-----');
+    console.log(data);
+    console.warn('--------------------');
+  }
+
+  _removeGroupUser(data: unknown): void {
+    console.warn('-----Remove User Form-----');
+    console.log(data);
+    console.warn('--------------------');
+  }
+
+  _handleSendMessage(data: CallBackData): void {
+    console.warn('-----Message Form-----');
+    console.log(data);
+    console.warn('--------------------');
+  }
+
+  _editProfile(data: CallBackData): void {
+    console.warn('-----Edit Profile Form-----');
+    console.log(data);
+    console.warn('--------------------');
+  }
+
+  _handleChangePassword(data: CallBackData): void {
+    console.warn('-----Password Form-----');
+    console.log(data);
+    console.warn('--------------------');
+  }
+
+  // Изменение темы
+  _changeTheme(evt: Event) {
+    const target: HTMLDivElement = evt.target as HTMLDivElement;
+    document.getElementById('root')!.classList.toggle('theme_dark');
+    target.classList.toggle('profile__theme-change_theme_dark');
+  }
+
+  // Рендер страницы в зависимости от текущего пути
   _pageToRender(path: string): Block {
     let page: Block;
     switch (path) {
       case '/signin':
         page = new Login({
           loginForm,
-          onLogin: this.login,
-          history: this.changPage,
+          onLogin: this._handleLogin,
         });
         break;
       case '/signup':
         page = new Register({
           registerForm,
-          onRegister: this.register,
+          onRegister: this._handleRegister,
         });
         break;
       case '/':
@@ -64,13 +107,35 @@ class App extends Block {
           chats,
           chatData,
           userId,
+          onSendMessage: this._handleSendMessage,
+          onSearch: this._handleSearch,
+          onAddUser: this._addGroupUser,
+          onRemoveUser: this._removeGroupUser,
         });
         break;
       case '/profile':
-        page = new Profile({ personalForm, passwordForm, userInfo });
+        page = new Profile({
+          personalForm,
+          passwordForm,
+          userInfo,
+          events: [
+            {
+              selector: 'profile__theme-change',
+              events: {
+                click: this._changeTheme.bind(this),
+              },
+            },
+          ],
+          onEditProfile: this._editProfile,
+        });
         break;
       default:
-        page = new ErrorPage();
+        page = new ErrorPage({
+          title: '404',
+          description: 'Вы попали в пустоту...',
+          link: './',
+          linkTitle: 'Вернуться к чату?',
+        });
         break;
     }
     return page;
@@ -81,132 +146,4 @@ class App extends Block {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* class App extends Block {
-  constructor(props: Props) {
-    super(props);    
-  }
-
-/*   testFunction() {
-    const testArray = [1,2,3];
-    return testArray.map((element) => {
-      return new Form({});
-    })
-  } */
-
-// Обновление пропса. Добавить проверка
-//componentDidUpdate(oldProps: Props, newProps: Props): boolean {
-/*       if (oldProps.title !== newProps.title) {
-        this.children.pager.setProps({title: newProps.title});
-      } */
-/*       Object.keys(oldProps).forEach(prop => {
-        if (oldProps[prop] !== newProps[prop]) {
-          this.children.errorPage.setProps({ title: newProps[prop] });
-        }
-      }); */
-
-/*       return true;
-    } */
-
-// Как один из вариантов реализации обработки формы
-/*   handleForm(evt: Event): void {
-    evt.preventDefault();
-  } */
-
-// Рендер текущего шаблона
-/*   render(): DocumentFragment {
-    return this.compile(template);
-  } */
-//}
-
 export default App;
-
-/* events: [
-  {
-    selector: 'error-page__return-link',
-    events: {
-      click: this.handleForm.bind(this),
-    }
-  },
-  {
-    selector: 'error-page__title',
-    events: {
-      click: (evt: Event) => {
-        evt.preventDefault();
-      },
-    }
-  }
-] */
-
-/* import Login from '../Login/Login';
-import Regiser from '../Register/Register';
-import Profile from '../Profile/Profile';
-import Chat from '../Chat/Chat';
-
-
-// Импорт данных для временного наполнения
-import {
-
-} from '../../utils/constants';
-
-import {
-  loginForm,
-  registerForm,
-  addUserForm,
-  personalForm,
-  passwordForm,
-} from '../../utils/formsContent';
-
-import { chats, chatData } from '../../utils/chatsContent';
-
-import { userId, userInfo } from '../../utils/userInfo';
-
-function App(path) {
-  let currentPage;
-  const pathname = path ? path : window.location.pathname;
-
-  switch (pathname) {
-    case '/':
-      currentPage = Chat(chatData, chats, addUserForm);
-      break;
-    case '/signin':
-      currentPage = Login(loginForm);
-      break;
-    case '/signup':
-      currentPage = Regiser(registerForm);
-      break;
-    case '/profile':
-      currentPage = Profile(personalForm, passwordForm, userInfo);
-      break;
-    default:
-      currentPage = new ErrorPage({
-        title: '404',
-        description: 'Вы попали в пустоту...',
-        link: './',
-        linkTitle: 'Вернуться к чату?',
-      }).getContent();
-  };
-  console.log(template({
-    page: currentPage,
-  }))
-
-  return template({
-    page: currentPage,
-  });
-}
-
-export default App;
- */

@@ -1,9 +1,10 @@
-import Block from '../../../../services/Block';
 import './Header.css';
 import template from './Header.hbs';
+import Block from '../../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  group: boolean,
+  name: string,
 };
 
 class Header extends Block {
@@ -15,7 +16,7 @@ class Header extends Block {
     return this.compile(template, {
       group: this.props.group,
       name: this.props.name,
-    })
+    });
   }
 }
 

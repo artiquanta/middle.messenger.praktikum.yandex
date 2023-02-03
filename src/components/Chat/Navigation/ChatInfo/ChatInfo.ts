@@ -1,14 +1,9 @@
-import Block from '../../../../services/Block';
 import './ChatInfo.css';
 import template from './ChatInfo.hbs';
+import Block from '../../../../services/Block';
 
-type Props = {
-  [key: string]: unknown
-};
-
-//function ChatInfo() {
 class ChatInfo extends Block {
-  constructor(props: Props) {
+  constructor() {
     super();
   }
 

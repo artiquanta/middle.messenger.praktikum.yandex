@@ -1,15 +1,23 @@
-import Block from '../../../../../../services/Block';
 import './VideoMessage.css';
 import template from './VideoMessage.hbs';
+import Block from '../../../../../../services/Block';
 
-//function VideoMessage(content) {
+type Props = {
+  content: string,
+};
+
 class VideoMessage extends Block {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
   }
 
   render(): DocumentFragment {
-    return this.compile(template, { content: this.props.content });
+    return this.compile(
+      template,
+      {
+        content: this.props.content,
+      },
+    );
   }
 }
 

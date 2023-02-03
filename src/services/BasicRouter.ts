@@ -1,17 +1,4 @@
-import EventBus from "./EventBus";
-
-
-/* function changePage(path) {
-  window.history.pushState({}, '', path);
-  window.dispatchEvent(new Event('popstate'));
-} */
-
-// Отслеживаем событие изменения истории
-/* window.addEventListener('popstate', (evt) => {
-  evt.preventDefault();
-  renderPage(window.location.pathname);
-}); */
-
+import EventBus from './EventBus';
 
 type Root = string;
 type Paths = string[];
@@ -23,12 +10,16 @@ class BasicRouter {
   };
 
   _rootElement: HTMLElement;
+
   _paths: Paths;
+
   _eventBus: EventBus;
-  _error: unknown; // 
+
+  _error: unknown; //
+
   _callBack: Function;
 
-  constructor(root: Root = 'root', paths: Paths, error: unknown, callBack: Function) {
+  constructor(paths: Paths, error: unknown, callBack: Function, root: Root = 'root') {
     this._rootElement = document.getElementById(root)!;
     this._paths = paths;
     this._eventBus = new EventBus();
@@ -51,18 +42,6 @@ class BasicRouter {
 
   _renderPage(path: string): void {
     this._rootElement.innerHTML = '';
-    /* let page;
-
-    console.log(this._paths.includes(path))
-
-    if (this._paths[path]) {
-      page = new this._paths[path]();
-    } else {
-      page = this._error;
-    }
-
-    this._rootElement.appendChild(page.getContent()); */
-    console.log(this._callBack);
     this._callBack(path);
   }
 

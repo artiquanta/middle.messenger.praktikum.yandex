@@ -1,9 +1,9 @@
-import Block from '../../../services/Block';
 import './FormHeading.css';
 import template from './FormHeading.hbs';
+import Block from '../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  heading: string,
 };
 
 class FormHeading extends Block {

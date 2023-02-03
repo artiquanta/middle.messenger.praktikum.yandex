@@ -4,31 +4,40 @@ enum METHOD {
   PUT = 'PUT',
   PATCH = 'PATCH',
   DELETE = 'DELETE',
-};
+}
 
 type Options = {
   method: METHOD;
   data?: any;
   timeout?: number,
-}
+};
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 class HTTPTransport {
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this._request(url, { ...options, method: METHOD.GET }, options.timeout = 5000);
+    const timeout = options.timeout ? options.timeout : 5000;
+    return this._request(url, timeout, { ...options, method: METHOD.GET });
   }
+
   post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this._request(url, { ...options, method: METHOD.POST }, options.timeout = 5000);
+    const timeout = options.timeout ? options.timeout : 5000;
+    return this._request(url, timeout, { ...options, method: METHOD.POST });
   }
+
   put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this._request(url, { ...options, method: METHOD.PUT }, options.timeout = 5000);
+    const timeout = options.timeout ? options.timeout : 5000;
+    return this._request(url, timeout, { ...options, method: METHOD.PUT });
   }
+
   patch(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this._request(url, { ...options, method: METHOD.PATCH }, options.timeout = 5000);
+    const timeout = options.timeout ? options.timeout : 5000;
+    return this._request(url, timeout, { ...options, method: METHOD.PATCH });
   }
+
   delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this._request(url, { ...options, method: METHOD.DELETE }, options.timeout = 5000);
+    const timeout = options.timeout ? options.timeout : 5000;
+    return this._request(url, timeout, { ...options, method: METHOD.DELETE });
   }
 
   _queryStringify(data: any = {}): string {
@@ -37,14 +46,15 @@ class HTTPTransport {
     }
 
     const keys = Object.keys(data);
-    return keys.reduce((result: string, key: string, index: number): string => {
-      return `${result}${key}=${typeof data[key] === 'object'
-        ? JSON.stringify(data[key])
-        : data[key]}${index < keys.length - 1 ? '&' : ''}`;
-    });
+
+    return keys.reduce((result: string, key: string, index: number): string => `${result}${key}=${typeof data[key] === 'object'
+      ? JSON.stringify(data[key])
+      : data[key]}${index < keys.length - 1 ? '&' : ''}`);
   }
 
-  _request(url: string, options: Options = { method: METHOD.GET }, timeout: number): Promise<XMLHttpRequest> {
+  _request(url: string, timeoutValue: number, options: Options = {
+    method: METHOD.GET,
+  }): Promise<XMLHttpRequest> {
     const { method, data } = options;
 
     return new Promise((resolve, reject) => {
@@ -52,13 +62,11 @@ class HTTPTransport {
       const isGet = method === METHOD.GET;
       xhr.open(method, isGet && data ? `${url}${this._queryStringify(data)}` : url);
 
-      xhr.onload = function () {
-        resolve(xhr);
-      };
+      xhr.onload = () => resolve(xhr);
 
       xhr.onabort = reject;
       xhr.onerror = reject;
-      xhr.timeout = timeout;
+      xhr.timeout = timeoutValue;
       xhr.ontimeout = reject;
 
       if (isGet || !data) {
@@ -67,7 +75,7 @@ class HTTPTransport {
         xhr.send(data);
       }
     });
-  };
+  }
 }
 
 export default HTTPTransport;

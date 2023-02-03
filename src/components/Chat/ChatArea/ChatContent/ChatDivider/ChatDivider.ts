@@ -1,9 +1,13 @@
-import Block from '../../../../../services/Block';
 import './ChatDivider.css';
 import template from './ChatDivider.hbs';
+import Block from '../../../../../services/Block';
+
+type Props = {
+  content: string,
+};
 
 class ChatDivider extends Block {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
   }
 

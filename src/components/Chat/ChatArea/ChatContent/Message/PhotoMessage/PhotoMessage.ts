@@ -1,18 +1,23 @@
-import Block from '../../../../../../services/Block';
 import './PhotoMessage.css';
 import template from './PhotoMessage.hbs';
+import Block from '../../../../../../services/Block';
 
 type Props = {
-  [key: string]: unknown
+  content: string,
 };
 
-//function PhotoMessage(content) {
 class PhotoMessage extends Block {
   constructor(props: Props) {
     super(props);
   }
+
   render(): DocumentFragment {
-    return this.compile(template, { content: this.props.content });
+    return this.compile(
+      template,
+      {
+        content: this.props.content,
+      },
+    );
   }
 }
 

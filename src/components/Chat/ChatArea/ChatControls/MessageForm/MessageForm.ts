@@ -1,15 +1,15 @@
-import './PopupAttach.css';
-import template from './PopupAttach.hbs';
+import './MessageForm.css';
+import template from './MessageForm.hbs';
 import Block from '../../../../../services/Block';
 
 type Props = {
-  events?: {
+  events: {
     selector: string;
     events: Record<string, (evt: Event) => void>,
   }[],
 };
 
-class PopupAttach extends Block {
+class MessageForm extends Block {
   constructor(props: Props) {
     super(props);
   }
@@ -19,4 +19,4 @@ class PopupAttach extends Block {
   }
 }
 
-export default PopupAttach;
+export default MessageForm;
