@@ -14,31 +14,33 @@ type Options = {
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
+type HTTPMethod = (url: string, options: OptionsWithoutMethod) => Promise<XMLHttpRequest>;
+
 class HTTPTransport {
-  get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  get: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.GET });
-  }
+  };
 
-  post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  post: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.POST });
-  }
+  };
 
-  put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  put: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.PUT });
-  }
+  };
 
-  patch(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  patch: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.PATCH });
-  }
+  };
 
-  delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  delete: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.DELETE });
-  }
+  };
 
   _queryStringify(data: any = {}): string {
     if (!data || typeof data !== 'object') {

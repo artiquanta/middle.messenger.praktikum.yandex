@@ -71,10 +71,6 @@ class Form extends Block {
     this.children.formBody = formBody;
   }
 
-  /*   componentDidUpdate(oldProps?: Props, newProps?: Props): boolean {
-      return true;
-    } */
-
   render(): DocumentFragment {
     return this.compile(template, {
       buttonTitle: this.props.form.buttonTitle,
