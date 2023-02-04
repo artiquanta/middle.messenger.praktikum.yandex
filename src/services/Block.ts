@@ -14,7 +14,7 @@ type Children = Record<string, Block | Record<string, Block | Block[]>>;
 type CompileTemplate = (args?: Record<string, unknown>) => string;
 type CompileProps = Record<string, unknown>;
 
-class Block {
+abstract class Block {
   private static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',

@@ -16,6 +16,7 @@ import {
 } from '../../utils/formsContent';
 import { chatData, chats } from '../../utils/chatsContent';
 import { userId, userInfo } from '../../utils/userInfo';
+import AppNavigation from '../AppNavigation/AppNavigation';
 
 type CallBackData = Record<string, FormDataEntryValue>;
 
@@ -27,7 +28,13 @@ class App extends Block {
   constructor() {
     super();
 
-    this.children.page = this._pageToRender(window.location.pathname);
+    // Временно добавления блока с навигацией по приложению
+    const appBody: Record<string, Block> = {};
+    appBody.page = this._pageToRender(window.location.pathname);
+    appBody.appNavigation = new AppNavigation();
+    this.children.appBody = appBody;
+
+    // this.children.page = this._pageToRender(window.location.pathname);
   }
 
   _handleLogin(data: CallBackData): void {
