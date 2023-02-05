@@ -1,7 +1,7 @@
 <label class="form-input">
   <span class="form-input__title">{{input.title}}</span>
   <input type="{{input.type}}" name="{{input.name}}"
-    class="form-input__input {{#if isPassword}}form-input__input_type_password{{/if}}" minlength="{{input.minLength}}"
+    class="form-input__input{{#if isPassword}} form-input__input_type_password{{/if}}" minlength="{{input.minLength}}"
     maxlength="{{input.maxLength}}" {{#if input.required}}required{{/if}}>
   <span class="form-input__error"></span>
 </label>

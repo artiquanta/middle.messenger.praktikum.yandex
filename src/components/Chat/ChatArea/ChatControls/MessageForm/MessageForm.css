@@ -1,0 +1,78 @@
+.message-form {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.message-form__textarea {
+  box-sizing: border-box;
+  margin: 12px 0;
+  padding: 10px 25px;
+  width: 100%;
+  max-height: 25vh;
+  min-height: 35px;
+  background-color: var(--background-main-primary);
+  font-size: 12px;
+  color: var(--font-additional-secondary);
+  line-height: 1.25;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  resize: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color-primary) var(--scrollbar-background-secondary);
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
+}
+
+.message-form__textarea::placeholder {
+  font-size: 12px;
+  color: var(--font-additional-secondary);
+  line-height: 1.25;
+  opacity: .5;
+}
+
+.message-form__textarea::-webkit-scrollbar {
+  width: 7px;
+}
+
+.message-form__textarea::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-background-primary);
+  border-radius: 3px;
+  border: 2px solid var(--scrollbar-color-secondary);
+}
+
+.message-form__textarea::-webkit-scrollbar-track {
+  margin: 5px 0;
+}
+
+.message-form__textarea_type_error::placeholder {
+  color: var(--font-extra);
+}
+
+.message-form__send-btn {
+  margin: 0 22px 12px;
+  padding: 0;
+  width: 50px;
+  height: 35px;
+  background-color: #f5f5f5;
+  background-image: url(../../../../../images/chat-control__send-btn-icon.svg);
+  background-size: 13px 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: .4s;
+}
+
+.message-form__send-btn:hover {
+  opacity: .8;
+}
+
+.message-form__send-btn:disabled {
+  pointer-events: none;
+  user-select: none;
+  opacity: .5;
+}

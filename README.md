@@ -1,4 +1,4 @@
-[![Sprint-1](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml/badge.svg?branch=sprint_1)](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml)
+[![Sprint-2](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml/badge.svg?branch=sprint_2)](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml)
 
 # Проектная работа. Мессенджер.
 
@@ -6,7 +6,8 @@
 
 Первая проектная работа в рамках курса от **Яндекс.Практикум**.
 
-В ходе первого спринта работы были свёрстаны основные страницы мессенджера с использованием шаблонизатора **HandleBars**.
+В ходе второго спринта был внедрён TypeScript, реализованы классовые компоненты, подключён EventBus.
+Также для всех форм подключёна валидация, реализованная в едином компоненте.
 
 **Для запуска проекта используйте следующие команды:**
 1. Сборка проекта - npm run build

@@ -30,3 +30,7 @@
 .search-form__input:focus {
   outline: none;
 }
+
+.search-form__input_type_error {
+  color: var(--font-extra);
+}

@@ -1,0 +1,31 @@
+.app-navigation {
+  display: flex;
+  min-width: 235px;
+}
+
+.app-navigation__links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  list-style: none;
+  row-gap: 15px;
+}
+
+.app-navigation__link-item {
+  display: flex;
+}
+
+.app-navigation__link {
+  font-size: 14px;
+  line-height: 1.25;
+  color: var(--font-additional-secondary);
+  text-decoration: none;
+}
+
+.app-navigation__link:hover {
+  opacity: .8;
+}
