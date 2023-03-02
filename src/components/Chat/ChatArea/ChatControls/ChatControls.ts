@@ -1,30 +1,22 @@
 import './ChatControls.css';
-import Block from '../../../../services/Block';
 import template from './ChatControls.hbs';
+import Block from '../../../../services/Block';
+import FormValidator from '../../../../services/FormValidator';
 import MessageForm from './MessageForm/MessageForm';
 import PopupAttach from './PopupAttach/PopupAttach';
-import FormValidator from '../../../../services/FormValidator';
-
-type CallBack = (data: Record<string, FormDataEntryValue>) => void;
+import { CallBack, EventType } from '../../../../types/types';
 
 type Props = {
-  events?: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  events?: EventType[],
   onSendMessage: CallBack,
 };
 
 class ChatControls extends Block {
-  _onSendMessage: CallBack;
-
-  _validator: FormValidator;
+  private _validator: FormValidator;
 
   constructor(props: Props) {
-    const { onSendMessage } = props;
     super(props);
 
-    this._onSendMessage = onSendMessage;
     const chatControlsBody: Record<string, Block> = {};
 
     chatControlsBody.popup = new PopupAttach({});
@@ -39,8 +31,8 @@ class ChatControls extends Block {
         {
           selector: 'message-form__textarea',
           events: {
-            input: this.handleInput.bind(this),
-            keydown: (evt: Event) => {
+            input: this._handleInput.bind(this),
+            keydown: (evt: Event) => { // Отправка сообщения сочетанием клавиш "Shift + Enter"
               const { key, shiftKey }: { key: string, shiftKey: boolean } = evt as KeyboardEvent;
               if (key === 'Enter' && shiftKey) {
                 evt.preventDefault();
@@ -57,7 +49,7 @@ class ChatControls extends Block {
   }
 
   // Подключение валидатора после монтирования компонента
-  componentIsReady() {
+  _componentIsReady() {
     this._validator = new FormValidator(
       {
         options: {
@@ -76,6 +68,7 @@ class ChatControls extends Block {
 
   handleFormSubmit(evt: Event) {
     evt.preventDefault();
+
     const target = evt.target as HTMLFormElement;
     // Повторная проверка валидации формы
     const isFormValid: boolean = this._validator.submitValidation();
@@ -85,18 +78,25 @@ class ChatControls extends Block {
       const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
 
       // Коллбэк компонента App
-      this._onSendMessage(formData);
+      this.props.onSendMessage(formData);
 
       // Очистка содержимого формы
-      if (target.form) {
-        target.form.reset();
+      if (target instanceof HTMLTextAreaElement && target.form) {
+        this._inputReset(target);
       } else {
-        target.reset();
+        this._inputReset(target.message);
       }
     }
   }
 
-  handleInput(evt: Event) {
+  // Очистка поля ввода
+  private _inputReset(input: HTMLTextAreaElement) {
+    const inputElement = input;
+    inputElement.value = '';
+    inputElement.style.height = 'auto';
+  }
+
+  private _handleInput(evt: Event) {
     const target = evt.target as HTMLTextAreaElement;
     target.style.height = 'auto';
     target.style.height = `${target.scrollHeight}px`;

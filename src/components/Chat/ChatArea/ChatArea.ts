@@ -5,52 +5,59 @@ import Header from './Header/Header';
 import ChatContent from './ChatContent/ChatContent';
 import SidePanel from './SidePanel/SidePanel';
 import ChatControls from './ChatControls/ChatControls';
-import { FormType } from '../../../utils/formsContent';
-import { ChatDataType } from '../../../utils/chatsContent';
-
-type CallBack = (data: Record<string, FormDataEntryValue>) => void;
+import throttle from '../../../utils/throttle';
+import {
+  CallBack,
+  EventType,
+} from '../../../types/types';
 
 type Props = {
-  chatData: ChatDataType,
-  addUserForm: FormType,
-  userId: number,
-  events?: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  events?: EventType[],
   onSendMessage: CallBack,
   onAddUser: CallBack,
-  onRemoveUser: (data: unknown) => void,
+  onDeleteChat: CallBack,
+  onRemoveUser: CallBack,
+  onGetMessages: CallBack,
 };
 
 class ChatArea extends Block {
-  _sidePanelContent: HTMLDivElement;
+  private _sidePanelContent: HTMLDivElement;
 
-  _sidePanelButton: HTMLButtonElement;
+  private _sidePanelButton: HTMLButtonElement;
 
-  _chatAttachButton: HTMLButtonElement;
+  private _chatAttachButton: HTMLButtonElement;
 
   constructor(props: Props) {
     const {
-      chatData,
-      addUserForm,
-      userId,
       onSendMessage,
       onAddUser,
       onRemoveUser,
+      onDeleteChat,
+      onGetMessages,
     } = props;
-    super(chatData);
+
+    super({
+      onDeleteChat,
+      onGetMessages,
+    });
+
     const chatAreaBody: Record<string, Block> = {};
 
-    chatAreaBody.header = new Header({ group: this.props.group, name: this.props.name });
-    chatAreaBody.chatContent = new ChatContent({ messages: this.props.messages, userId });
+    chatAreaBody.header = new Header({});
 
-    // Добавляем информацию о пользователях группы, если имеются
-    // Иначе добавляется информация о действующих пользователей чата
+    chatAreaBody.chatContent = new ChatContent({
+      events: [
+        {
+          selector: 'chat-content__messages',
+          events: {
+            scroll: throttle<Event>(this._getMessages.bind(this), 750),
+          },
+        },
+      ],
+    });
+
+    // Добавление информации о действующих пользователях чата
     chatAreaBody.sidePanel = new SidePanel({
-      groupUsers: this.props.groupUsers,
-      groupOwner: this.props.groupOwner,
-      addUserForm,
       events: [
         {
           selector: 'side-panel__button',
@@ -58,10 +65,18 @@ class ChatArea extends Block {
             click: this._openSidePanel.bind(this),
           },
         },
+        {
+          selector: 'side-panel__delete-chat',
+          events: {
+            click: this._deleteChat.bind(this),
+          },
+        },
       ],
       onAddUser,
       onRemoveUser,
+      onDeleteChat,
     });
+
     chatAreaBody.chatControls = new ChatControls({
       events: [
         {
@@ -81,16 +96,36 @@ class ChatArea extends Block {
   }
 
   // Поиск элементов после монтирования компонента
-  componentIsReady(): void {
+  _componentIsReady(): void {
     const sidePanelContainer = document.querySelector('.side-panel')!;
     this._sidePanelContent = sidePanelContainer.querySelector('.side-panel__content')!;
     this._sidePanelButton = sidePanelContainer.querySelector('.side-panel__button')!;
     this._chatAttachButton = document.querySelector('.popup-attach')!;
   }
 
-  _openSidePanel(): void {
+  private _openSidePanel(): void {
     this._sidePanelContent.classList.toggle('side-panel__content_shown');
     this._sidePanelButton.classList.toggle('side-panel__button_action_close');
+  }
+
+  // Обработчик удаления текущего чата
+  private _deleteChat() {
+    this.props.onDeleteChat();
+  }
+
+  private async _getMessages(evt: Event) {
+    const target = evt.target as HTMLUListElement;
+    const top = target.scrollHeight - target.offsetHeight - Math.abs(target.scrollTop);
+    if (top < 300) {
+      const currentScrollPos = target.scrollTop;
+      await this.props.onGetMessages();
+      // Временная прокрутка
+      setTimeout(() => {
+        document.querySelector('.chat-content__messages')?.scrollTo({
+          top: currentScrollPos,
+        });
+      }, 1000);
+    }
   }
 
   render(): DocumentFragment {

@@ -1,13 +1,11 @@
 <aside class="side-panel">
   <div class="side-panel__content">
     <div class="side-panel__container">
+      {{#if chatOwner}}
       <button class="side-panel__delete-chat">Удалить чат</button>
+      {{/if}}
       <h2 class="side-panel__title">Пользователи</h2>
-      <ul class="side-panel__users">
-        {{#each usersList}}
-        {{{this}}}
-        {{/each}}
-      </ul>
+      {{{usersList}}}
     </div>
     <div class="side-panel__form-container">
       {{{form}}}

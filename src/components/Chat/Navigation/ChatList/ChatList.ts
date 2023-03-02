@@ -1,55 +1,68 @@
 import './ChatList.css';
 import template from './ChatList.hbs';
 import Block from '../../../../services/Block';
-import ChatCard from './ChatCard/ChatCard';
-import { ChatsType } from '../../../../utils/chatsContent';
+import ChatCard from '../ChatCard/ChatCard';
+import connect from '../../../../services/Store/connect';
+import isEqual from '../../../../utils/isEqual';
+import {
+  CallBack,
+  ChatType,
+  EventType,
+  State,
+  UserType,
+} from '../../../../types/types';
 
 type Props = {
-  chats: ChatsType,
-  userId: number,
-  events?: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  chats: ChatType[],
+  user: UserType,
+  chatId: number,
+  events?: EventType[],
+  onSelectChat: CallBack;
 };
 
 class ChatList extends Block {
-  _cardsContainer: HTMLUListElement;
+  private _selectedCardId: number;
 
   constructor(props: Props) {
-    const { chats, userId } = props;
-    super();
-
-    const chatListBody: Record<string, Block | Block[]> = {};
-
-    // Генерация карточек чатов
-    chatListBody.chatCards = chats.map((chat) => new ChatCard({
-      chat,
-      userId,
-      events: [
-        {
-          selector: 'chat-card',
-          events: {
-            click: this._handleCardClick.bind(this),
-          },
-        },
-      ],
-    }));
-
-    // Добавление дочерних компонентов
-    this.children.chatCards = chatListBody;
+    super(props);
   }
 
-  componentIsReady(): void {
-    this._cardsContainer = document.querySelector('.chat-list')!;
+  componentDidUpdate(oldProps: Props, newProps: Props): boolean {
+    if (isEqual(oldProps, newProps)) {
+      return false;
+    }
+
+    // Устанавливаем первоначальное значение _selectedCardId, если имеется открытый чат
+    if (oldProps.chatId !== newProps.chatId) {
+      this._selectedCardId = newProps.chatId;
+    }
+
+    if (newProps.chats && newProps.chats !== oldProps.chats) {
+      this.children.chatCards = newProps.chats.map((chat) => new ChatCard({
+        chat,
+        user: this.props.user,
+        events: [
+          {
+            selector: 'chat-card',
+            events: {
+              click: () => this._handleCardClick(chat.id),
+            },
+          },
+        ],
+      }));
+
+      return true;
+    }
+
+    return false;
   }
 
   // Обработчик клика по карточке
-  _handleCardClick(evt: Event): void {
-    const selectedCards: NodeListOf<HTMLLIElement> = this._cardsContainer.querySelectorAll('.chat-card_selected')!;
-    selectedCards.forEach((element: HTMLLIElement) => element.classList.remove('chat-card_selected'));
-    const target = evt.target as HTMLDivElement;
-    target.closest('li')!.classList.add('chat-card_selected');
+  private _handleCardClick(chatId: number): void {
+    if (this._selectedCardId !== chatId) {
+      this._selectedCardId = chatId;
+      this.props.onSelectChat(chatId);
+    }
   }
 
   render(): DocumentFragment {
@@ -57,4 +70,12 @@ class ChatList extends Block {
   }
 }
 
-export default ChatList;
+function mapStateToProps(state: State) {
+  return {
+    chats: state.safe?.chats,
+    user: state.user,
+    chatId: state.safe?.chatId,
+  };
+}
+
+export default connect(ChatList, mapStateToProps);

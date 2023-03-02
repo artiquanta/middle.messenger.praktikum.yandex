@@ -1,29 +1,24 @@
 import './Register.css';
 import template from './Register.hbs';
 import Block from '../../services/Block';
+import Router from '../../services/Router/Router';
 import Form from '../Form/Form';
 import FormValidator from '../../services/FormValidator';
-import { FormType } from '../../utils/formsContent';
-
-type CallBack = (data: Record<string, FormDataEntryValue>) => void;
+import { registerForm } from '../../utils/formsContent';
+import { SIGNIN_URL } from '../../utils/constants';
+import { CallBack, EventType } from '../../types/types';
 
 type Props = {
-  registerForm: FormType,
-  events?: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
   onRegister: CallBack,
+  checkLoggedIn: CallBack,
+  events: EventType[],
 };
 
 class Register extends Block {
-  _onRegister: CallBack;
-
   _validator: FormValidator;
 
   constructor(props: Props) {
-    const { registerForm, onRegister } = props;
-    super();
+    super(props);
 
     // Добавление компонента формы на страницу
     this.children.form = new Form({
@@ -36,17 +31,27 @@ class Register extends Block {
             submit: this._handleForm.bind(this),
           },
         },
+        {
+          selector: 'form__link',
+          events: {
+            click: (evt: Event) => {
+              evt.preventDefault();
+              new Router('.app').go(SIGNIN_URL);
+            },
+          },
+        },
       ],
       // Коллбэк
       handleInput: this._handleInput.bind(this),
     });
-
-    // Коллбэк с App
-    this._onRegister = onRegister;
   }
 
-  // Выполняется по событию из Block, когда компонент смонтирован
-  componentIsReady() {
+  // Подключаем валидатор после монтирования компонента
+  _componentIsReady() {
+    if (this.props.checkLoggedIn()) {
+      return;
+    }
+
     this._validator = new FormValidator({
       options: {
         withButton: true,
@@ -86,7 +91,7 @@ class Register extends Block {
       const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
 
       // Коллбэк основного компонента App
-      this._onRegister(formData);
+      this.props.onRegister(formData);
     }
   }
 

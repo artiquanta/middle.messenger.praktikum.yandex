@@ -3,27 +3,26 @@ import template from './Login.hbs';
 import Block from '../../services/Block';
 import Form from '../Form/Form';
 import FormValidator from '../../services/FormValidator';
-import { FormType } from '../../utils/formsContent';
+import Router from '../../services/Router/Router';
+import { loginForm } from '../../utils/formsContent';
+import { SIGNUP_URL } from '../../utils/constants';
 
 type CallBack = (data: Record<string, FormDataEntryValue>) => void;
 
 type Props = {
-  loginForm: FormType,
   events?: {
     selector: string;
     events: Record<string, (evt: Event) => void>,
   }[],
   onLogin: CallBack,
+  checkLoggedIn: CallBack,
 };
 
 class Login extends Block {
-  _onLogin: CallBack;
-
-  _validator: FormValidator;
+  private _validator: FormValidator;
 
   constructor(props: Props) {
-    const { loginForm, onLogin } = props;
-    super();
+    super(props);
 
     this.children.form = new Form({
       form: loginForm,
@@ -31,20 +30,30 @@ class Login extends Block {
         {
           selector: 'form',
           events: {
-            submit: this.handleForm.bind(this),
+            submit: this._handleForm.bind(this),
+          },
+        },
+        {
+          selector: 'form__link',
+          events: {
+            click: (evt: Event) => {
+              evt.preventDefault();
+              new Router('.app').go(SIGNUP_URL);
+            },
           },
         },
       ],
       // Коллбэк обработки инпута
-      handleInput: this.handleInput.bind(this),
+      handleInput: this._handleInput.bind(this),
     });
-
-    // Коллбэк компонента App
-    this._onLogin = onLogin;
   }
 
   // Подключение валидатора после монтирования компонента
-  componentIsReady(): void {
+  _componentIsReady(): void {
+    if (this.props.checkLoggedIn()) {
+      return;
+    }
+
     this._validator = new FormValidator({
       options: {
         withButton: true,
@@ -61,7 +70,7 @@ class Login extends Block {
   }
 
   // Обработчик инпута
-  handleInput(evt: Event): void {
+  private _handleInput(evt: Event): void {
     switch (evt.type) {
       case 'input':
         this._validator.handleInputChange(evt);
@@ -75,7 +84,7 @@ class Login extends Block {
   }
 
   // Обработчик формы
-  handleForm(evt: Event): void {
+  private _handleForm(evt: Event): void {
     evt.preventDefault();
     const target = evt.target as HTMLFormElement;
     // Повторная проверка валидации формы
@@ -85,7 +94,7 @@ class Login extends Block {
       const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
 
       // Коллбэк основного компонента App
-      this._onLogin(formData);
+      this.props.onLogin(formData);
     }
   }
 

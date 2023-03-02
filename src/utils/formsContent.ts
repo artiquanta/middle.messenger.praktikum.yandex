@@ -1,35 +1,12 @@
-type HTMLInputTypeAttribute = 'button' | 'checkbox' | 'color' | 'date' | 'datetime' | 'local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
-
-type Form = {
-  id: string,
-  heading?: string,
-  link?: {
-    url: string
-    title: string,
-  },
-  buttonTitle: string,
-};
-
-type Inputs = {
-  title: string,
-  type: HTMLInputTypeAttribute,
-  name: string,
-  minLength: number,
-  maxLength: number,
-  required: boolean,
-}[];
-
-export type FormType = {
-  form: Form,
-  inputs: Inputs,
-};
+import { FormType } from '../types/types';
+import { SIGNIN_URL, SIGNUP_URL } from './constants';
 
 export const loginForm: FormType = {
   form: {
     id: 'loginForm',
     heading: 'Рады видеть!',
     link: {
-      url: './signup',
+      url: SIGNUP_URL,
       title: 'Нет аккаунта?',
     },
     buttonTitle: 'Войти',
@@ -59,7 +36,7 @@ export const registerForm: FormType = {
     id: 'registerForm',
     heading: 'Добро пожаловать! ',
     link: {
-      url: './signin',
+      url: SIGNIN_URL,
       title: 'Войти',
     },
     buttonTitle: 'Зарегистрироваться',

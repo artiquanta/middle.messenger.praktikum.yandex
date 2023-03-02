@@ -1,0 +1,19 @@
+<div class="search-results">
+  <ul class="search-results__container">
+    {{#each foundUsersList}}
+    {{{this}}}
+    {{/each}}
+    {{#unless foundUsersList}}
+    <p class="search-results__empty">Пользователи со схожим логином не найдены</p>
+    {{/unless}}
+  </ul>
+  <div class="search-results__divider">Найденные чаты</div>
+  <ul class="search-results__container">
+    {{#each foundChatsList}}
+    {{{this}}}
+    {{/each}}
+    {{#unless foundChatsList}}
+    <p class="search-results__empty">Чаты по запросу не найдены</p>
+    {{/unless}}
+  </ul>
+</div>

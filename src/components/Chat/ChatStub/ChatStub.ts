@@ -1,16 +1,14 @@
 import './ChatStub.css';
 import template from './ChatStub.hbs';
 import Block from '../../../services/Block';
+import { EventType } from '../../../types/types';
 
 type Props = {
-  events?: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  events?: EventType[],
 };
 
 class ChatStub extends Block {
-  constructor(props: Props) {
+  constructor(props?: Props) {
     super(props);
   }
 

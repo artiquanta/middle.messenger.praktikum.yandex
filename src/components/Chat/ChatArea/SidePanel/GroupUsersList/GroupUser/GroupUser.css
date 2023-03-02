@@ -33,7 +33,7 @@
   height: 13px;
   padding: 0;
   background-color: var(--background-extra);
-  mask-image: url(../../../../../images/side-panel__remove-user-icon.svg);
+  mask-image: url(../../../../../../images/side-panel__remove-user-icon.svg);
   mask-size: contain;
   mask-position: center;
   mask-repeat: no-repeat;

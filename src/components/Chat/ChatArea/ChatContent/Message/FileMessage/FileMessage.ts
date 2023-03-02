@@ -1,6 +1,7 @@
 import './FileMessage.css';
 import template from './FileMessage.hbs';
 import Block from '../../../../../../services/Block';
+import { BASE_RESOURCE_URL } from '../../../../../../utils/constants';
 
 type Props = {
   content: string,
@@ -14,7 +15,7 @@ class FileMessage extends Block {
 
   render(): DocumentFragment {
     return this.compile(template, {
-      value: this.props.content,
+      value: `${BASE_RESOURCE_URL}/${this.props.content}`,
       fileName: this.props.fileName,
     });
   }

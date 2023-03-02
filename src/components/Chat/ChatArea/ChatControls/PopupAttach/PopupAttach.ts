@@ -1,12 +1,10 @@
 import './PopupAttach.css';
 import template from './PopupAttach.hbs';
 import Block from '../../../../../services/Block';
+import { EventType } from '../../../../../types/types';
 
 type Props = {
-  events?: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  events?: EventType[],
 };
 
 class PopupAttach extends Block {
