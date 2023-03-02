@@ -9,7 +9,7 @@
 
 .chat-content__messages {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: flex-start;
   margin: 0;
   padding: 0 35px 0 25px;

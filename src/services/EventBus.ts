@@ -1,34 +1,46 @@
 class EventBus {
-  listeners: Record<string, Array<Function>>;
+  private _listeners: Record<string, Array<Function>>;
 
   constructor() {
-    this.listeners = {};
+    this._listeners = {};
   }
 
-  on(event: string, callback: Function): void {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
+  public on(event: string, callback: Function): void {
+    if (!this._listeners[event]) {
+      this._listeners[event] = [];
     }
 
-    this.listeners[event].push(callback);
+    this._listeners[event].push(callback);
   }
 
-  emit(event: string, ...args: any[]): void {
-    if (!this.listeners[event]) {
+  public emit(event: string, ...args: any[]): void {
+    if (!this._listeners[event]) {
       throw new Error(`Событие ${event} отсутствует.`);
     }
 
-    this.listeners[event]
+    this._listeners[event]
       .forEach((listener: Function): void => listener(...args));
   }
 
-  off(event: string, callback: Function): void {
-    if (!this.listeners[event]) {
+  public off(event: string, callback: Function): void {
+    if (!this._listeners[event]) {
       throw new Error(`Событие ${event} отсутствует.`);
     }
 
-    this.listeners[event] = this.listeners[event]
+    this._listeners[event] = this._listeners[event]
       .filter((listener: Function): boolean => listener !== callback);
+  }
+
+  public offAll() {
+    if (Object.keys(this._listeners).length === 0) {
+      throw new Error('События отсутствуют');
+    }
+
+    this._listeners = {};
+  }
+
+  public hasSubscriber(event: string) {
+    return this._listeners[event];
   }
 }
 

@@ -1,28 +1,17 @@
 import './ChatContent.css';
 import template from './ChatContent.hbs';
 import Block from '../../../../services/Block';
+import connect from '../../../../services/Store/connect';
 import Message from './Message/Message';
 import ChatDivider from './ChatDivider/ChatDivider';
-
-type MessageTypes = 'text' | 'file' | 'location' | 'photo' | 'video';
-
-type Messages = {
-  owner: {
-    id: number,
-    avatar: string,
-    username: string,
-  },
-  content: {
-    type: keyof MessageTypes,
-    fileName?: string,
-    value: string,
-  },
-  time: EpochTimeStamp,
-}[];
+import { checkIfToday, convertDay, convertTime } from '../../../../utils/convertTime';
+import isEqual from '../../../../utils/isEqual';
+import { MessageType, State, UserType } from '../../../../types/types';
 
 type Props = {
-  messages: Messages,
-  userId: number,
+  messages: MessageType[],
+  user: UserType,
+  chatUsers: UserType[],
   events?: {
     selector: string;
     events: Record<string, (evt: Event) => void>,
@@ -31,66 +20,70 @@ type Props = {
 
 class ChatContent extends Block {
   constructor(props: Props) {
-    const { messages, userId } = props;
-    super();
-    const chatContentBody: Record<string, Block | Block[]> = {};
+    super(props);
 
     // Дочерний компонент с массивом сообщений
-    chatContentBody.messages = this._renderMessages(messages, userId);
-
-    // Добавление дочерних компонентов
-    this.children.messages = chatContentBody;
+    this.children.messagesList = this._renderMessages(
+      this.props.user,
+      this.props.messageOwners,
+      this.props.messages,
+    );
   }
 
-  // Конвертация времени
-  _convertTime(time: EpochTimeStamp): string {
-    return new Date(time * 1000).toLocaleTimeString('ru-RU', { timeStyle: 'short' });
-  }
+  componentDidUpdate(oldProps: Props, newProps: Props) {
+    if (isEqual(oldProps, newProps)) {
+      return false;
+    }
 
-  // Конвертация даты
-  _convertDay(time: EpochTimeStamp): string {
-    return new Date(time * 1000).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
-  }
-
-  // Проверка, если день в сообщении сегодняшний
-  _checkIfToday(time: EpochTimeStamp): boolean {
-    const today = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
-    if (this._convertDay(time) === today) {
+    if (newProps.messages && newProps.messages !== oldProps.messages) {
+      this.children.messagesList = this._renderMessages(
+        this.props.user,
+        this.props.messageOwners,
+        newProps.messages,
+      );
       return true;
     }
-    return false;
+
+    return true;
   }
 
   // Генерация сообщений в зависимости от их типа, добавление разделителя
-  _renderMessages(messages: Messages, userId: number) {
+  private _renderMessages(user: UserType, messageOwners: UserType[], messages: MessageType[] = []) {
     // Массив с сообщениями для последующего наполнения шаблона
     const messagesList: Block[] = [];
 
     // Обработка массива с сообщениями
     messages.forEach((message, index): void => {
-      const messageTime: EpochTimeStamp = message.time;
-      const time: string = this._checkIfToday(messageTime)
-        ? `Сегодня в ${this._convertTime(messageTime)}`
-        : `${this._convertDay(messageTime)} ${this._convertTime(messageTime)}`;
+      const messageTime: string = message.time;
+      const time: string = checkIfToday(messageTime)
+        ? `Сегодня в ${convertTime(messageTime)}`
+        : `${convertDay(messageTime)} ${convertTime(messageTime)}`;
 
       // Добавление разделителя сообщений по датам
-      if (index === 0) {
-        messagesList.push(new ChatDivider({ content: 'Начало беседы' }));
-      } else {
-        const currentMessageDate = this._convertDay(messageTime);
-        const previousMessageDate = this._convertDay(messages[index - 1].time);
+      if (index !== 0) {
+        const currentMessageDate = convertDay(messageTime);
+        const previousMessageDate = convertDay(messages[index - 1].time);
 
         // Если даты отличаются, добавляем разделить
         if (currentMessageDate !== previousMessageDate) {
-          messagesList.push(new ChatDivider({ content: currentMessageDate }));
+          if (checkIfToday(messages[index - 1].time)) {
+            messagesList.push(new ChatDivider({ content: 'Сегодня' }));
+          } else {
+            messagesList.push(new ChatDivider({ content: previousMessageDate }));
+          }
         }
       }
 
+      const messageOwner = messageOwners.find((chatUser) => chatUser.id === message.user_id)!;
+
+      // Добавляем компонент сообщения в массив сообщений
       messagesList.push(new Message({
-        owner: message.owner,
         content: message.content,
+        file: message.file,
+        type: message.type,
+        owner: messageOwner,
         time,
-        userId,
+        user,
         events: [
           {
             selector: 'message_type_user',
@@ -104,6 +97,10 @@ class ChatContent extends Block {
           },
         ],
       }));
+
+      if (index === messages.length - 1) {
+        messagesList.push(new ChatDivider({ content: 'Начало беседы' }));
+      }
     });
 
     // Возвращаем массив с сообщениями и разделителями
@@ -115,4 +112,13 @@ class ChatContent extends Block {
   }
 }
 
-export default ChatContent;
+function mapStateToProps(state: State) {
+  return {
+    messages: state.safe?.messages,
+    user: state.user,
+    chatUsers: state.safe?.chatUsers,
+    messageOwners: state.safe?.messageOwners,
+  };
+}
+
+export default connect(ChatContent, mapStateToProps);

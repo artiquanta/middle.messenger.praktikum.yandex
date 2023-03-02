@@ -1,13 +1,11 @@
 import './ProfileControl.css';
 import template from './ProfileControl.hbs';
 import Block from '../../../../services/Block';
+import { EventType } from '../../../../types/types';
 
 type Props = {
   buttonTitle: string,
-  events: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  events: EventType[],
 };
 
 class ProfileControl extends Block {

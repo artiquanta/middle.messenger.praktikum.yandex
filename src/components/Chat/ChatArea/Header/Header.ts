@@ -1,10 +1,12 @@
 import './Header.css';
 import template from './Header.hbs';
 import Block from '../../../../services/Block';
+import connect from '../../../../services/Store/connect';
+import { EventType, State } from '../../../../types/types';
 
 type Props = {
-  group: boolean,
-  name: string,
+  chatTitle: string,
+  events: EventType[],
 };
 
 class Header extends Block {
@@ -14,10 +16,15 @@ class Header extends Block {
 
   render(): DocumentFragment {
     return this.compile(template, {
-      group: this.props.group,
-      name: this.props.name,
+      title: this.props.chatTitle,
     });
   }
 }
 
-export default Header;
+function mapStateToProps(state: State) {
+  return {
+    chatTitle: state.safe?.currentChat?.title,
+  };
+}
+
+export default connect(Header, mapStateToProps);

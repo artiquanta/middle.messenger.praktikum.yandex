@@ -1,4 +1,4 @@
-[![Sprint-2](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml/badge.svg?branch=sprint_2)](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml)
+[![Sprint-3](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml/badge.svg?branch=sprint_3)](https://github.com/artiquanta/middle.messenger.praktikum.yandex/actions/workflows/tests.yml)
 
 # Проектная работа. Мессенджер.
 
@@ -6,8 +6,8 @@
 
 Первая проектная работа в рамках курса от **Яндекс.Практикум**.
 
-В ходе второго спринта был внедрён TypeScript, реализованы классовые компоненты, подключён EventBus.
-Также для всех форм подключёна валидация, реализованная в едином компоненте.
+В ходе третьего спринта был подключён API, WebSocket для мгновенного получения и отправки сообщений, базовый роутер.
+В чате доступны: создание / удаление чата, добавление / удаление пользователей чата, отправка и получение новых сообщений / редактирование профиля и пароля пользователя / изменение аватара пользователя.
 
 **Для запуска проекта используйте следующие команды:**
 1. Сборка проекта - npm run build

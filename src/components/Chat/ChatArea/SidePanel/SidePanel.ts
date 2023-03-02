@@ -1,49 +1,44 @@
 import './SidePanel.css';
 import template from './SidePanel.hbs';
 import Block from '../../../../services/Block';
-import GroupUser from './GroupUser/GroupUser';
-import Form from '../../../Form/Form';
-import { FormType } from '../../../../utils/formsContent';
 import FormValidator from '../../../../services/FormValidator';
-
-type CallBack = (data: Record<string, FormDataEntryValue>) => void;
+import connect from '../../../../services/Store/connect';
+import Form from '../../../Form/Form';
+import GroupUsersList from './GroupUsersList/GroupUsersList';
+import { addUserForm } from '../../../../utils/formsContent';
+import {
+  CallBack,
+  EventType,
+  State,
+  UserType,
+} from '../../../../types/types';
 
 type Props = {
-  groupUsers: {
-    name: string,
-    avatar: string,
-    id: number,
-  }[],
-  groupOwner: number,
-  addUserForm: FormType,
-  events: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  user: UserType,
+  chatOwnerId: number,
+  events: EventType[],
   onAddUser: CallBack,
-  onRemoveUser: (data: unknown) => void,
+  onRemoveUser: CallBack,
 };
 
 class SidePanel extends Block {
-  _onAddUser: CallBack;
-
-  _onRemoveUser: (data: unknown) => void;
-
-  _validator: FormValidator;
+  private _validator: FormValidator;
 
   constructor(props: Props) {
     const {
-      addUserForm,
-      groupUsers,
-      groupOwner,
+      user,
+      chatOwnerId,
       events,
       onAddUser,
       onRemoveUser,
     } = props;
-    super({ events });
 
-    this._onAddUser = onAddUser;
-    this._onRemoveUser = onRemoveUser;
+    super({
+      events,
+      user,
+      chatOwnerId,
+      onAddUser,
+    });
 
     const sidePanelBody: Record<string, Block | Block[]> = {};
 
@@ -61,27 +56,15 @@ class SidePanel extends Block {
       handleInput: this._handleInput.bind(this),
     });
 
-    // Если тип чата - групповой чат, добавляем список пользователей группы.
-    // Иначе добавляем действующих участников чата
-    sidePanelBody.usersList = groupUsers.map((user) => new GroupUser({
-      user,
-      groupOwner,
-      events: [
-        {
-          selector: 'group-user__remove-user',
-          events: {
-            click: this._handleRemoveUser.bind(this),
-          },
-        },
-      ],
-    }));
+    // добавляем действующих участников чата
+    sidePanelBody.usersList = new GroupUsersList({ onRemoveUser });
 
     // Добавление дочерних компонетов
     this.children.sidePanelBody = sidePanelBody;
   }
 
   // Подключение валидатора после монтирования компонента
-  componentIsReady(): void {
+  _componentIsReady(): void {
     this._validator = new FormValidator({
       options: {
         withButton: true,
@@ -98,7 +81,7 @@ class SidePanel extends Block {
     });
   }
 
-  _handleInput(evt: Event): void {
+  private _handleInput(evt: Event): void {
     // Валидируем форму и поля, очищаем ошибку при начале ввода
     if (evt.type === 'input') {
       this._validator.handleInputChange(evt);
@@ -109,8 +92,9 @@ class SidePanel extends Block {
     }
   }
 
-  _handleFormSubmit(evt: Event): void {
+  private _handleFormSubmit(evt: Event): void {
     evt.preventDefault();
+
     const target = evt.target as HTMLFormElement;
     // Повторная проверка валидации формы
     const isFormValid: boolean = this._validator.submitValidation();
@@ -119,20 +103,25 @@ class SidePanel extends Block {
       const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
 
       // Коллбэк компонента App
-      this._onAddUser(formData);
+      this.props.onAddUser(formData);
 
       // Очистка содержимого формы
       target.reset();
     }
   }
 
-  _handleRemoveUser(evt: Event) {
-    this._onRemoveUser(evt);
-  }
-
   render(): DocumentFragment {
-    return this.compile(template);
+    return this.compile(template, {
+      chatOwner: this.props.chatOwnerId === this.props.user.id,
+    });
   }
 }
 
-export default SidePanel;
+function mapStateToProps(state: State) {
+  return {
+    user: state.user,
+    chatOwnerId: state.safe?.chatOwnerId,
+  };
+}
+
+export default connect(SidePanel, mapStateToProps);

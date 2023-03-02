@@ -3,18 +3,22 @@ import template from './Profile.hbs';
 import Block from '../../services/Block';
 import Form from '../Form/Form';
 import FormValidator from '../../services/FormValidator';
-import { FormType } from '../../utils/formsContent';
-import { UserInfo } from '../../utils/userInfo';
+import { passwordForm, personalForm } from '../../utils/formsContent';
+import Avatar from './Avatar/Avatar';
+import connect from '../../services/Store/connect';
+import { MESSENGER_URL } from '../../utils/constants';
+import { CallBack, Indexed, UserType } from '../../types/types';
 
 type Props = {
-  personalForm: FormType,
-  passwordForm: FormType,
-  userInfo: UserInfo,
+  user: UserType,
   events?: {
     selector: string;
     events: Record<string, (evt: Event) => void>,
   }[],
-  onEditProfile: (data: Record<string, FormDataEntryValue>) => void,
+  checkLoggedIn: CallBack,
+  onEditProfile: CallBack,
+  onChangePassword: CallBack,
+  onChangeAvatar: CallBack,
 };
 
 type User = {
@@ -29,22 +33,58 @@ type User = {
 };
 
 class Profile extends Block {
-  _validatorPersonal: FormValidator;
+  private _validatorPersonal: FormValidator;
 
-  _validatorPassword: FormValidator;
-
-  _onEditProfile;
+  private _validatorPassword: FormValidator;
 
   constructor(props: Props) {
     const {
-      personalForm,
-      passwordForm,
-      userInfo,
+      user,
       events,
+      checkLoggedIn,
       onEditProfile,
+      onChangePassword,
+      onChangeAvatar,
     } = props;
-    super({ userInfo, events });
+    super({
+      user,
+      events,
+      checkLoggedIn,
+      onEditProfile,
+      onChangePassword,
+      onChangeAvatar,
+    });
+
     const profileBody: Record<string, Block> = {};
+
+    profileBody.avatar = new Avatar({
+      events: [
+        {
+          selector: 'avatar',
+          events: {
+            submit: this._handleChangeAvatar.bind(this),
+          },
+        },
+        {
+          selector: 'avatar__label',
+          events: {
+            dragover: (evt: Event) => {
+              evt.preventDefault();
+            },
+            dragenter: (evt: Event) => {
+              evt.preventDefault();
+            },
+            drop: this._handleChangeAvatar.bind(this),
+          },
+        },
+        {
+          selector: 'avatar__upload-input',
+          events: {
+            change: this._handleChangeAvatar.bind(this),
+          },
+        },
+      ],
+    });
 
     // Форма редактирования профиля пользователя
     profileBody.personalForm = new Form({
@@ -58,7 +98,7 @@ class Profile extends Block {
         },
       ],
       // Коллбэк обработки инпута
-      handleInput: this.handlePersonalInput.bind(this),
+      handleInput: this._handlePersonalInput.bind(this),
     });
 
     // Форма изменения пароля пользователя
@@ -73,62 +113,65 @@ class Profile extends Block {
         },
       ],
       // Коллбэк обработки инпута
-      handleInput: this.handlePasswordInput.bind(this),
+      handleInput: this._handlePasswordInput.bind(this),
     });
 
     // Добавление доченрних компонентов в родительский
     this.children.profileBody = profileBody;
-    this._onEditProfile = onEditProfile;
+  }
+
+  componentDidMount() {
+    this.props.checkLoggedIn();
   }
 
   // Подключение валидации форм, заполнение формы персональными данными пользователя
-  componentIsReady(): void {
-    const personalForm = document.getElementById('personalForm')!;
-    const inputs = personalForm.querySelectorAll('input');
-    const { user } = this.props.userInfo as UserInfo;
-    // Заполнение формы данными пользователя
-    inputs.forEach((input: HTMLInputElement): void => {
-      /* eslint no-param-reassign: "error" */
-      const inputName = input.name as keyof User;
-      input.value = user[inputName].toString();
-    });
+  _componentIsReady(): void {
+    if (this.props.checkLoggedIn()) {
+      const formElement = document.getElementById('personalForm')!;
+      const inputs = formElement.querySelectorAll('input');
+      const { user } = this.props as Props;
+      // Заполнение формы данными пользователя
+      inputs.forEach((input: HTMLInputElement): void => {
+        /* eslint no-param-reassign: "error" */
+        const inputName = input.name as keyof User;
+        input.value = user[inputName]!.toString();
+      });
 
-    // Валидация для формы редактирования профиля
-    this._validatorPersonal = new FormValidator({
-      options: {
-        withButton: true,
-        withTextError: true,
-      },
-      formData:
-      {
-        formName: 'personalForm',
-        buttonSelector: 'form__button',
-        inputErrorTextSelector: 'form-input__error',
-        inputErrorClass: 'form-input__input_type_error',
-      },
+      // Валидация для формы редактирования профиля
+      this._validatorPersonal = new FormValidator({
+        options: {
+          withButton: true,
+          withTextError: true,
+        },
+        formData:
+        {
+          formName: 'personalForm',
+          buttonSelector: 'form__button',
+          inputErrorTextSelector: 'form-input__error',
+          inputErrorClass: 'form-input__input_type_error',
+        },
+      });
 
-    });
-
-    // Валидация для формы изменения пароля
-    this._validatorPassword = new FormValidator({
-      options: {
-        withButton: true,
-        withTextError: true,
-      },
-      formData:
-      {
-        formName: 'passwordForm',
-        buttonSelector: 'form__button',
-        inputErrorTextSelector: 'form-input__error',
-        inputErrorClass: 'form-input__input_type_error',
-        inputPasswordName: 'newPassword',
-      },
-
-    });
+      // Валидация для формы изменения пароля
+      this._validatorPassword = new FormValidator({
+        options: {
+          withButton: true,
+          withTextError: true,
+        },
+        formData:
+        {
+          formName: 'passwordForm',
+          buttonSelector: 'form__button',
+          inputErrorTextSelector: 'form-input__error',
+          inputErrorClass: 'form-input__input_type_error',
+          inputPasswordName: 'newPassword',
+        },
+      });
+    }
   }
 
   // Обработчик инпута формы реадктирования профиля
-  handlePersonalInput(evt: Event) {
+  private _handlePersonalInput(evt: Event) {
     switch (evt.type) {
       case 'input':
         this._validatorPersonal.handleInputChange(evt);
@@ -142,7 +185,7 @@ class Profile extends Block {
   }
 
   // Обработчик инпута формы реадктирования профиля
-  handlePasswordInput(evt: Event) {
+  private _handlePasswordInput(evt: Event) {
     switch (evt.type) {
       case 'input':
         this._validatorPassword.handleInputChange(evt);
@@ -156,7 +199,7 @@ class Profile extends Block {
   }
 
   // Обработчик формы редактирования профиля
-  _handlePersonalForm(evt: Event): void {
+  private _handlePersonalForm(evt: Event): void {
     evt.preventDefault();
 
     const target = evt.target as HTMLFormElement;
@@ -166,14 +209,17 @@ class Profile extends Block {
     if (isFormValid) {
       const data = new FormData(target);
       const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
-
+      const isDifferentData = Object.entries(formData)
+        .some(([key, value]) => value !== this.props.user[key]);
       // Коллбэк основного компонента App
-      this._onEditProfile(formData);
+      if (isDifferentData) {
+        this.props.onEditProfile(formData);
+      }
     }
   }
 
   // Обработчик формы изменения пароля
-  _handlePasswordForm(evt: Event): void {
+  private _handlePasswordForm(evt: Event): void {
     evt.preventDefault();
     const target = evt.target as HTMLFormElement;
     // Повторная проверка валидации формы
@@ -181,17 +227,48 @@ class Profile extends Block {
     if (isFormValid) {
       const data = new FormData(target);
       const formData: Record<string, FormDataEntryValue> = Object.fromEntries(data.entries());
-
+      this.props.onChangePassword(formData);
+      target.reset();
       // Коллбэк основного компонента App
-      this._onEditProfile(formData);
+    }
+  }
+
+  private _handleChangeAvatar(evt: InputEvent | DragEvent) {
+    evt.preventDefault();
+    let file: File | null = null;
+    switch (evt.type) {
+      case 'drop': {
+        const { dataTransfer } = evt as DragEvent;
+        [file] = dataTransfer!.files;
+      }
+        break;
+      case 'change': {
+        const target = evt.target as HTMLFormElement;
+        [file] = target.files;
+      }
+        break;
+      default:
+        break;
+    }
+
+    if (file) {
+      const form = new FormData();
+      form.append('avatar', file);
+      this.props.onChangeAvatar(form);
     }
   }
 
   render(): DocumentFragment {
     return this.compile(template, {
-      user: this.props.userInfo,
+      returnLink: MESSENGER_URL,
     });
   }
 }
 
-export default Profile;
+function mapSateToProps(state: Indexed) {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(Profile, mapSateToProps);

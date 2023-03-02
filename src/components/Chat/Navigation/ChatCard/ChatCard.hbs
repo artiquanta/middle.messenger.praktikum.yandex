@@ -1,7 +1,7 @@
-<li class="chat-card">
-  <img src="{{link}}" alt="{{name}}." class="chat-card__avatar">
+<li class="chat-card{{#if isActive}} chat-card_selected{{/if}}">
+  <img src="{{avatar}}" alt="{{title}}." class="chat-card__avatar">
   <div class="chat-card__info">
-    <h2 class="chat-card__username">{{name}}</h2>
+    <h2 class="chat-card__username">{{title}}</h2>
     {{#if lastMessage.content}}
     <div class="chat-card__message-container">
       {{#if owner}}
