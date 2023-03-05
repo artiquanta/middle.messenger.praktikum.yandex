@@ -4,41 +4,18 @@ import Block from '../../services/Block';
 import FormHeading from './FormHeading/FormHeading';
 import FormInput from './FormInput/FormInput';
 import FormLink from './FormLink/FormLink';
-import { FormType } from '../../utils/formsContent';
-
-type Props = {
-  form: FormType,
-  events: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
-  handleInput: (evt: Event) => void,
-};
-
-type Input = {
-  title: string,
-  type: string,
-  name: string,
-  minLength: number,
-  maxLength: number,
-  required?: boolean,
-};
-
-type FormElements = {
-  id: string,
-  heading?: string,
-  link?: {
-    url: string
-    title: string,
-  },
-  buttonTitle: string,
-};
+import { Props, Input, FormElements } from './Form.type';
+import FormError from './FormError/FormError';
 
 class Form extends Block {
   _propsForm: FormElements;
 
   constructor(props: Props) {
-    const { form, events, handleInput } = props;
+    const {
+      form,
+      events,
+      handleInput,
+    } = props;
     super({ form: form.form, events });
 
     const formBody: Record<string, Block | Block[]> = {};
@@ -66,6 +43,8 @@ class Form extends Block {
         },
       ],
     }));
+
+    formBody.formError = new FormError({});
 
     // Добавление дочерних компонентов
     this.children.formBody = formBody;

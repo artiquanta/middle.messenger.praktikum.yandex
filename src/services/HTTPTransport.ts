@@ -8,6 +8,8 @@ enum METHOD {
 
 type Options = {
   method: METHOD;
+  credentials?: boolean,
+  headers?: Record<string, string>,
   data?: any;
   timeout?: number,
 };
@@ -17,32 +19,32 @@ type OptionsWithoutMethod = Omit<Options, 'method'>;
 type HTTPMethod = (url: string, options: OptionsWithoutMethod) => Promise<XMLHttpRequest>;
 
 class HTTPTransport {
-  get: HTTPMethod = (url, options = {}) => {
+  public get: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.GET });
   };
 
-  post: HTTPMethod = (url, options = {}) => {
+  public post: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.POST });
   };
 
-  put: HTTPMethod = (url, options = {}) => {
+  public put: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.PUT });
   };
 
-  patch: HTTPMethod = (url, options = {}) => {
+  public patch: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.PATCH });
   };
 
-  delete: HTTPMethod = (url, options = {}) => {
+  public delete: HTTPMethod = (url, options = {}) => {
     const timeout = options.timeout ? options.timeout : 5000;
     return this._request(url, timeout, { ...options, method: METHOD.DELETE });
   };
 
-  _queryStringify(data: any = {}): string {
+  private _queryStringify(data: any = {}): string {
     if (!data || typeof data !== 'object') {
       return '';
     }
@@ -54,15 +56,30 @@ class HTTPTransport {
       : data[key]}${index < keys.length - 1 ? '&' : ''}`);
   }
 
-  _request(url: string, timeoutValue: number, options: Options = {
+  private _request(url: string, timeoutValue: number, options: Options = {
     method: METHOD.GET,
   }): Promise<XMLHttpRequest> {
-    const { method, data } = options;
+    const {
+      method,
+      credentials = false,
+      headers = {},
+      data,
+    } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const isGet = method === METHOD.GET;
       xhr.open(method, isGet && data ? `${url}${this._queryStringify(data)}` : url);
+
+      // Отсылаем куки, если необходимо
+      xhr.withCredentials = credentials;
+
+      // Добавляем заголовки, если заданы пользователем
+      Object.entries(headers).forEach(([key, value]) => {
+        xhr.setRequestHeader(key, value);
+      });
+
+      xhr.responseType = 'json';
 
       xhr.onload = () => resolve(xhr);
 

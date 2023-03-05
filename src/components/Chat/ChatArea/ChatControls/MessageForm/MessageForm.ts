@@ -1,12 +1,10 @@
 import './MessageForm.css';
 import template from './MessageForm.hbs';
 import Block from '../../../../../services/Block';
+import { EventType } from '../../../../../types/types';
 
 type Props = {
-  events: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  events: EventType[],
 };
 
 class MessageForm extends Block {

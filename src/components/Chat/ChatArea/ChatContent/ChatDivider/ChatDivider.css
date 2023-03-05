@@ -6,7 +6,7 @@
   margin: 0 0 20px;
 }
 
-.chat-divider_spacing_outer:first-child {
+.chat-divider_spacing_outer:last-child {
   margin-top: 35px;
 }
 

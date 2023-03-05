@@ -1,6 +1,6 @@
 import './FormInput.css';
-import Block from '../../../services/Block';
 import template from './FormInput.hbs';
+import Block from '../../../services/Block';
 
 type Props = {
   input: {
@@ -25,7 +25,8 @@ class FormInput extends Block {
   render(): DocumentFragment {
     return this.compile(template, {
       input: this.props.input,
-      isPassword: this.props.type === 'password', // Если тип поля ввода - "пароль", будет добавлен дополнительный класс для такого поля
+      // Если тип поля ввода - "пароль", будет добавлен дополнительный класс для такого поля
+      isPassword: this.props.input.type === 'password',
     });
   }
 }

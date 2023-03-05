@@ -6,41 +6,41 @@ import VideoMessage from './VideoMessage/VideoMessage';
 import PhotoMessage from './PhotoMessage/PhotoMessage';
 import FileMessage from './FileMessage/FileMessage';
 import LocationMessage from './LocationMessage/LocationMessage';
-
-type MessageTypes = 'text' | 'file' | 'location' | 'photo' | 'video';
+import * as defaultAvatar from '../../../../../images/default-avatar.svg';
+import { BASE_RESOURCE_URL } from '../../../../../utils/constants';
+import { EventType, UserType } from '../../../../../types/types';
 
 type Props = {
-  owner: {
+  owner: UserType,
+  content: string,
+  file?: {
     id: number,
-    avatar: string,
-    username: string,
-  },
-  content: {
-    type: keyof MessageTypes,
-    fileName?: string,
-    value: string,
+    user_id: number,
+    path: string,
+    fileName: string,
+    content_type: string,
+    content_size: number,
+    upload_date: string,
   },
   time: string,
-  userId: number,
-  events?: {
-    selector: string;
-    events: Record<string, (evt: Event) => void>,
-  }[],
+  user: UserType,
+  type: string,
+  events?: EventType[],
 };
 
 class Message extends Block {
   constructor(props: Props) {
     super(props);
 
-    // Добавляем дочерний компонент
+    // Добавляем дочерний компонент сообщений
     this.children.messageContent = this._generateMessage();
   }
 
   _generateMessage(): Block {
     let message: Block;
-    const messageContent: { content: string } = { content: this.props.content.value };
-    switch (this.props.content.type) {
-      case 'text':
+    const messageContent: { content: string } = { content: this.props.content };
+    switch (this.props.type) {
+      case 'message':
         message = new TextMessage(messageContent);
         break;
       case 'video':
@@ -51,8 +51,8 @@ class Message extends Block {
         break;
       case 'file':
         message = new FileMessage({
-          content: this.props.content.value,
-          fileName: this.props.content.fileName,
+          content: this.props.file.path,
+          fileName: this.props.file.fileName,
         });
         break;
       case 'location':
@@ -68,12 +68,21 @@ class Message extends Block {
   }
 
   render(): DocumentFragment {
+    const messageOwner = this.props.owner;
+    const userName = messageOwner.display_name
+      ? messageOwner.display_name
+      : `${messageOwner.first_name} ${messageOwner.second_name}`;
+
+    const userAvatar = this.props.owner.avatar
+      ? `${BASE_RESOURCE_URL}/${this.props.owner.avatar}`
+      : defaultAvatar;
+
     return this.compile(
       template,
       {
-        user: this.props.owner.id === this.props.userId,
-        avatar: this.props.owner.avatar,
-        username: this.props.owner.username,
+        user: this.props.owner.id === this.props.user.id,
+        avatar: userAvatar,
+        username: userName,
         time: this.props.time,
       },
     );

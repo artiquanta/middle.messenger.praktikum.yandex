@@ -123,6 +123,14 @@ class FormValidator {
 
   // Проверка валидности формы / Интегрировать с первоначальной с опциональным параметром?
   private _checkFromValid(): boolean {
+    if (this._form && this._withTextError) {
+      const formError: HTMLSpanElement = this._form.querySelector('.form-error')!;
+      if (formError.textContent) {
+        this._formButton.setAttribute('disabled', '');
+        formError.textContent = '';
+        return false;
+      }
+    }
     const isFormValid: boolean = !Object.values(this._inputValidity)
       .some((element: boolean): boolean => element === false);
     if (isFormValid && this._form.checkValidity()) {
