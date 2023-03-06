@@ -3,7 +3,7 @@ import template from './ChatCard.hbs';
 import Block from '../../../../services/Block';
 import connect from '../../../../services/Store/connect';
 import { convertTime } from '../../../../utils/convertTime';
-import * as defaultAvatar from '../../../../images/default-avatar.svg';
+import defaultAvatar from '../../../../images/default-avatar.svg';
 import {
   ChatType,
   EventType,

@@ -1,6 +1,5 @@
 /dist
 /.github
-/.parcel-cache
 /types
 **/*.min.js
 /node_modules

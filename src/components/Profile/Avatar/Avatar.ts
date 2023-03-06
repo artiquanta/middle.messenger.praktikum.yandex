@@ -16,7 +16,7 @@ class Avatar extends Block {
 
   render(): DocumentFragment {
     return this.compile(template, {
-      avatar: this.props.avatar,
+      avatarLink: this.props.avatar,
     });
   }
 }

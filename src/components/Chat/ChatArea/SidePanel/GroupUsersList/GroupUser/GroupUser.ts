@@ -2,7 +2,7 @@ import Block from '../../../../../../services/Block';
 import './GroupUser.css';
 import template from './GroupUser.hbs';
 import { BASE_RESOURCE_URL } from '../../../../../../utils/constants';
-import * as defaultAvatar from '../../../../../../images/default-avatar.svg';
+import defaultAvatar from '../../../../../../images/default-avatar.svg';
 import { EventType, UserType } from '../../../../../../types/types';
 
 type Props = {

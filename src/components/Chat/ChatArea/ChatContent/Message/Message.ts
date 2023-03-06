@@ -6,7 +6,7 @@ import VideoMessage from './VideoMessage/VideoMessage';
 import PhotoMessage from './PhotoMessage/PhotoMessage';
 import FileMessage from './FileMessage/FileMessage';
 import LocationMessage from './LocationMessage/LocationMessage';
-import * as defaultAvatar from '../../../../../images/default-avatar.svg';
+import defaultAvatar from '../../../../../images/default-avatar.svg';
 import { BASE_RESOURCE_URL } from '../../../../../utils/constants';
 import { EventType, UserType } from '../../../../../types/types';
 

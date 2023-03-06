@@ -1,9 +1,9 @@
 import './UserCard.css';
 import template from './UserCard.hbs';
 import Block from '../../../../services/Block';
-import * as defaultAvatar from '../../../../images/default-avatar.svg';
-import { EventType, UserType } from '../../../../types/types';
+import defaultAvatar from '../../../../images/default-avatar.svg';
 import { BASE_RESOURCE_URL } from '../../../../utils/constants';
+import { EventType, UserType } from '../../../../types/types';
 
 type Props = {
   user: UserType,

@@ -1,7 +1,7 @@
 import AuthApi from '../utils/Api/AuthApi';
 import Store from '../services/Store/Store';
 import { BASE_RESOURCE_URL } from '../utils/constants';
-import * as defaultAvatar from '../images/default-avatar.svg';
+import defaultAvatar from '../images/default-avatar.svg';
 import { LoginFormDataType, RegisterFormDataType, UserType } from '../types/types';
 
 class UserController {
