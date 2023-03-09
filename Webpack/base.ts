@@ -1,11 +1,10 @@
 import { Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import tsLoader from './tsLoader';
 import handlebarsLoader from './handlebarsLoader';
 import postcss from './postcss';
-
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 export default () => merge<Configuration>(
   [

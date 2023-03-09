@@ -24,13 +24,14 @@ import ErrorMessages from '../../utils/errorMessages';
 import {
   AddUserType,
   ChangePasswordType,
-  ErrorType,
   LoginFormDataType,
   RegisterFormDataType,
   SearchDataType,
   SendMessageType,
   UpdateProfileType,
 } from '../../types/types';
+import errorHandler from '../../utils/helpers/errorHandler';
+import ApiError from '../../utils/ApiError/ApiError';
 
 class App extends Block {
   private _userId: number | null;
@@ -71,7 +72,7 @@ class App extends Block {
   }
 
   // Подключение роутера
-  _registerRoutes() {
+  private _registerRoutes() {
     this._router = new Router('.app');
     this._router
       .use(SIGNIN_URL, Login, {
@@ -123,6 +124,12 @@ class App extends Block {
         onChangePassword: this._handleChangePassword.bind(this),
         onChangeAvatar: this._handleChangeAvatar.bind(this),
       })
+      .use('/505', ErrorPage, {
+        title: '505',
+        description: 'Что-то пошло не так. Попробуйте ещё раз!',
+        link: MESSENGER_URL,
+        linkTitle: 'Вернуться к чату?',
+      })
       .use('/*', ErrorPage, {
         title: '404',
         description: 'Вы попали в пустоту...',
@@ -150,9 +157,9 @@ class App extends Block {
   }
 
   // Обработчик незащищённых страниц
-  _initalizeUnprotectedPage() {
+  private _initalizeUnprotectedPage() {
     if (this._isLoggedIn) {
-      new Router('.app').go(MESSENGER_URL);
+      Router.getInstance().go(MESSENGER_URL);
       return true;
     }
 
@@ -160,9 +167,9 @@ class App extends Block {
   }
 
   // Обработчик защищённых страниц
-  _initalizeProtectedPage() {
+  private _initalizeProtectedPage() {
     if (!this._isLoggedIn) {
-      new Router('.app').go(SIGNIN_URL);
+      this._router.go(SIGNIN_URL);
       return false;
     }
 
@@ -170,7 +177,7 @@ class App extends Block {
   }
 
   // Инициализация страницы чата
-  async _initializeChatPage() {
+  private async _initializeChatPage() {
     Store.set('safe.isProcessing', true);
     // Ожидание завершения процесса аутентификации пользователя
     if (this._isProcessing) {
@@ -193,13 +200,13 @@ class App extends Block {
       }
       // иначе переводим его на страницу входа
     } else {
-      new Router('.app').go(SIGNIN_URL);
+      this._router.go(SIGNIN_URL);
       Store.set('safe.isProcessing', false);
     }
   }
 
   // Обработчик размонтирования страницы чата
-  _handleUnmountChatPage() {
+  private _handleUnmountChatPage() {
     if (this._chatController) {
       // Закрытие WSS
       this._chatController.closeSocketSoft();
@@ -208,109 +215,109 @@ class App extends Block {
 
   /* Обработчики форм */
   // Обработчик формы входа
-  async _handleLogin(data: LoginFormDataType): Promise<void> {
-    Store.set('safe.formError', '');
+  private async _handleLogin(data: LoginFormDataType): Promise<void> {
     this._isProcessing = true;
     Store.set('safe.isProcessing', true);
-    await this._userController.login(data)
-      .then((res) => {
-        if (typeof res === 'number') {
-          this._userId = res;
-        }
-      })
-      .then(() => {
+    Store.set('safe.formError', '');
+
+    try {
+      await this._userController.login(data);
+      const userId = await this._userController.getCurrentUser();
+      if (userId && typeof userId === 'number') {
+        this._userId = userId;
         this._isLoggedIn = true;
         this._isProcessing = false;
         this._router.go(MESSENGER_URL);
-      })
-      .catch((err) => {
-        this._isProcessing = false;
-        if (err.response) {
-          Store.set('safe.formError', ErrorMessages.INCORRECT_LOGIN_DATA);
-        } else {
-          Store.set('safe.formError', ErrorMessages.BAD_RESPONSE);
-        }
-        Store.set('safe.isProcessing', false);
-      });
+      } else {
+        throw new Error('Ошибка получения пользователя');
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(errorHandler(err, ErrorMessages.BAD_RESPONSE));
+      }
+      this._isProcessing = false;
+      Store.set('safe.isProcessing', false);
+    }
   }
 
   // Обработчик формы регистрации
-  async _handleRegister(data: RegisterFormDataType): Promise<void> {
+  private async _handleRegister(data: RegisterFormDataType): Promise<void> {
+    this._isProcessing = true;
+    Store.set('safe.isProcessing', true);
+    Store.set('safe.formError', '');
+
     try {
       await this._userController.register(data);
       this._handleLogin(data);
     } catch (err) {
-      const error = err as ErrorType;
-      if (error.response) {
-        Store.set('safe.formError', error.response.reason);
-      } else {
+      if (err instanceof ApiError) {
+        Store.set('safe.formError', err.reason);
+      }
+      if (err instanceof Error) {
         Store.set('safe.formError', ErrorMessages.BAD_RESPONSE);
       }
     }
   }
 
   // Выход из системы
-  async _handleLogout() {
+  private async _handleLogout() {
     Store.set('safe.isProcessing', true);
-    await this._userController.logout()
-      .then(() => {
-        if (this._chatController) {
-          this._chatController.closeSocket();
-        }
-        this._isLoggedIn = false;
-        this._userId = null;
-        this._isProcessing = false;
-        this._chatController = null;
-        this._profileController = null;
-        new Router('app').go(SIGNIN_URL);
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(ErrorMessages.LOGOUT_ERROR, err.response.reason);
-        } else {
-          console.log(ErrorMessages.BAD_RESPONSE);
-        }
-      });
+    try {
+      await this._userController.logout();
+      if (this._chatController) {
+        this._chatController.closeSocket();
+      }
+      this._isLoggedIn = false;
+      this._userId = null;
+      this._isProcessing = false;
+      this._chatController = null;
+      this._profileController = null;
+      this._router.go(SIGNIN_URL);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(errorHandler(err, ErrorMessages.BAD_RESPONSE));
+      }
+    }
   }
 
   // Создание чата
-  async _createChat(userId: number) {
+  private async _createChat(userId: number) {
     this._chatController!.createChat(userId);
   }
 
   // Удаление чата
-  async _handleChatDelete() {
+  private async _handleChatDelete() {
     this._chatController!.deleteChat();
   }
 
   // Добавление пользователя в чат
-  async _addGroupUser(data: AddUserType): Promise<void> {
+  private async _addGroupUser(data: AddUserType): Promise<void> {
     Store.set('safe.formError', '');
     await this._chatController!.addGroupUser(data);
   }
 
   // Удаление пользователя из чата
-  _removeGroupUser(userId: number): void {
+  private _removeGroupUser(userId: number): void {
     this._chatController!.removeGroupUser(userId);
   }
 
   // Открытие чата
-  _openChat(chatId: number) {
+  private _openChat(chatId: number) {
     this._chatController!.openChat(chatId);
   }
 
   // Получение списка сообщений
-  _getMessages() {
+  private _getMessages() {
     this._chatController!.getMoreMessage();
   }
 
   // Отправка сообщения
-  _handleSendMessage(data: SendMessageType): void {
+  private _handleSendMessage(data: SendMessageType): void {
     this._chatController!.sendMessage(data);
   }
 
   // Обработчик формы поиска
-  async _handleSearch(data: SearchDataType): Promise<void> {
+  private async _handleSearch(data: SearchDataType): Promise<void> {
     if (!this._searchController) {
       this._searchController = new SearchController();
     }
@@ -319,60 +326,41 @@ class App extends Block {
   }
 
   // Редактирование профиля
-  _editProfile(data: UpdateProfileType): void {
+  private _editProfile(data: UpdateProfileType): void {
     if (!this._profileController) {
       this._profileController = new ProfileController();
     }
     Store.set('safe.formError', '');
-    this._profileController.updateProfile(data)
-      .catch((err) => {
-        if (err.response) {
-          Store.set('safe.formError', ErrorMessages.BAD_DATA);
-        } else {
-          Store.set('safe.formError', ErrorMessages.BAD_RESPONSE);
-        }
-      });
+    this._profileController.updateProfile(data);
   }
 
   // Изменение пароля пользователя
-  _handleChangePassword(data: ChangePasswordType): void {
+  private async _handleChangePassword(data: ChangePasswordType): Promise<void> {
     if (!this._profileController) {
       this._profileController = new ProfileController();
     }
 
     Store.set('safe.formError', '');
     if (data.oldPassword === data.newPassword) {
+      Store.set('safe.formError', ErrorMessages.SAME_PASSWORD);
       return;
     }
-    this._profileController.changePassword(data)
-      .catch((err) => {
-        if (err.response) {
-          Store.set('safe.formError', err.response.reason);
-        } else {
-          Store.set('safe.formError', ErrorMessages.BAD_RESPONSE);
-        }
-      });
+
+    this._profileController.changePassword(data);
   }
 
   // Изменение аватара пользовател
-  _handleChangeAvatar(data: FormData) {
+  private async _handleChangeAvatar(data: FormData): Promise<void> {
     if (!this._profileController) {
       this._profileController = new ProfileController();
     }
 
     Store.set('safe.formError', '');
-    this._profileController.updateAvatar(data)
-      .catch((err) => {
-        if (err.response) {
-          Store.set('safe.formError', err.response.reason);
-        } else {
-          Store.set('safe.formError', ErrorMessages.BAD_RESPONSE);
-        }
-      });
+    this._profileController.updateAvatar(data);
   }
 
   // Изменение темы
-  _changeTheme(evt: Event) {
+  private _changeTheme(evt: Event) {
     this._mainController.changeTheme(evt);
   }
 

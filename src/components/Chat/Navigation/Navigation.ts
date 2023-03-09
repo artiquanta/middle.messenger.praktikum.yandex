@@ -97,7 +97,7 @@ class Navigation extends Block {
           selector: 'profile-control__button',
           events: {
             click: () => {
-              new Router('.app').go(PROFILE_URL);
+              Router.getInstance().go(PROFILE_URL);
             },
           },
         },

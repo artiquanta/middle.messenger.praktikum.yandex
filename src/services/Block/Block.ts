@@ -3,8 +3,6 @@ import EventBus from '../EventBus/EventBus';
 import isEqual from '../../utils/helpers/isEqual';
 import cloneDeep from '../../utils/helpers/deepClone';
 import {
-  CompileTemplate,
-  CompileProps,
   EventType,
 } from '../../types/types';
 
@@ -16,6 +14,10 @@ type Props = {
 type Children = Record<string, Block | Block[] | Record<string, Block | Block[]>>;
 
 type ChildBlockItem = Block | Block[] | Record<string, Block | Block[]>;
+
+type CompileTemplate = (args?: Record<string, unknown>) => string;
+
+type CompileProps = Record<string, unknown>;
 
 abstract class Block {
   private static EVENTS = {
@@ -72,28 +74,35 @@ abstract class Block {
     this._eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
+  // Вызывается, когда компонент смонтирован
+  _componentIsReady(): void { }
+
+  /* Функции для парсинга дочерних компонентов */
+  // Разбор дочерних компонентов в массиве
+  private _parseChildrenArray(childs: Block[], callBack: () => void) {
+    childs.forEach((child) => {
+      callBack.call(child);
+    });
+  }
+
+  // Разбор дочерних компонентов из объекта
+  private _parseChildren(children: Children, callBack: () => void) {
+    Object.values(children).forEach((child) => {
+      if (child instanceof Block) {
+        callBack.call(child);
+      } else if (Array.isArray(child)) {
+        this._parseChildrenArray(child, callBack);
+      } else {
+        this._parseChildren(child, callBack);
+      }
+    });
+  }
+
+  /* Монтирование */
   // Для каждого дочернего компонента вызываем ComponentDidMount
   private _componentDidMount(): void {
     if (Object.entries(this.children).length > 0) {
-      Object.values(this.children).forEach((child) => {
-        if (child instanceof Block) {
-          child.dispatchComponentDidMount();
-        } else if (Array.isArray(child)) {
-          child.forEach((childElement) => {
-            childElement.dispatchComponentDidMount();
-          });
-        } else {
-          Object.values(child).forEach((childElement) => {
-            if (childElement instanceof Block) {
-              childElement.dispatchComponentDidMount();
-            } else if (Array.isArray(childElement)) {
-              childElement.forEach((childArrayElement) => {
-                childArrayElement.dispatchComponentDidMount();
-              });
-            }
-          });
-        }
-      });
+      this._parseChildren(this.children, this.dispatchComponentDidMount);
     }
   }
 
@@ -104,9 +113,7 @@ abstract class Block {
     this._eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  // Вызывается, когда компонент смонтирован
-  _componentIsReady(): void { }
-
+  /* Обновление компонента */
   private _componentDidUpdate(oldProps: Props, newProps: Props): void {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this._render();
@@ -128,27 +135,11 @@ abstract class Block {
     this._eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
+  /* Размонтирование */
   private _componentDidUnmount(): void {
+    // Если имеются дочерние компоненты
     if (Object.entries(this.children).length > 0) {
-      Object.values(this.children).forEach((child) => {
-        if (child instanceof Block) {
-          child.dispatchComponentDidUnmount();
-        } else if (Array.isArray(child)) {
-          child.forEach((childElement) => {
-            childElement.dispatchComponentDidUnmount();
-          });
-        } else {
-          Object.values(child).forEach((childElement) => {
-            if (childElement instanceof Block) {
-              childElement.dispatchComponentDidUnmount();
-            } else if (Array.isArray(childElement)) {
-              childElement.forEach((childArrayElement) => {
-                childArrayElement.dispatchComponentDidUnmount();
-              });
-            }
-          });
-        }
-      });
+      this._parseChildren(this.children, this.dispatchComponentDidUnmount);
     }
   }
 

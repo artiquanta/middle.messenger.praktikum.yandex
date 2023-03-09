@@ -16,18 +16,16 @@ class UserCard extends Block {
   }
 
   render(): DocumentFragment {
-    /* eslint-disable */
     const {
       id,
       avatar,
-      display_name,
-      first_name,
-      second_name,
+      display_name: displayName,
+      first_name: firstName,
+      second_name: secondName,
       login,
-    } = this.props.user;
-    /* eslint-enable */
+    } = this.props.user as UserType;
 
-    const userName = display_name ?? `${first_name} ${second_name}`;
+    const userName = displayName ?? `${firstName} ${secondName}`;
 
     return this.compile(template, {
       id,

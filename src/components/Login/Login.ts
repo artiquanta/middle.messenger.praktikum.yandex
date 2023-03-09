@@ -38,7 +38,7 @@ class Login extends Block {
           events: {
             click: (evt: Event) => {
               evt.preventDefault();
-              new Router('.app').go(SIGNUP_URL);
+              Router.getInstance().go(SIGNUP_URL);
             },
           },
         },

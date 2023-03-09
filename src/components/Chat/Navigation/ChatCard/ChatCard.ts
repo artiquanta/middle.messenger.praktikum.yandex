@@ -18,36 +18,53 @@ type Props = {
   events?: EventType[],
 };
 
+type LastMessage = {
+  content: string,
+  id: number,
+  time: string,
+  user: {
+    avatar: string | null,
+    display_name: string | null,
+    email: string,
+    first_name: string,
+    second_name: string,
+    login: string,
+    phone: string,
+  },
+};
+
 class ChatCard extends Block {
   constructor(props: Props) {
     super(props);
   }
 
+  // Является ли текущий пользователь владельцем сообщения
+  private _returnOwner(message: LastMessage): boolean {
+    if (this.props.user) {
+      return message
+        ? message.user.login === this.props.user.login
+        : false;
+    }
+
+    return false;
+  }
+
   render(): DocumentFragment {
     const {
-      /* eslint-disable */
       id,
       avatar,
       title,
-      last_message,
-      unread_count,
-    } = this.props.chat;
-    /* eslint-enable */
-
-    let isOwner;
-    if (this.props.user) {
-      isOwner = last_message ? last_message.user.login === this.props.user.login : false;
-    } else {
-      isOwner = false;
-    }
+      last_message: lastMessage,
+      unread_count: count,
+    } = this.props.chat as ChatType;
 
     return this.compile(template, {
       avatar: avatar ? `${BASE_RESOURCE_URL}/${avatar}` : defaultAvatar,
       title,
-      owner: isOwner,
-      time: last_message ? convertTime(last_message.time) : '',
-      unreadCount: unread_count,
-      lastMessage: last_message,
+      owner: this._returnOwner(lastMessage),
+      time: lastMessage ? convertTime(lastMessage.time) : '',
+      unreadCount: count,
+      lastMessage,
       isActive: this.props.activeCard === id,
     });
   }

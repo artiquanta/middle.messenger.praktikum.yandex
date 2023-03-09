@@ -2,52 +2,7 @@ export type Indexed<T = unknown> = {
   [key in string]: T;
 };
 
-export type CompileTemplate = (args?: Record<string, unknown>) => string;
-
-export type CompileProps = Record<string, unknown>;
-
-export type PlainObject<T = any> = {
-  [k in string]: T;
-};
-
-export type Form = {
-  id: string,
-  heading?: string,
-  link?: {
-    url: string
-    title: string,
-  },
-  buttonTitle: string,
-};
-
-export type HTMLInputTypeAttribute = 'button' | 'checkbox' | 'color' | 'date' | 'datetime' | 'local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
-
-export type Inputs = {
-  title: string,
-  type: HTMLInputTypeAttribute,
-  name: string,
-  minLength: number,
-  maxLength: number,
-  required: boolean,
-}[];
-
-export type FormType = {
-  form: Form,
-  inputs: Inputs,
-};
-
-export type UserData = {
-  first_name: string,
-  second_name: string,
-  login: string,
-  email: string,
-  password: string,
-  phone: string,
-};
-
 export type CallBack = (data?: unknown) => void;
-
-export type FormCallBack = (data: Record<string, FormDataEntryValue>) => void;
 
 export type State = {
   [key: string]: any,
@@ -123,6 +78,11 @@ export type SendMessageType = {
   message: string,
 };
 
+export type LoginFormDataType = {
+  login: string,
+  password: string,
+};
+
 export type UpdateProfileType = {
   first_name: string,
   second_name: string,
@@ -137,11 +97,6 @@ export type ChangePasswordType = {
   newPassword: string,
 };
 
-export type LoginFormDataType = {
-  login: string,
-  password: string,
-};
-
 export type RegisterFormDataType = {
   first_name: string,
   second_name: string,
@@ -151,23 +106,9 @@ export type RegisterFormDataType = {
   phone: string,
 };
 
-export type RegisterResponse = {
-  id: number,
-};
-
 export type StoreSafeType = {
   chatId?: number,
   chats?: ChatType[],
-  chatUsers: ChatType[],
+  chatUsers: UserType[],
   messages: MessageType[],
-};
-
-export type ChatTokenReponse = {
-  token: string,
-};
-
-export type ErrorType = {
-  response?: {
-    reason: string,
-  }
 };

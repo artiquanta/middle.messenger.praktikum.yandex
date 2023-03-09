@@ -14,7 +14,7 @@
     "tsc": "tsc --build --clean && tsc",
     "lint": "npx eslint .",
     "test": "mocha",
-    "docker": "docker build -t messenger . && docker run -p 8080:3000 --rm messenger"
+    "docker": "docker build -t messenger . && docker run --rm messenger"
   },
   "keywords": [],
   "author": "",

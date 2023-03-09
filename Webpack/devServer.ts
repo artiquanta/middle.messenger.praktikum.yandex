@@ -1,9 +1,8 @@
-import path from 'path';
 import 'webpack-dev-server';
 
 export default () => ({
   devServer: {
-    static: path.resolve(__dirname, './dist'),
+    static: './dist',
     historyApiFallback: true,
     compress: true,
     port: 8080,

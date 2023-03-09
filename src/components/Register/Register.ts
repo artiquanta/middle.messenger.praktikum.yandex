@@ -36,7 +36,7 @@ class Register extends Block {
           events: {
             click: (evt: Event) => {
               evt.preventDefault();
-              new Router('.app').go(SIGNIN_URL);
+              Router.getInstance().go(SIGNIN_URL);
             },
           },
         },

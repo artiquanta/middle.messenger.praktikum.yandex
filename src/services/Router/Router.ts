@@ -14,17 +14,17 @@ class Router {
   static __instance: Router;
 
   constructor(rootQuery: string) {
-    /* eslint no-constructor-return: "off" */
-    if (Router.__instance) {
-      return Router.__instance;
-    }
-
     this._routes = [];
     this._history = window.history as History;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
 
     Router.__instance = this;
+  }
+
+  // Вовзрат ранее созданного экземпляра класса
+  static getInstance() {
+    return this.__instance;
   }
 
   use(pathname: string, block: typeof Block, props: Indexed) {

@@ -1,5 +1,6 @@
 import Store from '../services/Store/Store';
 import UserApi from '../utils/Api/UserApi';
+import errorHandler from '../utils/helpers/errorHandler';
 import { SearchDataType, StoreSafeType } from '../types/types';
 
 class SearchController {
@@ -11,13 +12,17 @@ class SearchController {
       Store.set('safe.searchResults', false);
       return;
     }
-    const foundUsers = await UserApi.findUser(searchRequest)
-      .catch((err) => console.log('При поиске пользователей произошла ошибка', err));
-
-    if (foundUsers) {
-      Store.set('safe.foundUsers', foundUsers);
-      Store.set('safe.searchResults', true);
-      this._filterChat(searchRequest);
+    try {
+      const foundUsers = await UserApi.findUser(searchRequest);
+      if (foundUsers) {
+        Store.set('safe.foundUsers', foundUsers);
+        Store.set('safe.searchResults', true);
+        this._filterChat(searchRequest);
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(errorHandler(err), 'Ошибка при выполнении поиска');
+      }
     }
   }
 

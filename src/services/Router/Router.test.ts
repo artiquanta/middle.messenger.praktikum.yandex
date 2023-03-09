@@ -27,6 +27,10 @@ class TestBlock extends Block {
 describe('Services/Router', () => {
   const router = new Router('.app');
 
+  it('Возвращает ранее созданный экземляр (Singleton)', () => {
+    expect(Router.getInstance()).to.be.not.a('null').that.equal(Route);
+  });
+
   it('Маршрут добавляется', () => {
     router
       .use('/', TestBlock, {
@@ -51,20 +55,12 @@ describe('Services/Router', () => {
   });
 
   it('Переход назад', () => {
-    router.go('/');
-    console.log(document.getElementById('firstTestBlock'))
-    console.log(document.getElementById('secondTestBlock'))
-    router.go('/test');
-    console.log(document.getElementById('firstTestBlock'))
-    console.log(document.getElementById('secondTestBlock'))
     router.back();
     const newElement = document.getElementById('firstTestBlock')!;
     expect(newElement).to.be.not.a('null');
   });
 
   it('Переход вперёд', () => {
-    router.go('/test');
-    router.back();
     router.forward();
     const newElement = document.getElementById('secondTestBlock')!;
     expect(newElement).to.be.not.a('null');

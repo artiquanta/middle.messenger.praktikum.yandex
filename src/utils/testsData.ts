@@ -55,3 +55,5 @@ export const resultObject = {
     test2: false,
   },
 };
+
+export const errorMessage = 'При обращении к серверу произошла ошибка. Причина: страница не найдена. Код ответа: 404';

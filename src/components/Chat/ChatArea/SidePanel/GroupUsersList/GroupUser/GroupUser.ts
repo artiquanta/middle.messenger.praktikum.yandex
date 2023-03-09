@@ -17,16 +17,27 @@ class GroupUser extends Block {
     super(props);
   }
 
-  render(): DocumentFragment {
-    const currentUser = this.props.chatUser;
-    // Отображаемое имя пользователя
-    const userName = currentUser.display_name
-      ? currentUser.display_name
-      : `${currentUser.first_name} ${currentUser.second_name}`;
-    // Отображаемый аватар (если аватар отсутствует - подставляем стандартный аватар)
-    const userAvatar = currentUser.avatar
+  // Формирование ссылки на аватар
+  private _generateAvatarLink(currentUser: UserType): string {
+    return currentUser.avatar
       ? `${BASE_RESOURCE_URL}/${currentUser.avatar}`
       : defaultAvatar;
+  }
+
+  // Формирование имени пользователя
+  private _generateUsername(currentUser: UserType): string {
+    return currentUser.display_name
+      ? currentUser.display_name
+      : `${currentUser.first_name} ${currentUser.second_name}`;
+  }
+
+  render(): DocumentFragment {
+    const currentUser: UserType = this.props.chatUser;
+
+    // Отображаемое имя пользователя
+    const userName = this._generateUsername(currentUser);
+    // Отображаемый аватар (если аватар отсутствует - подставляем стандартный аватар)
+    const userAvatar = this._generateAvatarLink(currentUser);
 
     const canManage = this.props.chatOwnerId === this.props.user.id;
 
