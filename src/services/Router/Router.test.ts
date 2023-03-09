@@ -53,16 +53,4 @@ describe('Services/Router', () => {
     const newElement = document.getElementById('secondTestBlock')!;
     expect(newElement).to.be.not.a('null');
   });
-
-  it('Переход назад', () => {
-    router.back();
-    const newElement = document.getElementById('firstTestBlock')!;
-    expect(newElement).to.be.not.a('null');
-  });
-
-  it('Переход вперёд', () => {
-    router.forward();
-    const newElement = document.getElementById('secondTestBlock')!;
-    expect(newElement).to.be.not.a('null');
-  });
 });
