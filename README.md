@@ -36,4 +36,3 @@
 Ссылка на макет: [Figma](https://www.figma.com/file/NxHVGyrtVacAGaBIGCJM5D/Messsenger.-Sprint-1?t=0uRgnrCWzty5sfx1-1)
 
 Проектная работа доступна на странице: [https://hilarious-capybara-51e99e.netlify.app](https://hilarious-capybara-51e99e.netlify.app)
-Render: []

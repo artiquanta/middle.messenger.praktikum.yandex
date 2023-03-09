@@ -4,6 +4,8 @@ WORKDIR /home/messenger
 
 COPY . .
 
+RUN npm update
+
 RUN npm install
 
 RUN npm run build
