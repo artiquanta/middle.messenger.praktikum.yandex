@@ -1,7 +1,7 @@
 import './Navigation.css';
 import template from './Navigation.hbs';
-import Block from '../../../services/Block';
-import FormValidator from '../../../services/FormValidator';
+import Block from '../../../services/Block/Block';
+import FormValidator from '../../../services/FormValidator/FormValidator';
 import Router from '../../../services/Router/Router';
 import connect from '../../../services/Store/connect';
 import SearchForm from './SearchForm/SearchForm';
@@ -9,7 +9,7 @@ import ChatList from './ChatList/ChatList';
 import ChatInfo from './ChatInfo/ChatInfo';
 import ProfileControl from './ProfileControl/ProfileControl';
 import SearchResults from './SearchResults/SearchResults';
-import isEqual from '../../../utils/isEqual';
+import isEqual from '../../../utils/helpers/isEqual';
 import { PROFILE_URL } from '../../../utils/constants';
 import {
   ChatType,

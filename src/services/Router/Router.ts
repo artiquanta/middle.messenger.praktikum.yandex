@@ -1,5 +1,5 @@
 import Route from './Route';
-import Block from '../Block';
+import Block from '../Block/Block';
 import { Indexed } from '../../types/types';
 
 class Router {

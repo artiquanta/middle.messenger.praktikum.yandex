@@ -1,6 +1,6 @@
 import './Loader.css';
 import template from './Loader.hbs';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import connect from '../../services/Store/connect';
 import { EventType, State } from '../../types/types';
 

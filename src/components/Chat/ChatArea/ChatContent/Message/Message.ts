@@ -1,6 +1,6 @@
 import './Message.css';
 import template from './Message.hbs';
-import Block from '../../../../../services/Block';
+import Block from '../../../../../services/Block/Block';
 import TextMessage from './TextMessage/TextMessage';
 import VideoMessage from './VideoMessage/VideoMessage';
 import PhotoMessage from './PhotoMessage/PhotoMessage';

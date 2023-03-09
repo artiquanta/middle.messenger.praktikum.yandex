@@ -1,6 +1,6 @@
 import Store, { StoreEvents } from './Store';
-import Block from '../Block';
-import isEqual from '../../utils/isEqual';
+import Block from '../Block/Block';
+import isEqual from '../../utils/helpers/isEqual';
 import { Indexed } from '../../types/types';
 
 function connect(Component: typeof Block, mapStateToProps: (state: Indexed) => Indexed) {

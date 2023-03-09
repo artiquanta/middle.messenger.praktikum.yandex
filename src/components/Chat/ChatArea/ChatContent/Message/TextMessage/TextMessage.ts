@@ -1,4 +1,4 @@
-import Block from '../../../../../../services/Block';
+import Block from '../../../../../../services/Block/Block';
 import './TextMessage.css';
 import template from './TextMessage.hbs';
 

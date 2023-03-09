@@ -1,4 +1,4 @@
-import Block from '../../../../../../services/Block';
+import Block from '../../../../../../services/Block/Block';
 import './GroupUser.css';
 import template from './GroupUser.hbs';
 import { BASE_RESOURCE_URL } from '../../../../../../utils/constants';

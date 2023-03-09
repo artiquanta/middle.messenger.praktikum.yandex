@@ -1,8 +1,8 @@
 import './ChatCard.css';
 import template from './ChatCard.hbs';
-import Block from '../../../../services/Block';
+import Block from '../../../../services/Block/Block';
 import connect from '../../../../services/Store/connect';
-import { convertTime } from '../../../../utils/convertTime';
+import { convertTime } from '../../../../utils/helpers/convertTime';
 import defaultAvatar from '../../../../images/default-avatar.svg';
 import {
   ChatType,

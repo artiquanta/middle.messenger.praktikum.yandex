@@ -1,4 +1,4 @@
-import HTTPTransport from '../../services/HTTPTransport';
+import HTTPTransport from '../../services/HTTPTransport/HTTPTransport';
 
 class BaseApi {
   _baseUrl: string;

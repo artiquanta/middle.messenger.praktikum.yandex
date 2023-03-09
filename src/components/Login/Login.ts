@@ -1,8 +1,8 @@
 import './Login.css';
 import template from './Login.hbs';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import Form from '../Form/Form';
-import FormValidator from '../../services/FormValidator';
+import FormValidator from '../../services/FormValidator/FormValidator';
 import Router from '../../services/Router/Router';
 import { loginForm } from '../../utils/formsContent';
 import { SIGNUP_URL } from '../../utils/constants';

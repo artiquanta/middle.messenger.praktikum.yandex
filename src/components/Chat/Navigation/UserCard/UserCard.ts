@@ -1,6 +1,6 @@
 import './UserCard.css';
 import template from './UserCard.hbs';
-import Block from '../../../../services/Block';
+import Block from '../../../../services/Block/Block';
 import defaultAvatar from '../../../../images/default-avatar.svg';
 import { BASE_RESOURCE_URL } from '../../../../utils/constants';
 import { EventType, UserType } from '../../../../types/types';

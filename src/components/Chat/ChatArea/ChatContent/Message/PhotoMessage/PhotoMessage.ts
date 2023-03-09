@@ -1,6 +1,6 @@
 import './PhotoMessage.css';
 import template from './PhotoMessage.hbs';
-import Block from '../../../../../../services/Block';
+import Block from '../../../../../../services/Block/Block';
 
 type Props = {
   content: string,

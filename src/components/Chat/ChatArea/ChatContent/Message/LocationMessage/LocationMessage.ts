@@ -1,6 +1,6 @@
 import './LocationMessage.css';
 import template from './LocationMessage.hbs';
-import Block from '../../../../../../services/Block';
+import Block from '../../../../../../services/Block/Block';
 
 type Props = {
   content: string,

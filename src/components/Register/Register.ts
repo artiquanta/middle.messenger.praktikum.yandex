@@ -1,9 +1,9 @@
 import './Register.css';
 import template from './Register.hbs';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import Router from '../../services/Router/Router';
 import Form from '../Form/Form';
-import FormValidator from '../../services/FormValidator';
+import FormValidator from '../../services/FormValidator/FormValidator';
 import { registerForm } from '../../utils/formsContent';
 import { SIGNIN_URL } from '../../utils/constants';
 import { CallBack, EventType } from '../../types/types';

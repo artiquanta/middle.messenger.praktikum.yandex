@@ -1,6 +1,6 @@
 import './FormHeading.css';
 import template from './FormHeading.hbs';
-import Block from '../../../services/Block';
+import Block from '../../../services/Block/Block';
 
 type Props = {
   heading: string,

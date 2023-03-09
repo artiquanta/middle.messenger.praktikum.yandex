@@ -1,9 +1,9 @@
 import './GroupUsersList.css';
 import template from './GroupUsersList.hbs';
-import Block from '../../../../../services/Block';
+import Block from '../../../../../services/Block/Block';
 import connect from '../../../../../services/Store/connect';
 import GroupUser from './GroupUser/GroupUser';
-import isEqual from '../../../../../utils/isEqual';
+import isEqual from '../../../../../utils/helpers/isEqual';
 import { CallBack, State, UserType } from '../../../../../types/types';
 
 type Props = {

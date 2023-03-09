@@ -1,12 +1,12 @@
 FROM node:18.14.2-slim
 
-WORKDIR /user/messenger
+WORKDIR /home/messenger
 
-COPY . .
+COPY ./app.ts ./server.ts ./Docker/package.json ./
+
+ADD dist ./dist
 
 RUN npm install
-
-RUN npm run build
 
 EXPOSE 3000
 

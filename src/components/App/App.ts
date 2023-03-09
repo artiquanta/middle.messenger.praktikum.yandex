@@ -1,6 +1,6 @@
 import './App.css';
 import template from './App.hbs';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import Router from '../../services/Router/Router';
 import Store from '../../services/Store/Store';
 import Login from '../Login/Login';
@@ -9,11 +9,11 @@ import Chat from '../Chat/Chat';
 import Profile from '../Profile/Profile';
 import ErrorPage from '../ErrorPage/ErrorPage';
 import Loader from '../Loader/Loader';
-import UserController from '../../Controllers/UserController';
-import MainController from '../../Controllers/MainController';
-import ChatController from '../../Controllers/ChatController';
-import SearchController from '../../Controllers/SearchController';
-import ProfileController from '../../Controllers/ProfileController';
+import UserController from '../../controllers/UserController';
+import MainController from '../../controllers/MainController';
+import ChatController from '../../controllers/ChatController';
+import SearchController from '../../controllers/SearchController';
+import ProfileController from '../../controllers/ProfileController';
 import {
   MESSENGER_URL,
   PROFILE_URL,

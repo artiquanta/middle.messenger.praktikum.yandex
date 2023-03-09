@@ -1,6 +1,6 @@
 import './FormLink.css';
 import template from './FormLink.hbs';
-import Block from '../../../services/Block';
+import Block from '../../../services/Block/Block';
 
 type Props = {
   link: {

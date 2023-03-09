@@ -1,4 +1,4 @@
-function throttle<T = unknown>(callBack: (data: T) => Promise<void>, timeout: number) {
+function throttle<T = unknown>(callBack: (data: T) => void, timeout: number) {
   let timer: ReturnType<typeof setTimeout> | null = null;
 
   return function perform(...args: [T]) {

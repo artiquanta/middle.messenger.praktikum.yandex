@@ -1,12 +1,12 @@
 import { v4 as makeUUID } from 'uuid';
-import EventBus from './EventBus';
-import isEqual from '../utils/isEqual';
-import cloneDeep from '../utils/deepClone';
+import EventBus from '../EventBus/EventBus';
+import isEqual from '../../utils/helpers/isEqual';
+import cloneDeep from '../../utils/helpers/deepClone';
 import {
   CompileTemplate,
   CompileProps,
   EventType,
-} from '../types/types';
+} from '../../types/types';
 
 type Props = {
   [key: string]: any,
@@ -259,8 +259,11 @@ abstract class Block {
   render(): any { }
 
   getContent(): HTMLElement {
-    setTimeout(() => this._eventBus.emit(Block.EVENTS.READY), 1);
-    return this._element;
+    try {
+      return this._element;
+    } finally {
+      setTimeout(() => this._eventBus.emit(Block.EVENTS.READY), 1);
+    }
   }
 
   // Изменение пропсов блока

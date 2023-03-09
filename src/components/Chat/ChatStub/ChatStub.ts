@@ -1,6 +1,6 @@
 import './ChatStub.css';
 import template from './ChatStub.hbs';
-import Block from '../../../services/Block';
+import Block from '../../../services/Block/Block';
 import { EventType } from '../../../types/types';
 
 type Props = {

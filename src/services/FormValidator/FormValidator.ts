@@ -1,4 +1,4 @@
-import { PATTERNS, VALIDATION_ERRORS } from '../utils/constants';
+import { PATTERNS, VALIDATION_ERRORS } from '../../utils/constants';
 
 type Options = {
   withButton: boolean,
