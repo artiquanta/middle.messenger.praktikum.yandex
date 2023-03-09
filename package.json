@@ -13,17 +13,13 @@
     "build": "webpack --mode production",
     "tsc": "tsc --build --clean && tsc",
     "lint": "npx eslint .",
-    "test": "mocha",
+    "mocha": "mocha",
+    "test": "npm-run-all lint tsc mocha",
     "docker": "docker build -t messenger . && docker run --rm messenger"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all lint tsc test"
-    }
-  },
   "devDependencies": {
     "@types/chai": "4.3.4",
     "@types/jsdom": "21.1.0",

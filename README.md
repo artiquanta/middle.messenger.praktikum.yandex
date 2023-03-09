@@ -26,7 +26,7 @@
 2. Запуск проекта - npm start
 3. Запуск Dev-сервера с hot reload - npm run dev
 4. Сборка и запуск Docker - npm run docker
-5. Запуск unit-тестов - npm run test
+5. Запуск unit-тестов - npm run mocha
 5. Запуск линтера - npm run lint
 
 
