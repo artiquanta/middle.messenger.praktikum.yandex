@@ -1,6 +1,6 @@
 import './FileMessage.css';
 import template from './FileMessage.hbs';
-import Block from '../../../../../../services/Block';
+import Block from '../../../../../../services/Block/Block';
 import { BASE_RESOURCE_URL } from '../../../../../../utils/constants';
 
 type Props = {

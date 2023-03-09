@@ -1,6 +1,6 @@
 import './MessageForm.css';
 import template from './MessageForm.hbs';
-import Block from '../../../../../services/Block';
+import Block from '../../../../../services/Block/Block';
 import { EventType } from '../../../../../types/types';
 
 type Props = {

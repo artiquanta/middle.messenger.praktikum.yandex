@@ -1,10 +1,10 @@
 import './Profile.css';
 import template from './Profile.hbs';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import Form from '../Form/Form';
-import FormValidator from '../../services/FormValidator';
-import { passwordForm, personalForm } from '../../utils/formsContent';
 import Avatar from './Avatar/Avatar';
+import FormValidator from '../../services/FormValidator/FormValidator';
+import { passwordForm, personalForm } from '../../utils/formsContent';
 import connect from '../../services/Store/connect';
 import { MESSENGER_URL } from '../../utils/constants';
 import { CallBack, Indexed, UserType } from '../../types/types';

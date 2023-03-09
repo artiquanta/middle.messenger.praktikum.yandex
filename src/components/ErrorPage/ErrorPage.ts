@@ -1,6 +1,6 @@
 import './ErrorPage.css';
 import template from './ErrorPage.hbs';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 
 type Props = {
   title: string,

@@ -1,4 +1,4 @@
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import './UploadPopup.css';
 import template from './UploadPopup.hbs';
 

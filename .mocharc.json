@@ -1,5 +1,8 @@
 {
-  "require": "ts-node/esm",
+  "require": [
+    "ts-node/esm",
+    "jsdom.config.ts"
+  ],
   "spec": "src/**/*.test.ts",
   "exclude": [
     "./dist",

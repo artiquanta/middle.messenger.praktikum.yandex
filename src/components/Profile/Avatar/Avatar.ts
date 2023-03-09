@@ -1,6 +1,6 @@
 import './Avatar.css';
 import template from './Avatar.hbs';
-import Block from '../../../services/Block';
+import Block from '../../../services/Block/Block';
 import connect from '../../../services/Store/connect';
 import { EventType, State } from '../../../types/types';
 
@@ -16,7 +16,7 @@ class Avatar extends Block {
 
   render(): DocumentFragment {
     return this.compile(template, {
-      avatar: this.props.avatar,
+      avatarLink: this.props.avatar,
     });
   }
 }

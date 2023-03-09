@@ -1,6 +1,6 @@
 import './PopupAttach.css';
 import template from './PopupAttach.hbs';
-import Block from '../../../../../services/Block';
+import Block from '../../../../../services/Block/Block';
 import { EventType } from '../../../../../types/types';
 
 type Props = {

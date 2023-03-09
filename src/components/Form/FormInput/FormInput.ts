@@ -1,6 +1,6 @@
 import './FormInput.css';
 import template from './FormInput.hbs';
-import Block from '../../../services/Block';
+import Block from '../../../services/Block/Block';
 
 type Props = {
   input: {

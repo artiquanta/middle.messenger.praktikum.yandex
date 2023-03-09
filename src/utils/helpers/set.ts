@@ -1,4 +1,4 @@
-import { Indexed } from '../types/types';
+import { Indexed } from '../../types/types';
 import merge from './merge';
 
 function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {

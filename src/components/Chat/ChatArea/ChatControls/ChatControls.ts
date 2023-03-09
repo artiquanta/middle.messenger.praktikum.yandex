@@ -1,7 +1,7 @@
 import './ChatControls.css';
 import template from './ChatControls.hbs';
-import Block from '../../../../services/Block';
-import FormValidator from '../../../../services/FormValidator';
+import Block from '../../../../services/Block/Block';
+import FormValidator from '../../../../services/FormValidator/FormValidator';
 import MessageForm from './MessageForm/MessageForm';
 import PopupAttach from './PopupAttach/PopupAttach';
 import { CallBack, EventType } from '../../../../types/types';

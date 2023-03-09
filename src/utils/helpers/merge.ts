@@ -1,4 +1,4 @@
-import { Indexed } from '../types/types';
+import { Indexed } from '../../types/types';
 
 function merge(lhs: Indexed, rhs: Indexed): Indexed {
   const target = lhs;

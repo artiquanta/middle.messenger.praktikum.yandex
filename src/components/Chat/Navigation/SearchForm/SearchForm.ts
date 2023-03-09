@@ -1,6 +1,6 @@
 import './SearchForm.css';
 import template from './SearchForm.hbs';
-import Block from '../../../../services/Block';
+import Block from '../../../../services/Block/Block';
 import { EventType } from '../../../../types/types';
 
 type Props = {
