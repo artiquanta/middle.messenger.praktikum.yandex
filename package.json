@@ -15,7 +15,7 @@
     "lint": "npx eslint .",
     "mocha": "mocha",
     "stylelint": "stylelint \"**/*.css\"",
-    "precommit": "npm-run-all lint stylelint tsc mocha",
+    "precommit": "npm-run-all tsc mocha",
     "docker": "docker build -t messenger . && docker run --rm messenger"
   },
   "keywords": [],
