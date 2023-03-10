@@ -14,7 +14,8 @@
     "tsc": "tsc --build --clean && tsc",
     "lint": "npx eslint .",
     "mocha": "mocha",
-    "test": "npm-run-all lint tsc mocha",
+    "stylelint": "stylelint \"**/*.css\"",
+    "precommit": "npm-run-all lint stylelint tsc mocha",
     "docker": "docker build -t messenger . && docker run --rm messenger"
   },
   "keywords": [],
@@ -40,6 +41,7 @@
     "html-webpack-plugin": "5.5.0",
     "husky": "8.0.3",
     "jsdom": "21.1.0",
+    "lint-staged": "13.2.0",
     "mini-css-extract-plugin": "2.7.3",
     "mocha": "10.2.0",
     "nodemon": "2.0.21",

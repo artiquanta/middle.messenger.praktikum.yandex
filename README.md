@@ -28,7 +28,8 @@
 3. Запуск Dev-сервера с hot reload - npm run dev
 4. Сборка и запуск Docker - npm run docker
 5. Запуск unit-тестов - npm run mocha
-5. Запуск линтера - npm run lint
+6. Запуск eslint - npm run lint
+7. Запуск stylelint - npm run stylelint
 
 
 ## Ссылка на проектную работу
