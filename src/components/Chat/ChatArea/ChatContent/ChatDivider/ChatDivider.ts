@@ -1,6 +1,6 @@
 import './ChatDivider.css';
 import template from './ChatDivider.hbs';
-import Block from '../../../../../services/Block';
+import Block from '../../../../../services/Block/Block';
 
 type Props = {
   content: string,

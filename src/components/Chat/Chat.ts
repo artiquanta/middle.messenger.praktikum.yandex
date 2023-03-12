@@ -3,9 +3,9 @@ import template from './Chat.hbs';
 import Navigation from './Navigation/Navigation';
 import ChatArea from './ChatArea/ChatArea';
 import ChatStub from './ChatStub/ChatStub';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import connect from '../../services/Store/connect';
-import isEqual from '../../utils/isEqual';
+import isEqual from '../../utils/helpers/isEqual';
 import {
   State,
   CallBack,

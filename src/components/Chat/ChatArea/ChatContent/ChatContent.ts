@@ -1,11 +1,11 @@
 import './ChatContent.css';
 import template from './ChatContent.hbs';
-import Block from '../../../../services/Block';
+import Block from '../../../../services/Block/Block';
 import connect from '../../../../services/Store/connect';
 import Message from './Message/Message';
 import ChatDivider from './ChatDivider/ChatDivider';
-import { checkIfToday, convertDay, convertTime } from '../../../../utils/convertTime';
-import isEqual from '../../../../utils/isEqual';
+import { checkIfToday, convertDay, convertTime } from '../../../../utils/helpers/convertTime';
+import isEqual from '../../../../utils/helpers/isEqual';
 import { MessageType, State, UserType } from '../../../../types/types';
 
 type Props = {

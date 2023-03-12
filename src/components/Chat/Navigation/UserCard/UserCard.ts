@@ -1,9 +1,9 @@
 import './UserCard.css';
 import template from './UserCard.hbs';
-import Block from '../../../../services/Block';
-import * as defaultAvatar from '../../../../images/default-avatar.svg';
-import { EventType, UserType } from '../../../../types/types';
+import Block from '../../../../services/Block/Block';
+import defaultAvatar from '../../../../images/default-avatar.svg';
 import { BASE_RESOURCE_URL } from '../../../../utils/constants';
+import { EventType, UserType } from '../../../../types/types';
 
 type Props = {
   user: UserType,
@@ -16,18 +16,16 @@ class UserCard extends Block {
   }
 
   render(): DocumentFragment {
-    /* eslint-disable */
     const {
       id,
       avatar,
-      display_name,
-      first_name,
-      second_name,
+      display_name: displayName,
+      first_name: firstName,
+      second_name: secondName,
       login,
-    } = this.props.user;
-    /* eslint-enable */
+    } = this.props.user as UserType;
 
-    const userName = display_name ?? `${first_name} ${second_name}`;
+    const userName = displayName ?? `${firstName} ${secondName}`;
 
     return this.compile(template, {
       id,

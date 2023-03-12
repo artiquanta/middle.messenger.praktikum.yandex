@@ -1,6 +1,6 @@
 import './Form.css';
 import template from './Form.hbs';
-import Block from '../../services/Block';
+import Block from '../../services/Block/Block';
 import FormHeading from './FormHeading/FormHeading';
 import FormInput from './FormInput/FormInput';
 import FormLink from './FormLink/FormLink';

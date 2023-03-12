@@ -1,12 +1,12 @@
 import './Message.css';
 import template from './Message.hbs';
-import Block from '../../../../../services/Block';
+import Block from '../../../../../services/Block/Block';
 import TextMessage from './TextMessage/TextMessage';
 import VideoMessage from './VideoMessage/VideoMessage';
 import PhotoMessage from './PhotoMessage/PhotoMessage';
 import FileMessage from './FileMessage/FileMessage';
 import LocationMessage from './LocationMessage/LocationMessage';
-import * as defaultAvatar from '../../../../../images/default-avatar.svg';
+import defaultAvatar from '../../../../../images/default-avatar.svg';
 import { BASE_RESOURCE_URL } from '../../../../../utils/constants';
 import { EventType, UserType } from '../../../../../types/types';
 
@@ -67,15 +67,24 @@ class Message extends Block {
     return message;
   }
 
-  render(): DocumentFragment {
-    const messageOwner = this.props.owner;
-    const userName = messageOwner.display_name
-      ? messageOwner.display_name
-      : `${messageOwner.first_name} ${messageOwner.second_name}`;
-
-    const userAvatar = this.props.owner.avatar
+  // Формирование ссылки на аватар
+  private _generateAvatarLink(): string {
+    return this.props.owner.avatar
       ? `${BASE_RESOURCE_URL}/${this.props.owner.avatar}`
       : defaultAvatar;
+  }
+
+  // Формирование имени пользователя
+  private _generateUsername(): string {
+    const messageOwner = this.props.owner;
+    return messageOwner.display_name
+      ? messageOwner.display_name
+      : `${messageOwner.first_name} ${messageOwner.second_name}`;
+  }
+
+  render(): DocumentFragment {
+    const userName = this._generateUsername();
+    const userAvatar = this._generateAvatarLink();
 
     return this.compile(
       template,

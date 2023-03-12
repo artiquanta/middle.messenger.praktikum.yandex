@@ -1,10 +1,10 @@
 import './SearchResults.css';
 import template from './SearchResults.hbs';
-import Block from '../../../../services/Block';
+import Block from '../../../../services/Block/Block';
 import connect from '../../../../services/Store/connect';
 import ChatCard from '../ChatCard/ChatCard';
 import UserCard from '../UserCard/UserCard';
-import isEqual from '../../../../utils/isEqual';
+import isEqual from '../../../../utils/helpers/isEqual';
 import {
   CallBack,
   ChatType,

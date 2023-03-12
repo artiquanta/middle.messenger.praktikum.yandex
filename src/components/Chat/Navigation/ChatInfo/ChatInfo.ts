@@ -1,6 +1,6 @@
 import './ChatInfo.css';
 import template from './ChatInfo.hbs';
-import Block from '../../../../services/Block';
+import Block from '../../../../services/Block/Block';
 
 class ChatInfo extends Block {
   constructor() {

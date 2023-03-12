@@ -1,11 +1,11 @@
 import './ChatArea.css';
 import template from './ChatArea.hbs';
-import Block from '../../../services/Block';
+import Block from '../../../services/Block/Block';
 import Header from './Header/Header';
 import ChatContent from './ChatContent/ChatContent';
 import SidePanel from './SidePanel/SidePanel';
 import ChatControls from './ChatControls/ChatControls';
-import throttle from '../../../utils/throttle';
+import throttle from '../../../utils/helpers/throttle';
 import {
   CallBack,
   EventType,

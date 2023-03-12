@@ -1,6 +1,6 @@
 import './VideoMessage.css';
 import template from './VideoMessage.hbs';
-import Block from '../../../../../../services/Block';
+import Block from '../../../../../../services/Block/Block';
 
 type Props = {
   content: string,

@@ -1,9 +1,9 @@
 import './ChatList.css';
 import template from './ChatList.hbs';
-import Block from '../../../../services/Block';
+import Block from '../../../../services/Block/Block';
 import ChatCard from '../ChatCard/ChatCard';
 import connect from '../../../../services/Store/connect';
-import isEqual from '../../../../utils/isEqual';
+import isEqual from '../../../../utils/helpers/isEqual';
 import {
   CallBack,
   ChatType,

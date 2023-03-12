@@ -1,7 +1,7 @@
 import './SidePanel.css';
 import template from './SidePanel.hbs';
-import Block from '../../../../services/Block';
-import FormValidator from '../../../../services/FormValidator';
+import Block from '../../../../services/Block/Block';
+import FormValidator from '../../../../services/FormValidator/FormValidator';
 import connect from '../../../../services/Store/connect';
 import Form from '../../../Form/Form';
 import GroupUsersList from './GroupUsersList/GroupUsersList';

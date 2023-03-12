@@ -5,8 +5,7 @@
   "rules": {
     "plugin/selector-bem-pattern": {
       "componentName": "[a-zA-Z]+"
-    },
-    "color-hex-case": "lower"
+    }
   },
   "ignoreFiles": [
     "dist/*"
